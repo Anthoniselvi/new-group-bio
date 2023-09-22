@@ -57,3 +57,15 @@ export const getProfileById = (req, res) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
+
+export const deleteProfile = (req, res) => {
+  const profileId = req.params._id;
+  Profiles.deleteOne({ profileId: profileId })
+    .then((result) => {
+      if (result.deletedCount === 0) {
+        return res.status(404).json("Entry not found");
+      }
+      res.json("Entry deleted successfully");
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
