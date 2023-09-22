@@ -11,7 +11,8 @@ app.use(cors());
 
 app.use("/profile", profileRoutes);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+// const PORT = 3000;
 
 mongoose
   .connect(process.env.MONGO_URL, {
