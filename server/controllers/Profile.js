@@ -62,7 +62,7 @@ export const getProfileById = (req, res) => {
 };
 
 export const deleteProfile = (req, res) => {
-  const profileId = req.params._id;
+  const profileId = req.params.profileId;
   Profiles.deleteOne({ profileId: profileId })
     .then((result) => {
       if (result.deletedCount === 0) {

@@ -3,16 +3,17 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import profileRoutes from "./routes/Profile.js";
+import adminRoutes from "./routes/Admin.js";
 
 dotenv.config();
 const app = express();
-app.use(express.json()); // Use express.json() instead of bodyParser.json()
+app.use(express.json());
 app.use(cors());
 
 app.use("/profile", profileRoutes);
+app.use("/admin", adminRoutes);
 
 const PORT = process.env.PORT || 3000;
-// const PORT = 3000;
 
 mongoose
   .connect(process.env.MONGO_URL, {
