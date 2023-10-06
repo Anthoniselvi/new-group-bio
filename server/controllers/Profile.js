@@ -2,26 +2,10 @@ import Profiles from "../models/Profile.js";
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Types;
 import { v4 as uuidv4 } from "uuid";
+import Groups from "../models/Group.js"; // Import the Groups model
 
 export const postProfile = (req, res) => {
-  const name = req.body.name;
-  const image = req.body.image;
-  const course = req.body.course;
-  const year = req.body.year;
-  const location = req.body.location;
-  const phone = req.body.phone;
-  const company = req.body.company;
-  const designation = req.body.designation;
-  const industry = req.body.industry;
-  const offers = req.body.offers;
-  const linkedin = req.body.linkedin;
-  const website = req.body.website;
-
-  // Generate a unique profileId using UUID
-  const profileId = uuidv4();
-
-  const newProfile = new Profiles({
-    profileId,
+  const {
     name,
     image,
     course,
@@ -34,11 +18,64 @@ export const postProfile = (req, res) => {
     offers,
     linkedin,
     website,
-  });
+    groupId,
+  } = req.body;
 
-  newProfile
-    .save()
-    .then(() => res.json("Profile added"))
+  const profileId = uuidv4();
+
+  if (
+    !name ||
+    !location ||
+    !company ||
+    !designation ||
+    !industry ||
+    !offers ||
+    !linkedin ||
+    !website
+  ) {
+    return res
+      .status(400)
+      .json(
+        "Name, location, Company, Designation, Industry, Offers, Linkedin and Website are mandatory fields"
+      );
+  }
+  // Retrieve the groupType for the specified groupId
+  Groups.findOne({ groupId })
+    .then((group) => {
+      if (!group) {
+        return res.status(404).json("Group not found");
+      }
+
+      // Check groupType and validate course and year accordingly
+      if (group.groupType === "0" && (!course || !year)) {
+        return res
+          .status(400)
+          .json("Course and Year are mandatory for this groupType");
+      }
+
+      // Create a new profile associated with the groupId
+      const newProfile = new Profiles({
+        profileId,
+        groupId, // Include groupId in the profile
+        name,
+        image,
+        course,
+        year,
+        location,
+        phone,
+        company,
+        designation,
+        industry,
+        offers,
+        linkedin,
+        website,
+      });
+
+      newProfile
+        .save()
+        .then(() => res.json("Profile added"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
@@ -103,6 +140,22 @@ export const updateProfile = (req, res) => {
         .save()
         .then(() => res.json("Profile updated"))
         .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+export const getProfilesByGroupId = (req, res) => {
+  const groupId = req.params.groupId;
+  console.log("groupId: " + groupId);
+
+  // Use groupId to query profiles
+  Profiles.find({ groupId: groupId })
+    .then((profiles) => {
+      if (!profiles || profiles.length === 0) {
+        return res.status(404).json("Profiles not found");
+      }
+      res.json(profiles);
+      console.log("Profiles by groupId: " + JSON.stringify(profiles));
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };

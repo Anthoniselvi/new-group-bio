@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const ProfileSchema = new mongoose.Schema({
   profileId: { type: String, required: true, unique: true },
+  groupId: { type: String, required: true },
   name: { type: String, required: true },
   image: { type: String, default: "" },
   course: { type: String, default: "" },

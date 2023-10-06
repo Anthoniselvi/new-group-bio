@@ -50,6 +50,8 @@ export const updateGroup = (req, res) => {
 
       group.groupName = updatedData.groupName;
       group.groupType = updatedData.groupType;
+      group.groupDescription = updatedData.groupDescription;
+      group.groupImage = updatedData.groupImage;
 
       group
         .save()
@@ -67,6 +69,18 @@ export const deleteGroup = (req, res) => {
         return res.status(404).json("Group not found");
       }
       res.json("Group deleted successfully");
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+export const getSingleGroupbyGroupId = (req, res) => {
+  const groupId = req.params.groupId;
+  Groups.findOne({ groupId })
+    .then((group) => {
+      if (!group) {
+        return res.status(404).json("Group not found");
+      }
+      res.json(group);
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
