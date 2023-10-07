@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import profileRoutes from "./routes/Profile.js";
 import adminRoutes from "./routes/Admin.js";
 import groupRoutes from "./routes/Group.js";
+import memberRoutes from "./routes/Member.js";
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors());
 app.use("/profile", profileRoutes);
 app.use("/admin", adminRoutes);
 app.use("/group", groupRoutes);
+app.use("/member", memberRoutes);
 
 const PORT = process.env.PORT || 3000;
 
