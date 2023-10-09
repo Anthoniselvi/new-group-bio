@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -11,12 +10,9 @@ import { useRouter } from "next/router";
 import { courseList } from "./CourseList";
 
 export default function SingleGroupProfiles() {
-  const theme = useTheme();
   const router = useRouter();
   const { id } = router.query;
-  const [profilesList, setProfilesList] = useState([]);
-  const [groupIdList, setGroupIdList] = useState([]);
-  const [selectedLetter, setSelectedLetter] = useState(null);
+
   const [singleGroup, setSingleGroup] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState({});
   const profileCardsRef = useRef(null);

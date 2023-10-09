@@ -4,12 +4,10 @@ import { useState } from "react";
 import AddGroup from "@/components/Dashboard/AddGroup";
 
 export default function Dashboard() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
 
-  const handleEditEvent = () => {
-    setAnchorEl(null);
-    setEditModalOpen(true);
+  const handleCreateGroup = () => {
+    setCreateGroupModalOpen(true);
   };
   return (
     <div style={{ padding: "1rem", marginTop: "6rem" }}>
@@ -23,7 +21,7 @@ export default function Dashboard() {
       >
         <h2>Groups List</h2>
         <button
-          onClick={handleEditEvent}
+          onClick={handleCreateGroup}
           style={{
             padding: "10px 20px",
             backgroundColor: "#00b4d8",
@@ -35,10 +33,10 @@ export default function Dashboard() {
         >
           + Add
         </button>
-        {editModalOpen ? (
+        {createGroupModalOpen ? (
           <AddGroup
-            open={editModalOpen}
-            onClose={() => setEditModalOpen(false)}
+            open={createGroupModalOpen}
+            onClose={() => setCreateGroupModalOpen(false)}
           />
         ) : (
           <></>

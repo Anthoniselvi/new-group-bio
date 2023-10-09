@@ -1,16 +1,21 @@
 import * as React from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import SingleGroupProfiles from "@/components/Members/SingleGroupProfiles";
+import AddMember from "@/components/Members/AddMember";
 
 export default function SingleGroup() {
+  const [createMemberModalOpen, setCreateMemberModalOpen] = useState(false);
   const router = useRouter();
   const { id: groupId, name } = router.query;
-  const navigateToCreateProfile = (groupId) => {
-    router.push({
-      pathname: "/form",
-      query: { id: groupId },
-    });
+  const navigateToCreateMember = (groupId) => {
+    setCreateMemberModalOpen(true);
+    // router.push({
+    //   pathname: "/createmember",
+    //   query: { id: groupId },
+    // });
   };
+
   return (
     <div style={{ padding: "1rem", marginTop: "6rem" }}>
       <div
@@ -31,10 +36,20 @@ export default function SingleGroup() {
             border: "none",
             cursor: "pointer",
           }}
-          onClick={() => navigateToCreateProfile(groupId)}
+          onClick={() => navigateToCreateMember(groupId)}
         >
           + Add
         </button>
+        {createMemberModalOpen ? (
+          <AddMember
+            open={createMemberModalOpen}
+            onClose={() => setCreateMemberModalOpen(false)}
+            name={name}
+            groupId={groupId}
+          />
+        ) : (
+          <></>
+        )}
       </div>
       <SingleGroupProfiles />
     </div>
