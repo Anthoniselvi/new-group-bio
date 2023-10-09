@@ -3,11 +3,13 @@ import { validateStep1, validateStep2, validateStep3 } from "./Validation";
 
 const handleSubmit = (
   inputFieldValues,
-  selectedGroupId,
+  groupId,
   setFieldErrors,
+  memberId,
   router
 ) => {
-  console.log("selectedGroupID: " + selectedGroupId);
+  console.log("groupId in handlesubmit: " + groupId);
+  console.log("MemberId in handlesubmit: " + JSON.stringify(memberId));
   const step1Errors = validateStep1(inputFieldValues);
   const step2Errors = validateStep2(inputFieldValues);
   const step3Errors = validateStep3(inputFieldValues);
@@ -21,7 +23,8 @@ const handleSubmit = (
   if (Object.keys(combinedErrors).length > 0) {
     setFieldErrors(combinedErrors);
   } else {
-    inputFieldValues.groupId = selectedGroupId;
+    inputFieldValues.memberId = memberId;
+    inputFieldValues.groupId = groupId;
     console.log("inputFieldValues:" + JSON.stringify(inputFieldValues));
     const formData = new FormData();
 
@@ -32,13 +35,16 @@ const handleSubmit = (
     console.log("formData: " + JSON.stringify(inputFieldValues));
 
     axios
-      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/add`, inputFieldValues)
+      .put(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`,
+        inputFieldValues
+      )
       .then((response) => {
-        console.log("Profile added successfully!");
-        console.log("postProfile: " + JSON.stringify(response.data));
+        console.log("Profile updated successfully!");
+        console.log("updatedProfile: " + JSON.stringify(response.data));
         router.push({
-          pathname: "/singlegroup",
-          query: { id: selectedGroupId },
+          pathname: "/membergrouppage",
+          query: { id: groupId },
         });
       })
       .catch((error) => {

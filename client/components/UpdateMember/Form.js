@@ -120,7 +120,9 @@ export default function Form() {
     const filledMandatoryFieldsCount = Object.keys(inputFieldValues).filter(
       (field) =>
         inputFieldValues[field] !== "" &&
-        steps.find((step) => step.mandatoryFields.includes(field))
+        steps(selectedGroup).find((step) =>
+          step.mandatoryFields.includes(field)
+        )
     ).length;
 
     const progressPercentage = (filledMandatoryFieldsCount / 12) * 100;
@@ -345,9 +347,9 @@ export default function Form() {
 
     return stepStatus;
   };
-  const selectedGroupId = selectedGroup.groupId;
-  const handleSubmitForm = () => {
-    handleSubmit(inputFieldValues, selectedGroupId, router);
+
+  const handleSubmitForm = (memberId) => {
+    handleSubmit(inputFieldValues, groupId, memberId, router);
   };
 
   return (
@@ -472,8 +474,8 @@ export default function Form() {
                 <Button
                   variant="contained"
                   onClick={
-                    activeStep === steps.length - 1
-                      ? handleSubmitForm
+                    activeStep === steps(selectedGroup).length - 1
+                      ? handleSubmitForm(memberId)
                       : handleNext
                   }
                   sx={{
@@ -483,7 +485,9 @@ export default function Form() {
                     borderRadius: "20px",
                   }}
                 >
-                  {activeStep === steps.length - 1 ? "Finish" : "Continue"}
+                  {activeStep === steps(selectedGroup).length - 1
+                    ? "Finish"
+                    : "Continue"}
                 </Button>
               </div>{" "}
             </StepContent>
