@@ -349,6 +349,7 @@ export default function Form() {
   };
 
   const handleSubmitForm = (memberId) => {
+    console.log("memberId in handle" + memberId);
     handleSubmit(inputFieldValues, groupId, memberId, router);
   };
 
@@ -471,11 +472,12 @@ export default function Form() {
                 >
                   Back
                 </Button>
+                {console.log("memberId :" + memberId, selectedMember.memberId)}
                 <Button
                   variant="contained"
                   onClick={
                     activeStep === steps(selectedGroup).length - 1
-                      ? handleSubmitForm(memberId)
+                      ? () => handleSubmitForm(selectedMember.memberId)
                       : handleNext
                   }
                   sx={{

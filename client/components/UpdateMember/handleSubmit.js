@@ -5,9 +5,11 @@ const handleSubmit = (
   inputFieldValues,
   groupId,
   setFieldErrors,
-  memberId,
+  //   memberId,
   router
 ) => {
+  const memberId = router.query.memberId;
+
   console.log("groupId in handlesubmit: " + groupId);
   console.log("MemberId in handlesubmit: " + JSON.stringify(memberId));
   const step1Errors = validateStep1(inputFieldValues);
