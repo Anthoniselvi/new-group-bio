@@ -7,12 +7,12 @@ const GroupsList = () => {
   const { groupsList } = useUserAuth();
   const router = useRouter();
   console.log("List of groups: " + JSON.stringify(groupsList));
-  //   const navigateToSingleGroupProfiles = (singleGroup) => {
-  //     router.push({
-  //       pathname: "/singlegroup",
-  //       query: { id: singleGroup.groupId, name: singleGroup.groupName },
-  //     });
-  //   };
+  const navigateToSingleGroupProfiles = (singleGroup) => {
+    router.push({
+      pathname: "/singlegroup",
+      query: { id: singleGroup.groupId, name: singleGroup.groupName },
+    });
+  };
 
   return (
     <div
@@ -26,7 +26,7 @@ const GroupsList = () => {
     >
       {groupsList.map((singleGroup) => (
         <div
-          //  onClick={() => navigateToSingleGroupProfiles(singleGroup)}
+          onClick={() => navigateToSingleGroupProfiles(singleGroup)}
           key={singleGroup.groupId} // Add a unique key for each group
           style={{
             width: "100%",
