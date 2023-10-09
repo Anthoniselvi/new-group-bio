@@ -1,6 +1,7 @@
 import GroupsList from "@/components/Dashboard/GroupsList";
 import * as React from "react";
 import { useState } from "react";
+import AddGroup from "@/components/Dashboard/AddGroup";
 
 export default function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
