@@ -7,6 +7,7 @@ const MemberLogin = () => {
   const [mobile, setMobile] = useState(null);
   const [membersList, setMembersList] = useState([]);
   const [error, setError] = useState(false);
+  const [memberId, setMemberId] = useState("");
   const router = useRouter();
   const { id: groupId } = router.query;
 
@@ -16,20 +17,22 @@ const MemberLogin = () => {
       return;
     }
 
-    const isMobileRegistered = membersList.some(
+    const matchingMember = membersList.find(
       (member) => member.mobile === parseInt(mobile)
     );
 
-    if (isMobileRegistered) {
+    if (matchingMember) {
+      setMemberId(matchingMember.memberId); // Store the memberId in state
+
       router.push({
-        pathname: "/singlegroup",
-        query: { id: groupId },
+        pathname: "/membergrouppage",
+        query: { id: groupId, memberId: matchingMember.memberId },
       });
     } else {
       setError("Your mobile number is not registered.");
     }
   };
-
+  console.log("memberId: " + memberId);
   useEffect(() => {
     console.log("groupId: " + groupId);
     axios

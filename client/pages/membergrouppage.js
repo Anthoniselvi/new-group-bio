@@ -6,25 +6,20 @@ import AddMember from "@/components/Members/AddMember";
 import AddedMembers from "@/components/Members/AddedMembers";
 import axios from "axios";
 
-export default function SingleGroup() {
+export default function MemberGroupPage() {
   const [createMemberModalOpen, setCreateMemberModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState({});
   const router = useRouter();
-  const { id: groupId } = router.query;
+  const { id: groupId, memberId } = router.query;
 
-  const navigateToCreateMember = () => {
-    setCreateMemberModalOpen(true);
+  const navigateToUpdateMember = () => {
+    router.push({
+      pathname: "/updatemember",
+      query: { id: groupId, memberId },
+    });
   };
-
-  const shareViaWhatsApp = () => {
-    const currentUrl = window.location.origin; // Get the base URL
-    const sharedUrl = `${currentUrl}/memberloginpage?id=${groupId}`; // Append the id query parameter
-    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
-      sharedUrl
-    )}`;
-    window.open(whatsappUrl, "_blank");
-  };
-
+  console.log("memberId recd in member's group page:" + memberId);
+  console.log("groupId recd in member's group page:" + groupId);
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
@@ -57,23 +52,11 @@ export default function SingleGroup() {
             border: "none",
             cursor: "pointer",
           }}
-          onClick={navigateToCreateMember}
+          onClick={() => navigateToUpdateMember(memberId)}
         >
-          + Add
+          Update
         </button>
-        <button
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#25d366", // WhatsApp green
-            color: "#fff",
-            borderRadius: "20px",
-            border: "none",
-            cursor: "pointer",
-          }}
-          onClick={shareViaWhatsApp}
-        >
-          Share via WhatsApp
-        </button>
+
         {createMemberModalOpen ? (
           <AddMember
             open={createMemberModalOpen}
