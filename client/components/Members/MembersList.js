@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { courseList } from "./CourseList";
 
-export default function SingleGroupProfiles() {
+export default function MembersList() {
   const router = useRouter();
   const { id } = router.query;
 
