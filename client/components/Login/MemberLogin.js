@@ -16,19 +16,16 @@ const MemberLogin = () => {
       return;
     }
 
-    // Check if the entered mobile number exists in membersList
     const isMobileRegistered = membersList.some(
       (member) => member.mobile === parseInt(mobile)
     );
 
     if (isMobileRegistered) {
-      // Mobile number is registered, navigate to the dashboard or the desired page
       router.push({
         pathname: "/singlegroup",
         query: { id: groupId },
       });
     } else {
-      // Mobile number is not registered
       setError("Your mobile number is not registered.");
     }
   };
@@ -44,7 +41,7 @@ const MemberLogin = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [groupId]); // Make the API call when groupId changes
+  }, [groupId]);
 
   return (
     <div className={styles.container}>

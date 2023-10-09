@@ -4,19 +4,23 @@ import { useState } from "react";
 import styles from "@/styles/Login.module.css";
 
 const Login = () => {
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const router = useRouter();
 
   const handleClick = async () => {
     try {
-      await axios.post("http://localhost:2222/admin/add", {
+      const response = await axios.post("http://localhost:2222/admin/login", {
         username,
         password,
       });
-      console.log("username: " + username);
-      router.push("/dashboard");
+
+      if (response.data.success) {
+        router.push("/dashboard");
+      } else {
+        setError(true);
+      }
     } catch (err) {
       setError(true);
     }
@@ -27,12 +31,12 @@ const Login = () => {
       <div className={styles.wrapper}>
         <h1>Log In</h1>
         <input
-          placeholder="username"
+          placeholder="Username"
           className={styles.input}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
-          placeholder="password"
+          placeholder="Password"
           type="password"
           className={styles.input}
           onChange={(e) => setPassword(e.target.value)}
