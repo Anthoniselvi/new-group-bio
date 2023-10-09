@@ -27,7 +27,7 @@ const GroupsList = () => {
       {groupsList.map((singleGroup) => (
         <div
           onClick={() => navigateToSingleGroupProfiles(singleGroup)}
-          key={singleGroup.groupId} // Add a unique key for each group
+          key={singleGroup.groupId}
           style={{
             width: "100%",
             padding: 2,

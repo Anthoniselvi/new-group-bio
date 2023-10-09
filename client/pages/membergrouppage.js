@@ -68,8 +68,8 @@ export default function MemberGroupPage() {
           <></>
         )}
       </div>
-      <AddedMembers />
-      {/* <MembersList /> */}
+      {/* <AddedMembers /> */}
+      <MembersList />
     </div>
   );
 }

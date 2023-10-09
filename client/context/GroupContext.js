@@ -17,7 +17,7 @@ export function ApiContextProvider({ children }) {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [membersList]);
 
   useEffect(() => {
     axios
@@ -29,7 +29,7 @@ export function ApiContextProvider({ children }) {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [groupsList]);
   return (
     <userAuthContext.Provider
       value={{
