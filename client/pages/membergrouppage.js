@@ -61,7 +61,7 @@ export default function MemberGroupPage() {
           <AddMember
             open={createMemberModalOpen}
             onClose={() => setCreateMemberModalOpen(false)}
-            name={name}
+            name={selectedGroup.groupName}
             groupId={groupId}
           />
         ) : (

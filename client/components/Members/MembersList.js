@@ -75,146 +75,152 @@ export default function MembersList() {
         }}
       >
         {singleGroup.map((item) => (
-          <Card
-            sx={{
-              display: "flex",
-              paddingRight: "1em",
-              paddingBottom: "1em",
-              width: "100%",
-              height: "200px",
-              flexDirection: "column",
-              alignItems: "center",
-              boxShadow: "0px 1px 5px 1px #03045e",
-            }}
-            key={item.profileId}
-            onClick={() => navigateToSingleProfile(item)}
-            data-starts-with={item.name.charAt(0).toLowerCase()}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "top",
-                width: "100%",
-              }}
-            >
-              <CardContent
+          <>
+            {item.name !== "" ? (
+              <Card
                 sx={{
                   display: "flex",
+                  paddingRight: "1em",
+                  paddingBottom: "1em",
+                  width: "100%",
+                  height: "200px",
                   flexDirection: "column",
-                  gap: "0.5em",
-                  padding: 0,
-                  paddingLeft: "1em",
-                  paddingTop: "1em",
+                  alignItems: "center",
+                  boxShadow: "0px 1px 5px 1px #03045e",
                 }}
+                key={item.profileId}
+                onClick={() => navigateToSingleProfile(item)}
+                data-starts-with={item.name.charAt(0).toLowerCase()}
               >
-                <Typography
-                  component="div"
+                <Box
                   sx={{
-                    fontFamily: "Sans-serif",
-                    fontSize: "17px",
-                    fontWeight: 600,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "top",
+                    width: "100%",
                   }}
                 >
-                  {item.name}
-                </Typography>
-                {selectedGroup.groupType === "0" ? (
-                  <Typography
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.5em",
+                      padding: 0,
+                      paddingLeft: "1em",
+                      paddingTop: "1em",
+                    }}
+                  >
+                    <Typography
+                      component="div"
+                      sx={{
+                        fontFamily: "Sans-serif",
+                        fontSize: "17px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {item.name}
+                    </Typography>
+                    {selectedGroup.groupType === "0" ? (
+                      <Typography
+                        component="div"
+                        sx={{
+                          fontFamily: "Sans-serif",
+                          fontSize: "15px",
+                        }}
+                      >
+                        {formatCourseInfo(
+                          item.course,
+                          item.year,
+                          getShortFormForCourse(item.course)
+                        )}
+                      </Typography>
+                    ) : (
+                      <></>
+                    )}
+                  </CardContent>
+                  <CardMedia
                     component="div"
                     sx={{
-                      fontFamily: "Sans-serif",
-                      fontSize: "15px",
-                    }}
-                  >
-                    {formatCourseInfo(
-                      item.course,
-                      item.year,
-                      getShortFormForCourse(item.course)
-                    )}
-                  </Typography>
-                ) : (
-                  <></>
-                )}
-              </CardContent>
-              <CardMedia
-                component="div"
-                sx={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  marginTop: 2,
-                }}
-              >
-                {item.image ? (
-                  <img
-                    src={item.image}
-                    style={{ width: "100%", height: "100%" }}
-                    alt="image"
-                  />
-                ) : (
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      background: "#00b4d8",
+                      width: 60,
+                      height: 60,
                       borderRadius: "50%",
-                      fontSize: "20px",
-                      fontWeight: "bold",
+                      overflow: "hidden",
+                      marginTop: 2,
                     }}
                   >
-                    {item.name.charAt(0).toUpperCase()}
-                  </div>
-                )}
-              </CardMedia>
-            </Box>
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        style={{ width: "100%", height: "100%" }}
+                        alt="image"
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          background: "#00b4d8",
+                          borderRadius: "50%",
+                          fontSize: "20px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {item.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                  </CardMedia>
+                </Box>
 
-            <CardContent
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "left",
-                gap: "0.5em",
-                padding: 0,
-                paddingLeft: "1em",
-                paddingTop: "0.5em",
-                width: "100%",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "Sans-serif",
-                  fontSize: "14px",
-                  color: "#999999",
-                }}
-                component="div"
-              >
-                {item.designation}
-                <br />
-                {item.company}
-                <br />
-                {item.location}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: "Sans-serif",
-                  fontSize: "14px",
-                  color: "#000000",
-                  backgroundColor: "red",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  display: "inline-block",
-                }}
-                component="div"
-              >
-                {/* Services Offered: <br /> */}
-                {item.offers}
-              </Typography>
-            </CardContent>
-          </Card>
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "left",
+                    gap: "0.5em",
+                    padding: 0,
+                    paddingLeft: "1em",
+                    paddingTop: "0.5em",
+                    width: "100%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: "Sans-serif",
+                      fontSize: "14px",
+                      color: "#999999",
+                    }}
+                    component="div"
+                  >
+                    {item.designation}
+                    <br />
+                    {item.company}
+                    <br />
+                    {item.location}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: "Sans-serif",
+                      fontSize: "14px",
+                      color: "#000000",
+                      backgroundColor: "red",
+                      WebkitBackgroundClip: "text",
+                      backgroundClip: "text",
+                      display: "inline-block",
+                    }}
+                    component="div"
+                  >
+                    {/* Services Offered: <br /> */}
+                    {item.offers}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ) : (
+              <></>
+            )}
+          </>
         ))}
       </div>
     </div>

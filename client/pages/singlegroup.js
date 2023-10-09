@@ -85,8 +85,8 @@ export default function SingleGroup() {
           <></>
         )}
       </div>
-      <AddedMembers />
-      {/* <MembersList /> */}
+      {/* <AddedMembers /> */}
+      <MembersList />
     </div>
   );
 }
