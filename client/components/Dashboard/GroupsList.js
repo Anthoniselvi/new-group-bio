@@ -10,7 +10,7 @@ const GroupsList = () => {
   const navigateToSingleGroupProfiles = (singleGroup) => {
     router.push({
       pathname: "/singlegroup",
-      query: { id: singleGroup.groupId, name: singleGroup.groupName },
+      query: { id: singleGroup.groupId },
     });
   };
 

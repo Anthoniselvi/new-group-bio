@@ -1,25 +1,42 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import MembersList from "@/components/Members/MembersList";
 import AddMember from "@/components/Members/AddMember";
 import AddedMembers from "@/components/Members/AddedMembers";
+import axios from "axios";
 
 export default function SingleGroup() {
   const [createMemberModalOpen, setCreateMemberModalOpen] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState({});
   const router = useRouter();
-  const { id: groupId, name } = router.query;
+  const { id: groupId } = router.query;
 
   const navigateToCreateMember = () => {
     setCreateMemberModalOpen(true);
   };
 
   const shareViaWhatsApp = () => {
-    const shareUrl = encodeURIComponent(window.location.href);
-    const whatsappUrl = `https://api.whatsapp.com/send?text=${shareUrl}`;
+    const currentUrl = window.location.origin; // Get the base URL
+    const sharedUrl = `${currentUrl}/memberloginpage?id=chennai_express_meet`; // Append the id query parameter
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+      sharedUrl
+    )}`;
     window.open(whatsappUrl, "_blank");
   };
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
+
+      .then((response) => {
+        setSelectedGroup(response.data);
+        console.log("selectedGroup :" + JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   return (
     <div style={{ padding: "1rem", marginTop: "6rem" }}>
       <div
@@ -30,7 +47,7 @@ export default function SingleGroup() {
           paddingBottom: "1rem",
         }}
       >
-        <h2>{name}</h2>
+        <h2>{selectedGroup.groupName}</h2>
         <button
           style={{
             padding: "10px 20px",
