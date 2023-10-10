@@ -72,6 +72,7 @@ export default function ActiveMembers() {
           alignItems: "center",
           position: "relative",
           gap: "1rem",
+          width: "100%",
         }}
       >
         {/* {singleGroup.map((item) => (

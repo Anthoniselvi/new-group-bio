@@ -21,12 +21,15 @@ export default function LeftDrawer({ open, onClose }) {
         zIndex: 1200,
         padding: 2,
         paddingLeft: 7,
+        backgroundColor: "#f0f1f4",
       }}
       role="presentation"
       onClick={onClose}
       onKeyDown={onClose}
     >
-      <List sx={{ backgroundColor: "pink", borderRadius: 6, height: "100%" }}>
+      <List
+        sx={{ backgroundColor: "#ffffff", borderRadius: 6, height: "100%" }}
+      >
         <IoMdClose
           style={{ marginLeft: "90%", fontSize: 20 }}
           onClick={onClose}

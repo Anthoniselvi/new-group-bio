@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useMediaQuery } from "@mui/material";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -63,6 +64,7 @@ const fabGreenStyle = {
 };
 
 export default function SingleGroupPage() {
+  const isMobile = useMediaQuery("(max-width: 900px)");
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -105,7 +107,7 @@ export default function SingleGroupPage() {
         flexDirection: "column",
         gap: "30px",
         width: "calc(100vw - 250px)",
-        padding: "2rem 4rem",
+        padding: isMobile ? 0 : "2rem 4rem",
         "& .MuiButtonBase-root-MuiTab-root": {
           backgroundColor: "none",
         },

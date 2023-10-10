@@ -13,15 +13,15 @@ const columns = [
 ];
 
 const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+  { id: 1, mobile: "2233445566" },
+  { id: 2, mobile: "2345678910" },
+  { id: 3, mobile: "4433225511" },
+  { id: 4, mobile: "9988776655" },
+  { id: 5, mobile: "8765432190" },
+  { id: 6, mobile: "5678432109" },
+  { id: 7, mobile: "4567876902" },
+  { id: 8, mobile: "4466889922" },
+  { id: 9, mobile: "1234567890" },
 ];
 
 export default function PendingMembers() {
