@@ -2,6 +2,8 @@ import GroupsList from "@/components/Dashboard/GroupsList";
 import * as React from "react";
 import { useState } from "react";
 import AddGroup from "@/components/Dashboard/AddGroup";
+import HomePage from "@/components/Home/HomePage";
+import { Typography } from "@mui/material";
 
 export default function Dashboard() {
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
@@ -11,7 +13,7 @@ export default function Dashboard() {
   };
   return (
     <div style={{ padding: "1rem", marginTop: "6rem" }}>
-      <div
+      {/* <div
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -19,7 +21,16 @@ export default function Dashboard() {
           paddingBottom: "1rem",
         }}
       >
-        <h2>Groups List</h2>
+        <Typography
+          sx={{
+            fontSize: 24,
+            fontWeight: 600,
+            fontFamily: "Poppins",
+            color: "#000000",
+          }}
+        >
+          Groups List
+        </Typography>
         <button
           onClick={handleCreateGroup}
           style={{
@@ -41,8 +52,9 @@ export default function Dashboard() {
         ) : (
           <></>
         )}
-      </div>
-      <GroupsList />
+      </div> */}
+      {/* <GroupsList /> */}
+      <HomePage />
     </div>
   );
 }

@@ -22,7 +22,7 @@ const AddedMembers = () => {
   return (
     <div>
       {singleGroupMembers.map((singleMember) => (
-        <div>{singleMember.mobile}</div>
+        <p style={{ color: "black" }}>{singleMember.mobile}</p>
       ))}
     </div>
   );
