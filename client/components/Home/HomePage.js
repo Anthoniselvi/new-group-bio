@@ -16,10 +16,20 @@ import MailIcon from "@mui/icons-material/Mail";
 import Groups from "./Groups";
 import SingleGroupPage from "./SingleGroupPage";
 import { FiChevronDown } from "react-icons/fi";
+import { useMediaQuery } from "@mui/material";
+import { FiMenu } from "react-icons/fi";
+import LeftDrawer from "./LeftDrawer";
 
 const drawerWidth = 240;
 
 export default function HomePage() {
+  const isMobile = useMediaQuery("(max-width: 900px)");
+  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
+
+  // Function to open the left drawer
+  const openLeftDrawer = () => {
+    setIsLeftDrawerOpen(true);
+  };
   return (
     <Box sx={{ display: "flex", backgroundColor: "#ffffff" }}>
       <CssBaseline />
@@ -42,13 +52,27 @@ export default function HomePage() {
               width: "100%",
             }}
           >
-            <Typography
-              sx={{ fontFamily: "Poppins", fontWeight: 600, fontSize: 16 }}
-              noWrap
-              component="div"
-            >
-              Group Bio
-            </Typography>
+            {isMobile ? (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <Typography
+                  sx={{ fontFamily: "Poppins", fontWeight: 600, fontSize: 16 }}
+                  noWrap
+                  component="div"
+                >
+                  Group Bio
+                </Typography>
+                <FiMenu onClick={openLeftDrawer} />
+              </div>
+            ) : (
+              <Typography
+                sx={{ fontFamily: "Poppins", fontWeight: 600, fontSize: 16 }}
+                noWrap
+                component="div"
+              >
+                Group Bio
+              </Typography>
+            )}
+
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
               <div
                 style={{
@@ -70,48 +94,51 @@ export default function HomePage() {
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-      >
-        <Toolbar />
-        <Box
+      {!isMobile && (
+        <Drawer
+          variant="permanent"
           sx={{
-            overflow: "auto",
-            paddingLeft: "2rem",
-            paddingTop: "4rem",
-            "& .MuiTypography-root": {
-              fontFamily: "Poppins",
-              color: "#91918D",
-              fontSize: 16,
-              fontWeight: 500,
-            },
-            "& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
-              borderRight: "none !important", // Override the existing rule
+            width: drawerWidth,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: "border-box",
             },
           }}
         >
-          <List>
-            {["Home", "Groups", "Members", "Support"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
+          <Toolbar />
+          <Box
+            sx={{
+              overflow: "auto",
+              paddingLeft: "2rem",
+              paddingTop: "4rem",
+              "& .MuiTypography-root": {
+                fontFamily: "Poppins",
+                color: "#91918D",
+                fontSize: 16,
+                fontWeight: 500,
+              },
+              "& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
+                borderRight: "none !important", // Override the existing rule
+              },
+            }}
+          >
+            <List>
+              {["Home", "Groups", "Members", "Support"].map((text, index) => (
+                <ListItem key={text} disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Drawer>
+      )}
+
       <Box
         component="main"
         sx={{
@@ -123,6 +150,10 @@ export default function HomePage() {
 
         <SingleGroupPage />
       </Box>
+      <LeftDrawer
+        open={isLeftDrawerOpen}
+        onClose={() => setIsLeftDrawerOpen(false)}
+      />
     </Box>
   );
 }
