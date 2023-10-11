@@ -77,10 +77,10 @@ export default function SingleGroupPage() {
   const [selectedGroup, setSelectedGroup] = useState({});
   const profileCardsRef = useRef(null);
 
-  const navigateToSingleProfile = (item) => {
+  const navigateToCreateMember = (item) => {
     router.push({
-      pathname: "/singleprofile",
-      query: { id: item.profileId },
+      pathname: "/createmember",
+      query: { id: id },
     });
   };
   useEffect(() => {
@@ -147,7 +147,7 @@ export default function SingleGroupPage() {
         display: "flex",
         flexDirection: "column",
         gap: "30px",
-        width: "calc(100vw - 250px)",
+        width: isMobile ? "100vw" : "calc(100vw - 250px)",
         padding: isMobile ? 0 : "2rem 4rem",
         "& .MuiButtonBase-root-MuiTab-root": {
           backgroundColor: "none",
@@ -157,10 +157,42 @@ export default function SingleGroupPage() {
         },
       }}
     >
-      <Typography sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}>
-        Members
-      </Typography>
-      <AppBar position="static" color="default" sx={{ boxShadow: "none" }}>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          alignItems: isMobile ? "left" : "center",
+          justifyContent: isMobile ? "left" : "space-between",
+        }}
+      >
+        <Typography
+          sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+        >
+          Members - {selectedGroup.groupName}
+        </Typography>
+        <button
+          onClick={navigateToCreateMember}
+          style={{
+            backgroundColor: "#FBC91B",
+            color: "#222222",
+            fontSize: 14,
+            fontWeight: 600,
+            fontFamily: "Poppins",
+            textTransform: "none",
+            borderRadius: 20,
+            padding: "8px 12px",
+            border: "none",
+          }}
+        >
+          + Add Member
+        </button>
+      </div>
+      <AppBar
+        position="static"
+        color="default"
+        sx={{ boxShadow: "none", padding: 0 }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}

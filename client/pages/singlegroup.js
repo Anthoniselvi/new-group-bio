@@ -5,6 +5,7 @@ import MembersList from "@/components/Members/MembersList";
 import AddMember from "@/components/Members/AddMember";
 import AddedMembers from "@/components/Members/AddedMembers";
 import axios from "axios";
+import SingleGroupPage from "@/components/Home/SingleGroupPage";
 
 export default function SingleGroup() {
   const [createMemberModalOpen, setCreateMemberModalOpen] = useState(false);
