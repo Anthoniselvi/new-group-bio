@@ -19,13 +19,21 @@ import { FiChevronDown } from "react-icons/fi";
 import { useMediaQuery } from "@mui/material";
 import { FiMenu } from "react-icons/fi";
 import LeftDrawer from "./LeftDrawer";
+import ProfileMenu from "./ProfileMenu";
 
 const drawerWidth = 240;
 
-export default function HomePage() {
+export default function HomePage({ children }) {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
-
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   // Function to open the left drawer
   const openLeftDrawer = () => {
     setIsLeftDrawerOpen(true);
@@ -62,6 +70,7 @@ export default function HomePage() {
               </Typography>
 
               <div
+                onClick={handleClick}
                 style={{ display: "flex", gap: "10px", alignItems: "center" }}
               >
                 <div
@@ -195,7 +204,8 @@ export default function HomePage() {
           // p: "0 4rem",
         }}
       >
-        <Groups />
+        {children}
+        {/* <Groups /> */}
 
         {/* <SingleGroupPage /> */}
       </Box>
@@ -203,6 +213,7 @@ export default function HomePage() {
         open={isLeftDrawerOpen}
         onClose={() => setIsLeftDrawerOpen(false)}
       />
+      <ProfileMenu open={open} onClose={handleClose} anchorEl={anchorEl} />
     </Box>
   );
 }

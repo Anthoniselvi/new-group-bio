@@ -18,6 +18,9 @@ import AddedMembers from "../Members/AddedMembers";
 import MembersList from "../Members/MembersList";
 import ActiveMembers from "./ActiveMembers";
 import PendingMembers from "./PendingMembers";
+import { useRouter } from "next/router";
+import { useState, useRef, useEffect } from "react";
+import axios from "axios";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -67,7 +70,45 @@ export default function SingleGroupPage() {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const router = useRouter();
+  const { id } = router.query;
 
+  const [singleGroupMembers, setSingleGroupMembers] = useState([]);
+  const [selectedGroup, setSelectedGroup] = useState({});
+  const profileCardsRef = useRef(null);
+
+  const navigateToSingleProfile = (item) => {
+    router.push({
+      pathname: "/singleprofile",
+      query: { id: item.profileId },
+    });
+  };
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${id}`)
+
+        .then((response) => {
+          setSingleGroupMembers(response.data);
+          console.log("singleGroup :" + JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, [id]);
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${id}`)
+
+      .then((response) => {
+        setSelectedGroup(response.data);
+        console.log("selectedGroup :" + JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -143,10 +184,13 @@ export default function SingleGroupPage() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <ActiveMembers />
+          <ActiveMembers
+            singleGroup={singleGroupMembers}
+            selectedGroup={selectedGroup}
+          />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <PendingMembers />
+          <PendingMembers singleGroup={singleGroupMembers} />
         </TabPanel>
       </SwipeableViews>
       {fabs.map((fab, index) => (

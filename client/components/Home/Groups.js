@@ -7,7 +7,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { FaLink } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
-
+import { useMediaQuery } from "@mui/material";
+import { useRouter } from "next/router";
+import { useUserAuth } from "@/context/GroupContext";
 const bull = (
   <Box
     component="span"
@@ -16,8 +18,13 @@ const bull = (
     •
   </Box>
 );
-
-const card = (
+const navigateToSingleGroupProfiles = (singleGroup, router) => {
+  router.push({
+    pathname: "/adminsinglegroup",
+    query: { id: singleGroup.groupId },
+  });
+};
+const card = (singleGroup, router) => (
   <React.Fragment>
     <CardContent sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       <Typography
@@ -29,12 +36,12 @@ const card = (
         }}
         component="div"
       >
-        Group Name
+        {singleGroup.groupName}
       </Typography>
       <Typography
         sx={{ fontFamily: "Poppins", color: "#75777A", fontSize: 16 }}
       >
-        Group Description
+        {singleGroup.groupDescription}
       </Typography>
       <Typography
         sx={{ fontFamily: "Poppins", fontSize: 20, color: "#000000" }}
@@ -73,6 +80,7 @@ const card = (
         <FaLink /> Invitation Link
       </Button>
       <Button
+        onClick={() => navigateToSingleGroupProfiles(singleGroup, router)}
         size="small"
         sx={{
           fontFamily: "Poppins",
@@ -94,6 +102,21 @@ const card = (
 );
 
 export default function Groups() {
+  const isMobile = useMediaQuery("(max-width: 900px)");
+  const router = useRouter();
+  const navigateToCreateGroup = () => {
+    router.push({
+      pathname: "/creategroup",
+    });
+  };
+  const { groupsList } = useUserAuth();
+  console.log("List of groups: " + JSON.stringify(groupsList));
+  const navigateToSingleGroupProfiles = (singleGroup) => {
+    router.push({
+      pathname: "/singlegroup",
+      query: { id: singleGroup.groupId },
+    });
+  };
   return (
     <Box
       sx={{
@@ -101,18 +124,45 @@ export default function Groups() {
         display: "flex",
         flexDirection: "column",
         gap: "2rem",
-
+        padding: isMobile ? 0 : "0 8rem",
         "& .MuiCard-root": {
           borderRadius: 3,
         },
       }}
     >
-      <Typography sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}>
-        Groups
-      </Typography>
-      <Card variant="outlined" padding="1rem">
-        {card}
-      </Card>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography
+          sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+        >
+          Groups
+        </Typography>
+        <button
+          onClick={navigateToCreateGroup}
+          style={{
+            backgroundColor: "#FBC91B",
+            color: "#222222",
+            fontSize: 14,
+            fontWeight: 600,
+            fontFamily: "Poppins",
+            textTransform: "none",
+            borderRadius: 20,
+            padding: "8px 12px",
+            border: "none",
+          }}
+        >
+          + Add Group
+        </button>
+      </div>
+      {groupsList.map((singleGroup) => (
+        <Card
+          variant="outlined"
+          padding="1rem"
+          key={singleGroup.groupId}
+          router={router}
+        >
+          {card(singleGroup, router)}
+        </Card>
+      ))}
     </Box>
   );
 }

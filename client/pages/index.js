@@ -13,8 +13,8 @@ export default function Home() {
         <title>XYZ Group Bio</title>
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        {/* <Login /> */}
-        <HomePage />
+        <Login />
+        {/* <HomePage /> */}
       </main>
     </>
   );

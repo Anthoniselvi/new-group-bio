@@ -5,7 +5,9 @@ import AddGroup from "@/components/Dashboard/AddGroup";
 import HomePage from "@/components/Home/HomePage";
 import { Typography } from "@mui/material";
 import Groups from "@/components/Home/Groups";
-export default function Dashboard() {
+import SingleGroupPage from "@/components/Home/SingleGroupPage";
+
+export default function AdminSingleGroup() {
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
 
   const handleCreateGroup = () => {
@@ -15,7 +17,7 @@ export default function Dashboard() {
     <div style={{ padding: "1rem", marginTop: "6rem" }}>
       {/* <GroupsList /> */}
       {/* <HomePage /> */}
-      <Groups />
+      <SingleGroupPage />
     </div>
   );
 }
