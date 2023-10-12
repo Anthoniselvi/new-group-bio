@@ -210,7 +210,7 @@ export default function Groups() {
 
         return (
           <Card variant="outlined" padding="1rem" key={singleGroup.groupId}>
-            {card(singleGroup, router, groupData)}
+            {card(singleGroup, router, groupData || { active: 0, pending: 0 })}
           </Card>
         );
       })}
