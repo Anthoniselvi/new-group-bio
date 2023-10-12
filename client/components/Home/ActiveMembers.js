@@ -21,7 +21,7 @@ export default function ActiveMembers({ singleGroup, selectedGroup }) {
     const cleanedCourse = course.replace(/\s*\([^)]*\)\s*/, "");
     return `${cleanedCourse.replace(/\)$/, "")}, ${year} (${shortform})`;
   };
-
+  let hasNonEmptyName = false;
   return (
     <div>
       <div
@@ -35,9 +35,10 @@ export default function ActiveMembers({ singleGroup, selectedGroup }) {
           width: "100%",
         }}
       >
-        {singleGroup.map((item) => (
-          <>
-            {item.name !== "" ? (
+        {singleGroup.map((item) => {
+          if (item.name !== "") {
+            hasNonEmptyName = true;
+            return (
               <Card
                 sx={{
                   display: "flex",
@@ -183,11 +184,10 @@ export default function ActiveMembers({ singleGroup, selectedGroup }) {
                   </Typography>
                 </CardContent>
               </Card>
-            ) : (
-              <></>
-            )}
-          </>
-        ))}
+            );
+          }
+        })}
+        {hasNonEmptyName ? null : <p>No Updated Members</p>}
       </div>
     </div>
   );
