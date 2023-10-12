@@ -10,6 +10,7 @@ const CreateGroupForm = () => {
   const [file, setFile] = useState(null);
   const [per, setPerc] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
+  const [groupsList, setGroupsList] = useState([]);
   const [inputFieldValues, setInputFieldValues] = useState({
     groupName: "",
     groupType: "Select Group Type",
@@ -48,7 +49,6 @@ const CreateGroupForm = () => {
       return;
     }
 
-    // Check if there is a file to upload
     if (file) {
       const name = new Date().getTime() + file.name;
       const storageRef = ref(storage, name);
@@ -74,13 +74,11 @@ const CreateGroupForm = () => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            // Update the inputFieldValues with the download URL
             const updatedInputFieldValues = {
               ...inputFieldValues,
               groupImage: downloadURL,
             };
 
-            // Send the request with the updated inputFieldValues
             axios
               .post(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/group/add`,
@@ -89,7 +87,12 @@ const CreateGroupForm = () => {
               .then((response) => {
                 console.log("Group added successfully!");
                 console.log("addedGroup: " + JSON.stringify(response.data));
-                onClose();
+
+                const updatedGroupsList = [...groupsList, response.data];
+                setGroupsList(updatedGroupsList);
+                router.push({
+                  pathname: "/dashboard",
+                });
               })
               .catch((error) => {
                 console.error("Error adding Group: ", error);
@@ -98,13 +101,17 @@ const CreateGroupForm = () => {
         }
       );
     } else {
-      // If there is no file to upload, just send the request with the current inputFieldValues
       axios
         .post(`${process.env.NEXT_PUBLIC_BASE_URL}/group/add`, inputFieldValues)
         .then((response) => {
           console.log("Group added successfully!");
           console.log("addedGroup: " + JSON.stringify(response.data));
-          onClose();
+
+          const updatedGroupsList = [...groupsList, response.data];
+          setGroupsList(updatedGroupsList);
+          router.push({
+            pathname: "/dashboard",
+          });
         })
         .catch((error) => {
           console.error("Error adding Group: ", error);
@@ -318,7 +325,7 @@ const CreateGroupForm = () => {
             border: "1px solid #dbdbd7",
             textTransform: "none",
           }}
-          onClick={handleSubmit}
+          onClick={navigateToDashboard}
         >
           Cancel
         </Button>

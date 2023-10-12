@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useUserAuth } from "@/context/GroupContext";
 import { useState, useEffect } from "react";
 import axios from "axios"; // Don't forget to import axios
+import { CollectionsOutlined } from "@mui/icons-material";
 
 const bull = (
   <Box
@@ -38,83 +39,89 @@ const shareViaWhatsApp = (singleGroup) => {
   window.open(whatsappUrl, "_blank");
 };
 
-const card = (singleGroup, router, activeMembers, pendingMembers) => (
-  <React.Fragment>
-    <CardContent sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-      <Typography
+const card = (singleGroup, router, groupData) => {
+  return (
+    <React.Fragment>
+      <CardContent
+        sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+      >
+        <Typography
+          sx={{
+            fontFamily: "Poppins",
+            fontSize: 18,
+            fontWeight: 600,
+            color: "#000000",
+          }}
+          component="div"
+        >
+          {singleGroup.groupName}
+        </Typography>
+        <Typography
+          sx={{ fontFamily: "Poppins", color: "#75777A", fontSize: 16 }}
+        >
+          {singleGroup.groupDescription}
+        </Typography>
+        {groupData && (
+          <Typography
+            sx={{ fontFamily: "Poppins", fontSize: 20, color: "#000000" }}
+          >
+            Active - {groupData.active}
+            <br />
+            Pending - {groupData.pending}
+          </Typography>
+        )}
+      </CardContent>
+      <CardActions
         sx={{
-          fontFamily: "Poppins",
-          fontSize: 18,
-          fontWeight: 600,
-          color: "#000000",
-        }}
-        component="div"
-      >
-        {singleGroup.groupName}
-      </Typography>
-      <Typography
-        sx={{ fontFamily: "Poppins", color: "#75777A", fontSize: 16 }}
-      >
-        {singleGroup.groupDescription}
-      </Typography>
-      <Typography
-        sx={{ fontFamily: "Poppins", fontSize: 20, color: "#000000" }}
-      >
-        Active - {activeMembers}
-        <br />
-        Pending - {pendingMembers}
-      </Typography>
-    </CardContent>
-    <CardActions
-      sx={{
-        display: "flex",
-        gap: "1rem",
-        backgroundColor: "#F8F8F7",
-        paddingTop: "1rem",
-        paddingBottom: "1rem",
-      }}
-    >
-      <Button
-        onClick={() => shareViaWhatsApp(singleGroup)}
-        size="small"
-        sx={{
-          fontFamily: "Poppins",
-          fontSize: 14,
-          color: "#F5F5F5",
-          backgroundColor: "#222220",
-          padding: "5px 25px",
-          borderRadius: "20px",
-          textTransform: "none",
           display: "flex",
-          gap: 1,
-          "&:hover": {
+          gap: "1rem",
+          backgroundColor: "#F8F8F7",
+          paddingTop: "1rem",
+          paddingBottom: "1rem",
+        }}
+      >
+        <Button
+          onClick={() => shareViaWhatsApp(singleGroup)}
+          size="small"
+          sx={{
+            fontFamily: "Poppins",
+            fontSize: 14,
+            color: "#F5F5F5",
             backgroundColor: "#222220",
-          },
-        }}
-      >
-        <FaLink /> Share Link
-      </Button>
-      <Button
-        onClick={() => navigateToSingleGroupProfiles(singleGroup, router)}
-        size="small"
-        sx={{
-          fontFamily: "Poppins",
-          fontSize: 14,
-          color: "#1B1B18",
-          backgroundColor: "#ffffff",
-          padding: "5px 25px",
-          borderRadius: "20px",
-          textTransform: "none",
-          display: "flex",
-          gap: 1,
-          border: "0.5px solid #e1e2e5",
-        }}
-      >
-        Open <HiOutlineExternalLink style={{ fontSize: 20 }} />
-      </Button>
-    </CardActions>
-  </React.Fragment>
-);
+            padding: "5px 25px",
+            borderRadius: "20px",
+            textTransform: "none",
+            display: "flex",
+            gap: 1,
+            "&:hover": {
+              backgroundColor: "#222220",
+            },
+          }}
+        >
+          <FaLink /> Share Link
+        </Button>
+        <Button
+          onClick={() => navigateToSingleGroupProfiles(singleGroup, router)}
+          size="small"
+          sx={{
+            fontFamily: "Poppins",
+            fontSize: 14,
+            color: "#1B1B18",
+            backgroundColor: "#ffffff",
+            padding: "5px 25px",
+            borderRadius: "20px",
+            textTransform: "none",
+            display: "flex",
+            gap: 1,
+            border: "0.5px solid #e1e2e5",
+          }}
+        >
+          Open <HiOutlineExternalLink style={{ fontSize: 20 }} />
+        </Button>
+      </CardActions>
+    </React.Fragment>
+  );
+};
 
 export default function Groups() {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -125,12 +132,12 @@ export default function Groups() {
     });
   };
   const { groupsList } = useUserAuth();
-  const [activeMembers, setActiveMembers] = useState(0);
-  const [pendingMembers, setPendingMembers] = useState(0);
+  const [groupCountArray, setGroupCountArray] = useState([]);
 
   useEffect(() => {
+    const groupDataArray = [];
+
     groupsList.forEach((singleGroup) => {
-      // Fetch member data for each group
       axios
         .get(
           `${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${singleGroup.groupId}`
@@ -142,8 +149,17 @@ export default function Groups() {
           const pending = response.data.filter(
             (member) => member.name === ""
           ).length;
-          setActiveMembers(active);
-          setPendingMembers(pending);
+
+          const groupName = singleGroup.groupName;
+
+          const groupData = {
+            groupName: groupName,
+            active: active,
+            pending: pending,
+          };
+
+          groupDataArray.push(groupData);
+          setGroupCountArray(groupDataArray);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -187,11 +203,17 @@ export default function Groups() {
           + Add Group
         </button>
       </div>
-      {groupsList.map((singleGroup) => (
-        <Card variant="outlined" padding="1rem" key={singleGroup.groupId}>
-          {card(singleGroup, router, activeMembers, pendingMembers)}
-        </Card>
-      ))}
+      {groupsList.map((singleGroup) => {
+        const groupData = groupCountArray.find(
+          (data) => data.groupName === singleGroup.groupName
+        );
+
+        return (
+          <Card variant="outlined" padding="1rem" key={singleGroup.groupId}>
+            {card(singleGroup, router, groupData)}
+          </Card>
+        );
+      })}
     </Box>
   );
 }
