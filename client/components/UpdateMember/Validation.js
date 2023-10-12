@@ -1,13 +1,13 @@
-export const validateStep1 = (values) => {
+export const validateStep1 = (values, selectedGroupType) => {
   const errors = {};
 
   if (!values.name) {
     errors.name = "Name is required";
   }
-  if (!values.course) {
+  if (!values.course && selectedGroupType === "0") {
     errors.course = "Course is required";
   }
-  if (!values.year) {
+  if (!values.year && selectedGroupType === "0") {
     errors.year = "Year is required";
   }
   if (!values.location) {

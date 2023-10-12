@@ -347,10 +347,16 @@ export default function Form() {
 
     return stepStatus;
   };
-
+  const selectedGroupType = selectedGroup.groupType;
   const handleSubmitForm = (memberId) => {
     console.log("memberId in handle" + memberId);
-    handleSubmit(inputFieldValues, groupId, memberId, router);
+    handleSubmit(
+      inputFieldValues,
+      groupId,
+      memberId,
+      router,
+      selectedGroupType
+    );
   };
 
   return (

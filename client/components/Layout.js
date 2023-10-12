@@ -38,6 +38,36 @@ const Layout = ({ children }) => {
   const openLeftDrawer = () => {
     setIsLeftDrawerOpen(true);
   };
+  const navigateToDashboard = (item) => {
+    router.push({
+      pathname: "/dashboard",
+    });
+  };
+  const handleMenuItemClick = (menuItem) => {
+    // Handle the click event based on the menuItem
+    switch (menuItem) {
+      case "Home":
+        {
+          navigateToDashboard;
+        }
+        break;
+      case "Groups":
+        {
+          navigateToDashboard;
+        }
+        break;
+      case "Members":
+        // Handle click for Members
+        break;
+      case "Support":
+        // Handle click for Support
+        break;
+      default:
+        // Handle any other items or provide a default action
+        break;
+    }
+  };
+
   return (
     <Box sx={{ display: "flex", backgroundColor: "#ffffff" }}>
       <CssBaseline />
@@ -184,7 +214,7 @@ const Layout = ({ children }) => {
             <List>
               {["Home", "Groups", "Members", "Support"].map((text, index) => (
                 <ListItem key={text} disablePadding>
-                  <ListItemButton>
+                  <ListItemButton onClick={() => handleMenuItemClick(text)}>
                     <ListItemIcon>
                       {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                     </ListItemIcon>

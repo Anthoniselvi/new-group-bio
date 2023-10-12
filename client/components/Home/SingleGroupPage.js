@@ -24,6 +24,7 @@ import axios from "axios";
 import { FaLink } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import ShowAlert from "./ShowAlert";
+import ListOfMembers from "./ListOfMembers";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -265,7 +266,11 @@ export default function SingleGroupPage() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <ActiveMembers
+          {/* <ActiveMembers
+            singleGroup={singleGroupMembers}
+            selectedGroup={selectedGroup}
+          /> */}
+          <ListOfMembers
             singleGroup={singleGroupMembers}
             selectedGroup={selectedGroup}
           />
