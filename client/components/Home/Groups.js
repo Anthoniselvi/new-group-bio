@@ -10,6 +10,9 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
 import { useUserAuth } from "@/context/GroupContext";
+import { useState, useEffect } from "react";
+import axios from "axios"; // Don't forget to import axios
+
 const bull = (
   <Box
     component="span"
@@ -18,13 +21,24 @@ const bull = (
     •
   </Box>
 );
+
 const navigateToSingleGroupProfiles = (singleGroup, router) => {
   router.push({
     pathname: "/adminsinglegroup",
     query: { id: singleGroup.groupId },
   });
 };
-const card = (singleGroup, router) => (
+
+const shareViaWhatsApp = (singleGroup) => {
+  const currentUrl = window.location.origin; // Get the base URL
+  const sharedUrl = `${currentUrl}/memberloginpage?id=${singleGroup.groupId}`; // Append the id query parameter
+  const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+    sharedUrl
+  )}`;
+  window.open(whatsappUrl, "_blank");
+};
+
+const card = (singleGroup, router, activeMembers, pendingMembers) => (
   <React.Fragment>
     <CardContent sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       <Typography
@@ -46,9 +60,9 @@ const card = (singleGroup, router) => (
       <Typography
         sx={{ fontFamily: "Poppins", fontSize: 20, color: "#000000" }}
       >
-        Active -
+        Active - {activeMembers}
         <br />
-        Pending -
+        Pending - {pendingMembers}
       </Typography>
     </CardContent>
     <CardActions
@@ -61,6 +75,7 @@ const card = (singleGroup, router) => (
       }}
     >
       <Button
+        onClick={() => shareViaWhatsApp(singleGroup)}
         size="small"
         sx={{
           fontFamily: "Poppins",
@@ -77,7 +92,7 @@ const card = (singleGroup, router) => (
           },
         }}
       >
-        <FaLink /> Invitation Link
+        <FaLink /> Share Link
       </Button>
       <Button
         onClick={() => navigateToSingleGroupProfiles(singleGroup, router)}
@@ -110,13 +125,32 @@ export default function Groups() {
     });
   };
   const { groupsList } = useUserAuth();
-  console.log("List of groups: " + JSON.stringify(groupsList));
-  const navigateToSingleGroupProfiles = (singleGroup) => {
-    router.push({
-      pathname: "/singlegroup",
-      query: { id: singleGroup.groupId },
+  const [activeMembers, setActiveMembers] = useState(0);
+  const [pendingMembers, setPendingMembers] = useState(0);
+
+  useEffect(() => {
+    groupsList.forEach((singleGroup) => {
+      // Fetch member data for each group
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${singleGroup.groupId}`
+        )
+        .then((response) => {
+          const active = response.data.filter(
+            (member) => member.name !== ""
+          ).length;
+          const pending = response.data.filter(
+            (member) => member.name === ""
+          ).length;
+          setActiveMembers(active);
+          setPendingMembers(pending);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     });
-  };
+  }, [groupsList]);
+
   return (
     <Box
       sx={{
@@ -154,13 +188,8 @@ export default function Groups() {
         </button>
       </div>
       {groupsList.map((singleGroup) => (
-        <Card
-          variant="outlined"
-          padding="1rem"
-          key={singleGroup.groupId}
-          router={router}
-        >
-          {card(singleGroup, router)}
+        <Card variant="outlined" padding="1rem" key={singleGroup.groupId}>
+          {card(singleGroup, router, activeMembers, pendingMembers)}
         </Card>
       ))}
     </Box>

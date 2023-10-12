@@ -21,7 +21,9 @@ import PendingMembers from "./PendingMembers";
 import { useRouter } from "next/router";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-
+import { FaLink } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import ShowAlert from "./ShowAlert";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -109,6 +111,29 @@ export default function SingleGroupPage() {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  const shareViaWhatsApp = () => {
+    const currentUrl = window.location.origin; // Get the base URL
+    const sharedUrl = `${currentUrl}/memberloginpage?id=${id}`; // Append the id query parameter
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+      sharedUrl
+    )}`;
+    window.open(whatsappUrl, "_blank");
+  };
+  const [alertVisible, setAlertVisible] = useState(false);
+  const handleDelete = () => {
+    axios
+      .delete(`${process.env.NEXT_PUBLIC_BASE_URL}/group/${id}`)
+
+      .then((response) => {
+        console.log("deleteGroup :" + JSON.stringify(response.data));
+        setAlertVisible(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+    return <ShowAlert />;
+  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -117,25 +142,25 @@ export default function SingleGroupPage() {
     setValue(index);
   };
 
-  const transitionDuration = {
-    enter: theme.transitions.duration.enteringScreen,
-    exit: theme.transitions.duration.leavingScreen,
-  };
+  // const transitionDuration = {
+  //   enter: theme.transitions.duration.enteringScreen,
+  //   exit: theme.transitions.duration.leavingScreen,
+  // };
 
-  const fabs = [
-    {
-      color: "primary",
-      sx: fabStyle,
-      icon: <AddIcon />,
-      label: "Add",
-    },
-    {
-      color: "secondary",
-      sx: fabStyle,
-      icon: <EditIcon />,
-      label: "Edit",
-    },
-  ];
+  // const fabs = [
+  //   {
+  //     color: "primary",
+  //     sx: fabStyle,
+  //     icon: <AddIcon />,
+  //     label: "Add",
+  //   },
+  //   {
+  //     color: "secondary",
+  //     sx: fabStyle,
+  //     icon: <EditIcon />,
+  //     label: "Edit",
+  //   },
+  // ];
 
   return (
     <Box
@@ -157,6 +182,7 @@ export default function SingleGroupPage() {
         },
       }}
     >
+      {alertVisible && <ShowAlert />}
       <div
         style={{
           width: "100%",
@@ -171,22 +197,45 @@ export default function SingleGroupPage() {
         >
           Members - {selectedGroup.groupName}
         </Typography>
-        <button
-          onClick={navigateToCreateMember}
-          style={{
-            backgroundColor: "#FBC91B",
-            color: "#222222",
-            fontSize: 14,
-            fontWeight: 600,
-            fontFamily: "Poppins",
-            textTransform: "none",
-            borderRadius: 20,
-            padding: "8px 12px",
-            border: "none",
-          }}
-        >
-          + Add Member
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <MdDelete
+            onClick={handleDelete}
+            style={{ color: "#fe3640", fontSize: 20, cursor: "pointer" }}
+          />
+          <button
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#25d366", // WhatsApp green
+              color: "#fff",
+              borderRadius: "20px",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "5px",
+            }}
+            onClick={shareViaWhatsApp}
+          >
+            <FaLink /> Share Link
+          </button>
+          <button
+            onClick={navigateToCreateMember}
+            style={{
+              backgroundColor: "#FBC91B",
+              color: "#222222",
+              fontSize: 14,
+              fontWeight: 600,
+              fontFamily: "Poppins",
+              textTransform: "none",
+              borderRadius: 20,
+              padding: "8px 12px",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            + Add Member
+          </button>
+        </div>
       </div>
       <AppBar
         position="static"
@@ -225,7 +274,7 @@ export default function SingleGroupPage() {
           <PendingMembers singleGroup={singleGroupMembers} />
         </TabPanel>
       </SwipeableViews>
-      {fabs.map((fab, index) => (
+      {/* {fabs.map((fab, index) => (
         <Zoom
           key={fab.color}
           in={value === index}
@@ -241,7 +290,7 @@ export default function SingleGroupPage() {
             {fab.icon}
           </Fab>
         </Zoom>
-      ))}
+      ))} */}
     </Box>
   );
 }

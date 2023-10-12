@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import Groups from "../models/Group.js";
+import Members from "../models/Member.js";
 
 export const postGroup = (req, res) => {
   const { groupName, groupType, groupDescription, groupImage } = req.body;
@@ -63,12 +64,17 @@ export const updateGroup = (req, res) => {
 
 export const deleteGroup = (req, res) => {
   const groupId = req.params.groupId;
-  Groups.deleteOne({ groupId: groupId })
-    .then((result) => {
-      if (result.deletedCount === 0) {
-        return res.status(404).json("Group not found");
-      }
-      res.json("Group deleted successfully");
+
+  Members.deleteMany({ groupId: groupId })
+    .then(() => {
+      Groups.deleteOne({ groupId: groupId })
+        .then((result) => {
+          if (result.deletedCount === 0) {
+            return res.status(404).json("Group not found");
+          }
+          res.json("Group and associated members deleted successfully");
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
