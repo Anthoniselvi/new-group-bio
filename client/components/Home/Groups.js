@@ -133,38 +133,51 @@ export default function Groups() {
   };
   const { groupsList } = useUserAuth();
   const [groupCountArray, setGroupCountArray] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const groupDataArray = [];
+    const fetchDataForGroup = async (groupId, groupName) => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${groupId}`
+        );
 
-    groupsList.forEach((singleGroup) => {
-      axios
-        .get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${singleGroup.groupId}`
-        )
-        .then((response) => {
-          const active = response.data.filter(
-            (member) => member.name !== ""
-          ).length;
-          const pending = response.data.filter(
-            (member) => member.name === ""
-          ).length;
+        const active = response.data.filter(
+          (member) => member.name !== ""
+        ).length;
+        const pending = response.data.filter(
+          (member) => member.name === ""
+        ).length;
 
-          const groupName = singleGroup.groupName;
+        return {
+          groupName,
+          active,
+          pending,
+        };
+      } catch (error) {
+        console.error(`Error fetching data for ${groupName}:`, error);
+        return {
+          groupName,
+          active: 0,
+          pending: 0,
+        };
+      }
+    };
 
-          const groupData = {
-            groupName: groupName,
-            active: active,
-            pending: pending,
-          };
-
-          groupDataArray.push(groupData);
-          setGroupCountArray(groupDataArray);
+    const fetchGroupData = async () => {
+      const groupDataArray = await Promise.all(
+        groupsList.map((singleGroup) => {
+          return fetchDataForGroup(singleGroup.groupId, singleGroup.groupName);
         })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    });
+      );
+
+      setGroupCountArray(groupDataArray);
+      setLoading(false);
+    };
+
+    if (groupsList.length > 0) {
+      fetchGroupData();
+    }
   }, [groupsList]);
 
   return (
@@ -203,17 +216,19 @@ export default function Groups() {
           + Add Group
         </button>
       </div>
-      {groupsList.map((singleGroup) => {
-        const groupData = groupCountArray.find(
-          (data) => data.groupName === singleGroup.groupName
-        );
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        groupsList.map((singleGroup, index) => {
+          const groupData = groupCountArray[index];
 
-        return (
-          <Card variant="outlined" padding="1rem" key={singleGroup.groupId}>
-            {card(singleGroup, router, groupData || { active: 0, pending: 0 })}
-          </Card>
-        );
-      })}
+          return (
+            <Card variant="outlined" padding="1rem" key={singleGroup.groupId}>
+              {card(singleGroup, router, groupData)}
+            </Card>
+          );
+        })
+      )}
     </Box>
   );
 }
