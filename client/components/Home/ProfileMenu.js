@@ -11,6 +11,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useRouter } from "next/router";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -64,6 +65,15 @@ export default function ProfileMenu({ open, onClose, anchorEl }) {
   //   const handleClose = () => {
   //     setAnchorEl(null);
   //   };
+  const router = useRouter();
+  const { id: groupId, memberId } = router.query;
+
+  const navigateToSelectedProfilePage = () => {
+    router.push({
+      pathname: "/profile",
+      query: { id: groupId, memberId: memberId },
+    });
+  };
 
   return (
     <div>
@@ -97,7 +107,7 @@ export default function ProfileMenu({ open, onClose, anchorEl }) {
           Duplicate
         </MenuItem> */}
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={onClose} disableRipple>
+        <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
           <PersonIcon />
           Profile
         </MenuItem>

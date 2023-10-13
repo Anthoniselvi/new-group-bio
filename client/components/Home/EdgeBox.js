@@ -148,7 +148,7 @@ export default function EdgeBox(props) {
               fontWeight: 600,
             }}
           >
-            {profile.name}
+            {profile.name} - {profile.mobile}
           </Typography>
           <div>
             <LinkedInIcon style={{ cursor: "pointer" }} />
