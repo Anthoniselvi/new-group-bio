@@ -53,7 +53,7 @@ export default function SingleMemberProfile({
             height: "80px",
             display: "flex",
             justifyContent: "center",
-            alignprofiles: "center",
+            alignItems: "center",
             background: "#00b4d8",
             borderRadius: "50%",
             fontSize: "20px",

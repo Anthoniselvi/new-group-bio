@@ -6,20 +6,39 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import SingleMemberProfile from "./SingleMemberProfile";
+import EdgeBox from "./EdgeBox";
+import { useMediaQuery } from "@mui/material";
+import { courseList } from "../Members/CourseList";
 
 export default function ListOfMembers({ singleGroup, selectedGroup }) {
+  const isMobile = useMediaQuery("(max-width: 900px)");
   const [selectedMember, setSelectedMember] = useState(null);
+  const [open, setOpen] = React.useState(false);
 
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
   const getShortFormForCourse = (fullCourseName) => {
-    // Implementation for getShortFormForCourse
+    const course = courseList.find(
+      (courseItem) => courseItem.course === fullCourseName
+    );
+    return course ? course.shortform : fullCourseName;
   };
 
   const formatCourseInfo = (course, year, shortform) => {
-    // Implementation for formatCourseInfo
+    const cleanedCourse = course.replace(/\s*\([^)]*\)\s*/, "");
+    return `${cleanedCourse.replace(/\)$/, "")}, ${year} (${shortform})`;
   };
+
+  // Remove unused variable
+  // let hasNonEmptyName = false;
 
   const showSingleMemberProfile = (item) => {
     setSelectedMember(item);
+    if (isMobile) {
+      setOpen(true);
+      setSelectedMember(item);
+    }
   };
 
   return (
@@ -123,6 +142,7 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
               </ListItem>
             );
           }
+          return null; // Return null for items with empty names
         })}
       </List>
       {selectedMember && (
@@ -130,6 +150,13 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
           profile={selectedMember}
           selectedGroup={selectedGroup}
           setSelectedMember={setSelectedMember}
+        />
+      )}
+      {isMobile && (
+        <EdgeBox
+          open={open}
+          toggleDrawer={toggleDrawer}
+          profile={selectedMember}
         />
       )}
     </div>

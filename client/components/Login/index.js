@@ -11,7 +11,7 @@ const Login = () => {
 
   const handleClick = async () => {
     try {
-      await axios.post("http://localhost:2222/admin/add", {
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/admin/add`, {
         username,
         password,
       });
