@@ -36,7 +36,7 @@ const Puller = styled(Box)(({ theme }) => ({
 
 export default function EdgeBox(props) {
   const { window, open, toggleDrawer, profile } = props;
-
+  console.log("profile:" + JSON.stringify(profile));
   // This is used only for the example
   const container =
     window !== undefined ? () => window().document.body : undefined;
