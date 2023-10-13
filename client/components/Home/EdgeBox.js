@@ -51,6 +51,7 @@ export default function EdgeBox(props) {
           ".MuiDrawer-root > .MuiPaper-root": {
             height: `calc(70% - ${drawerBleeding}px)`,
             overflow: "visible",
+            backgroundColor: "transparent",
           },
         }}
       />
@@ -69,7 +70,7 @@ export default function EdgeBox(props) {
           keepMounted: true,
         }}
       >
-        <StyledBox
+        {/* <StyledBox
           sx={{
             position: "absolute",
             top: -drawerBleeding,
@@ -94,7 +95,7 @@ export default function EdgeBox(props) {
             </Typography>
             <CloseOutlined onClick={toggleDrawer(false)} />
           </div>
-        </StyledBox>
+        </StyledBox> */}
         <StyledBox
           sx={{
             // px: 2,
@@ -105,8 +106,14 @@ export default function EdgeBox(props) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            borderTopRightRadius: "20px",
+            borderTopLeftRadius: "20px",
           }}
         >
+          <CloseOutlined
+            onClick={toggleDrawer(false)}
+            style={{ marginLeft: "80%" }}
+          />
           {profile.image ? (
             <Avatar
               alt="Remy Sharp"
@@ -166,7 +173,7 @@ export default function EdgeBox(props) {
                 fontWeight: 600,
               }}
             >
-              Personal Information
+              Bio
             </Typography>
             {profile.course && (
               <Typography
