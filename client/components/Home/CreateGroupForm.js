@@ -4,6 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useRouter } from "next/router";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { auth, db, storage } from "../../firebase";
 
 const CreateGroupForm = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");

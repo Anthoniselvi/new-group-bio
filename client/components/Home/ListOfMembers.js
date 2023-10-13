@@ -13,6 +13,7 @@ import { courseList } from "../Members/CourseList";
 export default function ListOfMembers({ singleGroup, selectedGroup }) {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [selectedMember, setSelectedMember] = useState(null);
+  const [edgeMember, setEdgeMember] = useState(null);
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -30,17 +31,15 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
     return `${cleanedCourse.replace(/\)$/, "")}, ${year} (${shortform})`;
   };
 
-  // Remove unused variable
-  // let hasNonEmptyName = false;
-
   const showSingleMemberProfile = (item) => {
     setSelectedMember(item);
-    if (isMobile) {
-      setOpen(true);
-      setSelectedMember(item);
-    }
   };
 
+  const showEdgeBox = (item) => {
+    console.log("item: " + JSON.stringify(item));
+    setOpen(true);
+    setEdgeMember(item);
+  };
   return (
     <div style={{ display: "flex", gap: "50px" }}>
       <List sx={{ width: "100%" }}>
@@ -48,7 +47,11 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
           if (item.name !== "") {
             return (
               <ListItem
-                onClick={() => showSingleMemberProfile(item)}
+                onClick={
+                  isMobile
+                    ? () => showEdgeBox(item)
+                    : () => showSingleMemberProfile(item)
+                }
                 alignItems="flex-start"
                 key={item.profileId}
                 data-starts-with={item.name.charAt(0).toLowerCase()}
@@ -152,12 +155,9 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
           setSelectedMember={setSelectedMember}
         />
       )}
+      {console.log("edgeMember: " + JSON.stringify(edgeMember))}
       {isMobile && (
-        <EdgeBox
-          open={open}
-          toggleDrawer={toggleDrawer}
-          profile={selectedMember}
-        />
+        <EdgeBox open={open} toggleDrawer={toggleDrawer} profile={edgeMember} />
       )}
     </div>
   );
