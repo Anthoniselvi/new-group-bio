@@ -13,6 +13,7 @@ import { courseList } from "../Members/CourseList";
 export default function ListOfMembers({ singleGroup, selectedGroup }) {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [selectedMember, setSelectedMember] = useState(null);
+  const [edgeMember, setEdgeMember] = useState(null);
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -31,10 +32,11 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
   };
 
   const showSingleMemberProfile = (item) => {
-    setSelectedMember(item);
-    if (isMobile) {
-      setOpen(true);
+    if (!isMobile) {
       setSelectedMember(item);
+    } else {
+      setOpen(true);
+      setEdgeMember(item);
     }
   };
 
@@ -149,13 +151,8 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
           setSelectedMember={setSelectedMember}
         />
       )}
-      {isMobile && selectedMember && (
-        <EdgeBox
-          open={open}
-          
-          toggleDrawer={toggleDrawer}
-          profile={selectedMember}
-        />
+      {isMobile && edgeMember && (
+        <EdgeBox open={open} toggleDrawer={toggleDrawer} profile={edgeMember} />
       )}
     </div>
   );
