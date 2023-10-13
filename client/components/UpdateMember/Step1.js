@@ -162,7 +162,7 @@ const Step1 = ({
         helperText={fieldErrors.location}
       />
       <TextField
-        label="mobile"
+        // label="mobile"
         // value={inputFieldValues.phone}
         value={mobile}
         onChange={(event) => handleFieldChange(event, "mobile")}

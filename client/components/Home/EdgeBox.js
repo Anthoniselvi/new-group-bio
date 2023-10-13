@@ -11,6 +11,8 @@ import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Avatar from "@mui/material/Avatar";
 import { CloseOutlined } from "@mui/icons-material";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import LinkIcon from "@mui/icons-material/Link";
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({
@@ -47,7 +49,7 @@ export default function EdgeBox(props) {
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(80% - ${drawerBleeding}px)`,
+            height: `calc(70% - ${drawerBleeding}px)`,
             overflow: "visible",
           },
         }}
@@ -95,8 +97,9 @@ export default function EdgeBox(props) {
         </StyledBox>
         <StyledBox
           sx={{
-            px: 2,
+            // px: 2,
             pb: 2,
+            pt: 2,
             height: "100%",
             overflow: "auto",
             display: "flex",
@@ -130,30 +133,116 @@ export default function EdgeBox(props) {
               {profile.name.charAt(0).toUpperCase()}
             </div>
           )}
-          <Typography sx={{ p: 2, color: "#333333" }}>
+          <Typography
+            sx={{
+              color: "#333333",
+              fontFamily: "Poppins",
+              fontSize: 20,
+              fontWeight: 600,
+            }}
+          >
             {profile.name}
           </Typography>
+          <div>
+            <LinkedInIcon style={{ cursor: "pointer" }} />
+            <LinkIcon style={{ cursor: "pointer" }} />
+          </div>
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "left",
               gap: "10px",
+              paddingTop: "20px",
+              paddingLeft: "20px",
+              width: "100%",
             }}
           >
-            <Typography sx={{ color: "#333333" }}>
-              {profile.course}, {profile.year}
+            <Typography
+              sx={{
+                color: "#000000",
+                fontFamily: "Poppins",
+                fontSize: 14,
+                fontWeight: 600,
+              }}
+            >
+              Personal Information
             </Typography>
-            <Typography sx={{ color: "#333333" }}>
-              {profile.company}, {profile.designation}
+            {profile.course && (
+              <Typography
+                sx={{
+                  color: "#333333",
+                  fontFamily: "Poppins",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              >
+                {profile.course}
+              </Typography>
+            )}
+            {profile.year && (
+              <Typography
+                sx={{
+                  color: "#333333",
+                  fontFamily: "Poppins",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              >
+                {profile.year}
+              </Typography>
+            )}
+            <Typography
+              sx={{
+                color: "#333333",
+                fontFamily: "Poppins",
+                fontSize: 14,
+                fontWeight: 500,
+              }}
+            >
+              {profile.company}
             </Typography>
-            <Typography sx={{ color: "#333333" }}>
+            <Typography
+              sx={{
+                color: "#333333",
+                fontFamily: "Poppins",
+                fontSize: 14,
+                fontWeight: 500,
+              }}
+            >
+              {profile.designation}
+            </Typography>
+            <Typography
+              sx={{
+                color: "#333333",
+                fontFamily: "Poppins",
+                fontSize: 14,
+                fontWeight: 500,
+              }}
+            >
               {profile.location}
             </Typography>
-            <Typography sx={{ color: "#333333" }}>
+            <Typography
+              sx={{
+                color: "#000000",
+                fontFamily: "Poppins",
+                fontSize: 14,
+                fontWeight: 500,
+              }}
+            >
               {profile.industry}
             </Typography>
-            <Typography sx={{ color: "#333333" }}>{profile.offers}</Typography>
+            <Typography
+              sx={{
+                color: "#75777A",
+                fontFamily: "Poppins",
+                fontSize: 14,
+                fontWeight: 500,
+              }}
+            >
+              Services Offered: <br />
+              {profile.offers}
+            </Typography>
           </div>
         </StyledBox>
       </SwipeableDrawer>

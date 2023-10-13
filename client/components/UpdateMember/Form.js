@@ -132,6 +132,7 @@ export default function Form() {
 
   const handleNext = () => {
     console.log("continue btn clicked");
+    console.log("active before: " + activeStep);
     // Validate the fields for the current step
     let validationErrors = {};
     if (activeStep === 0) {
@@ -142,13 +143,11 @@ export default function Form() {
       validationErrors = validateStep3(inputFieldValues);
     }
 
-    // If there are validation errors, set fieldErrors and return
     if (Object.keys(validationErrors).length > 0) {
       setFieldErrors(validationErrors);
       return;
     }
 
-    // Proceed to the next step
     if (activeStep < steps.length - 1) {
       setStepContentVisibility((prevVisibility) => {
         const updatedVisibility = [...prevVisibility];
@@ -159,6 +158,7 @@ export default function Form() {
 
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
+    console.log("active step: " + activeStep);
   };
 
   const handleBack = () => {
