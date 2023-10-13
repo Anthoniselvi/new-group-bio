@@ -12,26 +12,26 @@ export function ApiContextProvider({ children }) {
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/profile/all`)
       .then((response) => {
         setMembersList(response.data);
-        console.log("membersList:" + JSON.stringify(response.data));
+        // console.log("membersList:" + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
-  // }, [membersList]);
+    // }, []);
+  }, [membersList]);
 
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/all`)
       .then((response) => {
         setGroupsList(response.data);
-        console.log("groupsList:" + JSON.stringify(response.data));
+        // console.log("groupsList:" + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
-  // }, [groupsList]);
+    // }, []);
+  }, [groupsList]);
   return (
     <userAuthContext.Provider
       value={{
