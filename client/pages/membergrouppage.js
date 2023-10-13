@@ -5,10 +5,13 @@ import MembersList from "@/components/Members/MembersList";
 import AddMember from "@/components/Members/AddMember";
 import AddedMembers from "@/components/Members/AddedMembers";
 import axios from "axios";
+import ListOfMembers from "@/components/Home/ListOfMembers";
 
 export default function MemberGroupPage() {
   const [createMemberModalOpen, setCreateMemberModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState({});
+  const [singleGroupMembers, setSingleGroupMembers] = useState([]);
+
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
 
@@ -27,6 +30,19 @@ export default function MemberGroupPage() {
       .then((response) => {
         setSelectedGroup(response.data);
         console.log("selectedGroup :" + JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${groupId}`)
+
+      .then((response) => {
+        setSingleGroupMembers(response.data);
+        console.log("singleGroup :" + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -69,7 +85,11 @@ export default function MemberGroupPage() {
         )}
       </div>
       {/* <AddedMembers /> */}
-      <MembersList />
+      {/* <MembersList /> */}
+      <ListOfMembers
+        singleGroup={singleGroupMembers}
+        selectedGroup={selectedGroup}
+      />
     </div>
   );
 }
