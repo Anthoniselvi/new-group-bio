@@ -6,12 +6,12 @@ const handleSubmit = (
   groupId,
   setFieldErrors,
   selectedGroupType,
-  // memberId,
+  memberId,
   router
 ) => {
   console.log("router:" + router);
   // const memberId = router.query.memberId;
-  const memberId = "2cf1a3c4-116a-47a6-94b9-e55a37253ac5";
+  // const memberId = "2cf1a3c4-116a-47a6-94b9-e55a37253ac5";
   console.log("groupId in handlesubmit: " + groupId);
   console.log("memberId in handlesubmit: " + memberId);
   const step1Errors = validateStep1(inputFieldValues, selectedGroupType);

@@ -348,17 +348,60 @@ export default function Form() {
     return stepStatus;
   };
   const selectedGroupType = selectedGroup.groupType;
+  // const handleSubmitForm = (memberId) => {
+  //   console.log("memberId in handle" + memberId);
+  //   handleSubmit(
+  //     inputFieldValues,
+  //     groupId,
+  //     memberId,
+  //     router,
+  //     selectedGroupType
+  //   );
+  // };
   const handleSubmitForm = (memberId) => {
-    console.log("memberId in handle" + memberId);
-    handleSubmit(
-      inputFieldValues,
-      groupId,
-      memberId,
-      router,
-      selectedGroupType
-    );
-  };
+    console.log("memberId in handlesubmit: " + memberId);
+    const step1Errors = validateStep1(inputFieldValues, selectedGroupType);
+    const step2Errors = validateStep2(inputFieldValues);
+    const step3Errors = validateStep3(inputFieldValues);
 
+    const combinedErrors = {
+      ...step1Errors,
+      ...step2Errors,
+      ...step3Errors,
+    };
+    console.log("combinedErrors:" + JSON.stringify(combinedErrors));
+    if (Object.keys(combinedErrors).length > 0) {
+      setFieldErrors(combinedErrors);
+    } else {
+      inputFieldValues.memberId = memberId;
+      inputFieldValues.groupId = groupId;
+      console.log("inputFieldValues:" + JSON.stringify(inputFieldValues));
+      const formData = new FormData();
+
+      for (const fieldLabel in inputFieldValues) {
+        formData.append(fieldLabel, inputFieldValues[fieldLabel]);
+        console.log(`Appended ${fieldLabel}: ${inputFieldValues[fieldLabel]}`);
+      }
+      console.log("formData: " + JSON.stringify(inputFieldValues));
+
+      axios
+        .put(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`,
+          inputFieldValues
+        )
+        .then((response) => {
+          console.log("Profile updated successfully!");
+          console.log("updatedProfile: " + JSON.stringify(response.data));
+          router.push({
+            pathname: "/membergrouppage",
+            query: { id: groupId },
+          });
+        })
+        .catch((error) => {
+          console.error("Error adding profile: ", error);
+        });
+    }
+  };
   return (
     <Box className={styles.content_container}>
       <ProgressSlider progressPercentage={calculateProgressPercentage()} />
@@ -483,7 +526,7 @@ export default function Form() {
                   variant="contained"
                   onClick={
                     activeStep === steps(selectedGroup).length - 1
-                      ? () => handleSubmitForm(selectedMember.memberId)
+                      ? () => handleSubmitForm(memberId)
                       : handleNext
                   }
                   sx={{
