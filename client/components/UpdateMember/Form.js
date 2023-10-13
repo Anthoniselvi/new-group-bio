@@ -131,6 +131,7 @@ export default function Form() {
   };
 
   const handleNext = () => {
+    console.log("continue btn clicked");
     // Validate the fields for the current step
     let validationErrors = {};
     if (activeStep === 0) {
@@ -421,7 +422,7 @@ export default function Form() {
                 border: activeStep === index ? "#03045e" : "transparent",
                 borderBottom:
                   activeStep === index ? "1px solid #03045e" : "none",
-                backgroundColor: activeStep === index ? "#03045e" : "#fff",
+                backgroundColor: activeStep === index ? "#03045e" : "#fffae5",
                 borderTopLeftRadius: activeStep === index ? 20 : 5,
                 borderTopRightRadius: activeStep === index ? 20 : 5,
                 padding: 2,

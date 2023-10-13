@@ -228,3 +228,7 @@
     transform: rotate(0deg);
   }
 }
+.content_container{
+  /* border:1px solid red; */
+  /* padding: 4rem 1rem; */
+}
