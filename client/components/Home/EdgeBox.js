@@ -9,7 +9,8 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-
+import Avatar from "@mui/material/Avatar";
+import { CloseOutlined } from "@mui/icons-material";
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({
@@ -36,8 +37,7 @@ const Puller = styled(Box)(({ theme }) => ({
 
 export default function EdgeBox(props) {
   const { window, open, toggleDrawer, profile } = props;
-  console.log("profile:" + JSON.stringify(profile));
-  // This is used only for the example
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -47,7 +47,7 @@ export default function EdgeBox(props) {
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(50% - ${drawerBleeding}px)`,
+            height: `calc(80% - ${drawerBleeding}px)`,
             overflow: "visible",
           },
         }}
@@ -79,9 +79,19 @@ export default function EdgeBox(props) {
           }}
         >
           <Puller />
-          <Typography sx={{ p: 2, color: "text.secondary" }}>
-            {profile.name}
-          </Typography>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingRight: "10px",
+            }}
+          >
+            <Typography sx={{ p: 2, color: "text.secondary" }}>
+              Profile Details
+            </Typography>
+            <CloseOutlined onClick={toggleDrawer(false)} />
+          </div>
         </StyledBox>
         <StyledBox
           sx={{
@@ -89,18 +99,62 @@ export default function EdgeBox(props) {
             pb: 2,
             height: "100%",
             overflow: "auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          {/* <Skeleton variant="rectangular" height="100%" /> */}
+          {profile.image ? (
+            <Avatar
+              alt="Remy Sharp"
+              src={profile.image}
+              sx={{
+                width: "80px",
+                height: "80px",
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                width: "80px",
+                height: "80px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                background: "#00b4d8",
+                borderRadius: "50%",
+                fontSize: "20px",
+                fontWeight: "bold",
+              }}
+            >
+              {profile.name.charAt(0).toUpperCase()}
+            </div>
+          )}
           <Typography sx={{ p: 2, color: "#333333" }}>
-            {profile.course}, {profile.year}
+            {profile.name}
           </Typography>
-          <Typography sx={{ p: 2, color: "#333333" }}>
-            {profile.location}
-          </Typography>
-          <Typography sx={{ p: 2, color: "#333333" }}>
-            {profile.offers}
-          </Typography>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "left",
+              gap: "10px",
+            }}
+          >
+            <Typography sx={{ color: "#333333" }}>
+              {profile.course}, {profile.year}
+            </Typography>
+            <Typography sx={{ color: "#333333" }}>
+              {profile.company}, {profile.designation}
+            </Typography>
+            <Typography sx={{ color: "#333333" }}>
+              {profile.location}
+            </Typography>
+            <Typography sx={{ color: "#333333" }}>
+              {profile.industry}
+            </Typography>
+            <Typography sx={{ color: "#333333" }}>{profile.offers}</Typography>
+          </div>
         </StyledBox>
       </SwipeableDrawer>
     </Root>

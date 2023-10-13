@@ -152,6 +152,7 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
       {isMobile && selectedMember && (
         <EdgeBox
           open={open}
+          
           toggleDrawer={toggleDrawer}
           profile={selectedMember}
         />
