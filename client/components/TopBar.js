@@ -192,7 +192,7 @@ const TopBar = ({ children }) => {
               width: drawerWidth,
               boxSizing: "border-box",
             },
-            [`& .MuiPaper-root-MuiDrawer-paper`]: {
+            "& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
               borderRight: "none",
             },
           }}

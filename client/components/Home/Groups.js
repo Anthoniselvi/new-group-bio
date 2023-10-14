@@ -13,6 +13,7 @@ import { useUserAuth } from "@/context/GroupContext";
 import { useState, useEffect } from "react";
 import axios from "axios"; // Don't forget to import axios
 import { CollectionsOutlined } from "@mui/icons-material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const bull = (
   <Box
@@ -74,50 +75,62 @@ const card = (singleGroup, router, groupData) => {
       <CardActions
         sx={{
           display: "flex",
-          gap: "1rem",
+          justifyContent: "space-between",
+          alignItems: "center",
           backgroundColor: "#F8F8F7",
-          paddingTop: "1rem",
-          paddingBottom: "1rem",
+          // paddingTop: "1rem",
+          // paddingBottom: "1rem",
         }}
       >
-        <Button
-          onClick={() => shareViaWhatsApp(singleGroup)}
-          size="small"
-          sx={{
-            fontFamily: "Poppins",
-            fontSize: 14,
-            color: "#F5F5F5",
-            backgroundColor: "#222220",
-            padding: "5px 25px",
-            borderRadius: "20px",
-            textTransform: "none",
+        <div
+          style={{
             display: "flex",
-            gap: 1,
-            "&:hover": {
+            gap: "1rem",
+            backgroundColor: "#F8F8F7",
+            paddingTop: "1rem",
+            paddingBottom: "1rem",
+          }}
+        >
+          <Button
+            onClick={() => shareViaWhatsApp(singleGroup)}
+            size="small"
+            sx={{
+              fontFamily: "Poppins",
+              fontSize: 14,
+              color: "#F5F5F5",
               backgroundColor: "#222220",
-            },
-          }}
-        >
-          <FaLink /> Share Link
-        </Button>
-        <Button
-          onClick={() => navigateToSingleGroupProfiles(singleGroup, router)}
-          size="small"
-          sx={{
-            fontFamily: "Poppins",
-            fontSize: 14,
-            color: "#1B1B18",
-            backgroundColor: "#ffffff",
-            padding: "5px 25px",
-            borderRadius: "20px",
-            textTransform: "none",
-            display: "flex",
-            gap: 1,
-            border: "0.5px solid #e1e2e5",
-          }}
-        >
-          Open <HiOutlineExternalLink style={{ fontSize: 20 }} />
-        </Button>
+              padding: "5px 25px",
+              borderRadius: "20px",
+              textTransform: "none",
+              display: "flex",
+              gap: 1,
+              "&:hover": {
+                backgroundColor: "#222220",
+              },
+            }}
+          >
+            <FaLink /> Share Link
+          </Button>
+          <Button
+            onClick={() => navigateToSingleGroupProfiles(singleGroup, router)}
+            size="small"
+            sx={{
+              fontFamily: "Poppins",
+              fontSize: 14,
+              color: "#1B1B18",
+              backgroundColor: "#ffffff",
+              padding: "5px 25px",
+              borderRadius: "20px",
+              textTransform: "none",
+              display: "flex",
+              gap: 1,
+              border: "0.5px solid #e1e2e5",
+            }}
+          >
+            Open <HiOutlineExternalLink style={{ fontSize: 20 }} />
+          </Button>
+        </div>
+        <MoreVertIcon />
       </CardActions>
     </React.Fragment>
   );
@@ -187,7 +200,7 @@ export default function Groups() {
         display: "flex",
         flexDirection: "column",
         gap: "2rem",
-        padding: isMobile ? 0 : "0 8rem",
+        padding: isMobile ? 0 : "0 15rem",
         marginLeft: "230px",
         "& .MuiCard-root": {
           borderRadius: 3,
