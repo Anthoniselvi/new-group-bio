@@ -188,6 +188,7 @@ export default function Groups() {
         flexDirection: "column",
         gap: "2rem",
         padding: isMobile ? 0 : "0 8rem",
+        marginLeft: "230px",
         "& .MuiCard-root": {
           borderRadius: 3,
         },

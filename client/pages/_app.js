@@ -2,10 +2,16 @@ import React from "react";
 import App from "next/app";
 import Router from "next/router";
 import Layout from "@/components/Layout";
-import "../styles/globals.css";
 import { ApiContextProvider } from "@/context/GroupContext";
 
 class MyApp extends App {
+  constructor() {
+    super();
+    this.state = {
+      userLoggedIn: false,
+    };
+  }
+
   componentDidMount() {
     // Scroll to top when navigating to a new page
     Router.events.on("routeChangeComplete", () => {
@@ -13,12 +19,18 @@ class MyApp extends App {
     });
   }
 
+  handleLogin = () => {
+    // You can implement your login logic here
+    // If login is successful, update userLoggedIn state
+    this.setState({ userLoggedIn: true });
+  };
+
   render() {
     const { Component, pageProps } = this.props;
     return (
       <ApiContextProvider>
-        <Layout>
-          <Component {...pageProps} />
+        <Layout userLoggedIn={this.state.userLoggedIn}>
+          <Component {...pageProps} onLogin={this.handleLogin} />
         </Layout>
       </ApiContextProvider>
     );

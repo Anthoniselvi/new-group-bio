@@ -13,8 +13,6 @@ export default function Dashboard() {
   };
   return (
     <div style={{ padding: "1rem", marginTop: "6rem" }}>
-      {/* <GroupsList /> */}
-      {/* <HomePage /> */}
       <Groups />
     </div>
   );

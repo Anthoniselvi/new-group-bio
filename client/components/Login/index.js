@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "@/styles/Login.module.css";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [error, setError] = useState(false);
@@ -15,6 +15,7 @@ const Login = () => {
         username,
         password,
       });
+      onLogin();
       console.log("username: " + username);
       router.push("/dashboard");
     } catch (err) {
