@@ -13,7 +13,7 @@ const MemberLogin = () => {
   const { id: groupId } = router.query;
   const { memberLogin, loggedMemberId } = useUserAuth();
 
-  // console.log("memberId: " + memberId);
+  console.log("memberId in login: " + loggedMemberId);
   useEffect(() => {
     console.log("groupId: " + groupId);
     axios

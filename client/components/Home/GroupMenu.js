@@ -13,6 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
+import { useUserAuth } from "@/context/GroupContext";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -61,11 +62,11 @@ export default function GroupMenu({ open, onClose, anchorEl, groupId }) {
   console.log("groupId from Menu:" + groupId);
   const router = useRouter();
   // const { id: groupId, memberId } = router.query;
-
+  const { loggedMemberId } = useUserAuth();
   const navigateToEditGroup = () => {
     router.push({
       pathname: "/editgroup",
-      query: { id: groupId },
+      query: { id: groupId, memberId: loggedMemberId },
     });
   };
 

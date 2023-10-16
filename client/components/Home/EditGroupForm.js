@@ -6,11 +6,13 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useRouter } from "next/router";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from "../../firebase";
+import { useUserAuth } from "@/context/GroupContext";
 
 const EditGroupForm = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
   const { id: groupId } = router.query;
+  const {loggedMemberId} = useUserAuth()
   console.log("groupId in editForm:" + groupId);
   const [file, setFile] = useState(null);
   const [per, setPerc] = useState(null);

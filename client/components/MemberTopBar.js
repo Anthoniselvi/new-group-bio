@@ -249,7 +249,12 @@ const MemberTopBar = () => {
         open={isLeftDrawerOpen}
         onClose={() => setIsLeftDrawerOpen(false)}
       />
-      <MemberMenu open={open} onClose={handleClose} anchorEl={anchorEl} />
+      <MemberMenu
+        open={open}
+        onClose={handleClose}
+        anchorEl={anchorEl}
+        memberId={memberId}
+      />
     </Box>
   );
 };

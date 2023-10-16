@@ -6,19 +6,20 @@ import AddMember from "@/components/Members/AddMember";
 import AddedMembers from "@/components/Members/AddedMembers";
 import axios from "axios";
 import ListOfMembers from "@/components/Home/ListOfMembers";
+import { useUserAuth } from "@/context/GroupContext";
 
 export default function MemberGroupPage() {
   const [createMemberModalOpen, setCreateMemberModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState({});
   const [singleGroupMembers, setSingleGroupMembers] = useState([]);
-
+  const { loggedMemberId } = useUserAuth();
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
 
   const navigateToUpdateMember = () => {
     router.push({
       pathname: "/updatemember",
-      query: { id: groupId, memberId },
+      query: { id: groupId, memberId: loggedMemberId },
     });
   };
   console.log("memberId recd in member's group page:" + memberId);
