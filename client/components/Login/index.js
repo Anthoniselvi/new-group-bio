@@ -1,5 +1,3 @@
-// Login.js
-
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -14,22 +12,20 @@ const Login = () => {
 
   const handleAdminLogin = async () => {
     if (!username || !password) {
-      // You can add more specific validation if needed
       return;
     }
 
     try {
       await adminLogin(username, password);
-      // If login is successful, it will redirect to the dashboard
     } catch (err) {
-      // Handle login error here
+      console.log("login error:" + err);
     }
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <h1>Log In</h1>
+        <h1 className={styles.title}>Log In</h1>
         <input
           placeholder="username"
           className={styles.input}
