@@ -13,6 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
 import { useUserAuth } from "@/context/GroupContext";
+import { DeleteOutline, ShareOutlined } from "@mui/icons-material";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -57,9 +58,8 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function ProfileMenu({ open, onClose, anchorEl }) {
+export default function SingleGroupMenu({ open, onClose, anchorEl }) {
   const { logout } = useUserAuth();
-  const router = useRouter();
   const handleLogout = () => {
     logout();
     router.push({
@@ -82,13 +82,13 @@ export default function ProfileMenu({ open, onClose, anchorEl }) {
           disableRipple
           sx={{ borderBottom: "2px solid #e2e2df" }}
         >
-          <EditIcon />
-          Admin
+          <ShareOutlined />
+          Share
         </MenuItem>
 
         <MenuItem onClick={handleLogout} disableRipple>
-          <LogoutIcon />
-          Logout
+          <DeleteOutline />
+          Delete
         </MenuItem>
       </StyledMenu>
     </div>

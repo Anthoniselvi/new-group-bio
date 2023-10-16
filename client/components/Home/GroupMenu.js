@@ -10,6 +10,7 @@ import FileCopyIcon from "@mui/icons-material/FileCopy";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
+import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
 
@@ -30,7 +31,7 @@ const StyledMenu = styled((props) => (
   "& .MuiPaper-root": {
     borderRadius: 6,
     marginTop: theme.spacing(1),
-    minWidth: 180,
+    minWidth: 100,
     color:
       theme.palette.mode === "light"
         ? "rgb(55, 65, 81)"
@@ -56,39 +57,20 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function GroupMenu({ open, onClose, anchorEl }) {
-  //   const [anchorEl, setAnchorEl] = React.useState(null);
-  //   const open = Boolean(anchorEl);
-  //   const handleClick = (event) => {
-  //     setAnchorEl(event.currentTarget);
-  //   };
-  //   const handleClose = () => {
-  //     setAnchorEl(null);
-  //   };
+export default function GroupMenu({ open, onClose, anchorEl, groupId }) {
+  console.log("groupId from Menu:" + groupId);
   const router = useRouter();
-  const { id: groupId, memberId } = router.query;
+  // const { id: groupId, memberId } = router.query;
 
-  const navigateToSelectedProfilePage = () => {
+  const navigateToEditGroup = () => {
     router.push({
-      pathname: "/profile",
-      query: { id: groupId, memberId: memberId },
+      pathname: "/editgroup",
+      query: { id: groupId },
     });
   };
 
   return (
     <div>
-      {/* <Button
-        id="demo-customized-button"
-        aria-controls={open ? "demo-customized-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        variant="contained"
-        disableElevation
-        onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
-      >
-        Options
-      </Button> */}
       <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{
@@ -98,22 +80,15 @@ export default function GroupMenu({ open, onClose, anchorEl }) {
         open={open}
         onClose={onClose}
       >
-        <MenuItem onClick={onClose} disableRipple>
+        <MenuItem onClick={() => navigateToEditGroup(groupId)} disableRipple>
           <EditIcon />
-          Name
+          Edit Group
         </MenuItem>
-        {/* <MenuItem onClick={onClose} disableRipple>
-          <FileCopyIcon />
-          Duplicate
-        </MenuItem> */}
+
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
-          <PersonIcon />
-          Profile
-        </MenuItem>
-        <MenuItem onClick={onClose} disableRipple>
-          <LogoutIcon />
-          Logout
+        <MenuItem disableRipple>
+          <DeleteIcon />
+          Delete Group
         </MenuItem>
       </StyledMenu>
     </div>

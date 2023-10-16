@@ -14,6 +14,8 @@ import { useState, useEffect } from "react";
 import axios from "axios"; // Don't forget to import axios
 import { CollectionsOutlined } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ProfileMenu from "./ProfileMenu";
+import GroupMenu from "./GroupMenu";
 
 const bull = (
   <Box
@@ -40,7 +42,14 @@ const shareViaWhatsApp = (singleGroup) => {
   window.open(whatsappUrl, "_blank");
 };
 
-const card = (singleGroup, router, groupData) => {
+const card = (
+  singleGroup,
+  router,
+  groupData,
+  anchorEl,
+  handleClick,
+  handleClose
+) => {
   return (
     <React.Fragment>
       <CardContent
@@ -130,7 +139,10 @@ const card = (singleGroup, router, groupData) => {
             Open <HiOutlineExternalLink style={{ fontSize: 20 }} />
           </Button>
         </div>
-        <MoreVertIcon />
+        <MoreVertIcon
+          style={{ cursor: "pointer" }}
+          onClick={() => handleClick(singleGroup.groupId)}
+        />
       </CardActions>
     </React.Fragment>
   );
@@ -147,6 +159,14 @@ export default function Groups() {
   const { groupsList } = useUserAuth();
   const [groupCountArray, setGroupCountArray] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     const fetchDataForGroup = async (groupId, groupName) => {
@@ -238,9 +258,24 @@ export default function Groups() {
           const groupData = groupCountArray[index];
 
           return (
-            <Card variant="outlined" padding="1rem" key={singleGroup.groupId}>
-              {card(singleGroup, router, groupData)}
-            </Card>
+            <>
+              <Card variant="outlined" padding="1rem" key={singleGroup.groupId}>
+                {card(
+                  singleGroup,
+                  router,
+                  groupData,
+                  anchorEl,
+                  handleClick,
+                  handleClose
+                )}
+              </Card>
+              <GroupMenu
+                open={open}
+                onClose={handleClose}
+                anchorEl={anchorEl}
+                groupId={singleGroup.groupId}
+              />
+            </>
           );
         })
       )}

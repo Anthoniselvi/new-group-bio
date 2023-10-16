@@ -22,6 +22,7 @@ import ProfileMenu from "./Home/ProfileMenu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import logo from "../img/logo-big.png";
 import { useRouter } from "next/router";
 import { useUserAuth } from "@/context/GroupContext";
 
@@ -60,30 +61,6 @@ const TopBar = () => {
       pathname: "/",
     });
   };
-  const handleMenuItemClick = (menuItem) => {
-    // Handle the click event based on the menuItem
-    switch (menuItem) {
-      case "Home":
-        {
-          navigateToDashboard;
-        }
-        break;
-      case "Groups":
-        {
-          navigateToDashboard;
-        }
-        break;
-      case "Members":
-        // Handle click for Members
-        break;
-      case "Support":
-        // Handle click for Support
-        break;
-      default:
-        // Handle any other items or provide a default action
-        break;
-    }
-  };
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#ffffff" }}>
@@ -108,13 +85,23 @@ const TopBar = () => {
                 width: "100%",
               }}
             >
-              <Typography
-                sx={{ fontFamily: "Poppins", fontWeight: 600, fontSize: 16 }}
-                noWrap
-                component="div"
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  alignItems: "center",
+                }}
               >
-                Group Bio
-              </Typography>
+                {" "}
+                <img src={logo} />
+                <Typography
+                  sx={{ fontFamily: "Poppins", fontWeight: 600, fontSize: 16 }}
+                  noWrap
+                  component="div"
+                >
+                  Group Bio
+                </Typography>
+              </div>
 
               <div
                 onClick={handleClick}
@@ -161,6 +148,7 @@ const TopBar = () => {
               }}
             >
               <div style={{ display: "flex", alignItems: "center" }}>
+                <img src={logo} />
                 <Typography
                   sx={{
                     fontFamily: "Poppins",
@@ -176,7 +164,13 @@ const TopBar = () => {
               </div>
 
               <div
-                style={{ display: "flex", gap: "10px", alignItems: "center" }}
+                onClick={handleClick}
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
               >
                 <div
                   style={{
@@ -227,22 +221,12 @@ const TopBar = () => {
                 fontWeight: 500,
               },
               "& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
-                borderRight: "none !important", // Override the existing rule
+                borderRight: "none !important",
               },
             }}
           >
             <List>
-              {/* {["Home", "Groups", "Members", "Support"].map((text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton onClick={() => handleMenuItemClick(text)}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              ))} */}
-              <ListItem disablePadding>
+              <ListItem disablePadding sx={{ marginLeft: "-20px" }}>
                 <ListItemButton onClick={navigateToDashboard}>
                   <ListItemIcon>
                     <DashboardIcon />
@@ -250,7 +234,10 @@ const TopBar = () => {
                   <ListItemText>Dashboard</ListItemText>
                 </ListItemButton>
               </ListItem>
-              <ListItem disablePadding>
+              <ListItem
+                disablePadding
+                sx={{ marginLeft: "-20px", paddingBottom: "20px" }}
+              >
                 <ListItemButton onClick={navigateToGroupsPage}>
                   <ListItemIcon>
                     <GroupWorkIcon />
@@ -258,7 +245,11 @@ const TopBar = () => {
                   <ListItemText>Groups</ListItemText>
                 </ListItemButton>
               </ListItem>
-              <ListItem disablePadding>
+              <Divider />
+              <ListItem
+                disablePadding
+                sx={{ marginLeft: "-20px", paddingTop: "20px" }}
+              >
                 <ListItemButton onClick={handleLogout}>
                   <ListItemIcon>
                     <LogoutIcon />

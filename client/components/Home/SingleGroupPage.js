@@ -25,6 +25,9 @@ import { FaLink } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import ShowAlert from "./ShowAlert";
 import ListOfMembers from "./ListOfMembers";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ProfileMenu from "./ProfileMenu";
+import SingleGroupMenu from "./SingleGroupMenu";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -79,6 +82,14 @@ export default function SingleGroupPage() {
   const [singleGroupMembers, setSingleGroupMembers] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState({});
   const profileCardsRef = useRef(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const navigateToCreateMember = (item) => {
     router.push({
@@ -236,6 +247,12 @@ export default function SingleGroupPage() {
           >
             + Add Member
           </button>
+          <MoreVertIcon onClick={handleClick} />
+          <SingleGroupMenu
+            open={open}
+            onClose={handleClose}
+            anchorEl={anchorEl}
+          />
         </div>
       </div>
       <AppBar
