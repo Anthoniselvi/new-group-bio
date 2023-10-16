@@ -78,6 +78,7 @@ export default function ActiveMembers({ singleGroup, selectedGroup }) {
                         fontFamily: "Sans-serif",
                         fontSize: "17px",
                         fontWeight: 600,
+                        cursor: "pointer",
                       }}
                     >
                       {item.name}

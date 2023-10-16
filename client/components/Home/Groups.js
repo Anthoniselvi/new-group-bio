@@ -225,6 +225,7 @@ export default function Groups() {
             borderRadius: 20,
             padding: "8px 12px",
             border: "none",
+            cursor: "pointer",
           }}
         >
           + Add Group

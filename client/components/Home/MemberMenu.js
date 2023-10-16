@@ -56,7 +56,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function ProfileMenu({ open, onClose, anchorEl }) {
+export default function MemberMenu({ open, onClose, anchorEl }) {
   //   const [anchorEl, setAnchorEl] = React.useState(null);
   //   const open = Boolean(anchorEl);
   //   const handleClick = (event) => {
@@ -100,17 +100,17 @@ export default function ProfileMenu({ open, onClose, anchorEl }) {
       >
         <MenuItem onClick={onClose} disableRipple>
           <EditIcon />
-          Admin
+          Name
         </MenuItem>
         {/* <MenuItem onClick={onClose} disableRipple>
           <FileCopyIcon />
           Duplicate
         </MenuItem> */}
         <Divider sx={{ my: 0.5 }} />
-        {/* <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
+        <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
           <PersonIcon />
-          Profile
-        </MenuItem> */}
+          Profile Settings
+        </MenuItem>
         <MenuItem onClick={onClose} disableRipple>
           <LogoutIcon />
           Logout

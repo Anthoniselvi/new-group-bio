@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
 
 const drawerWidth = 240;
 
-const TopBar = ({ children }) => {
+const TopBar = () => {
   //   const [opened, setOpened] = useState(false);
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");

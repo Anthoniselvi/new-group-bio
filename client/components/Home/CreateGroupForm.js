@@ -148,7 +148,10 @@ const CreateGroupForm = () => {
         >
           Create Group
         </Typography>
-        <HighlightOffIcon onClick={navigateToDashboard} />
+        <HighlightOffIcon
+          onClick={navigateToDashboard}
+          style={{ cursor: "pointer" }}
+        />
       </div>
       <form
         onSubmit={handleSubmit}
