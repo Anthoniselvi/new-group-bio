@@ -2,6 +2,7 @@ import React from "react";
 import App from "next/app";
 import Router from "next/router";
 import Layout from "@/components/Layout";
+import "../styles/globals.css";
 import { ApiContextProvider } from "@/context/GroupContext";
 
 class MyApp extends App {
