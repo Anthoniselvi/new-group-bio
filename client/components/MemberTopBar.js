@@ -23,17 +23,20 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useRouter } from "next/router";
+import MemberMenu from "./Home/MemberMenu";
 import { useUserAuth } from "@/context/GroupContext";
 
 const drawerWidth = 240;
 
-const TopBar = () => {
+const MemberTopBar = () => {
   const { logout } = useUserAuth();
-  const router = useRouter();
+
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const router = useRouter();
+  const { id: groupId, memberId } = router.query;
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -46,7 +49,8 @@ const TopBar = () => {
   };
   const navigateToDashboard = () => {
     router.push({
-      pathname: "/dashboard",
+      pathname: "/membergrouppage",
+      query: { id: groupId, memberId },
     });
   };
   const navigateToGroupsPage = () => {
@@ -57,32 +61,9 @@ const TopBar = () => {
   const handleLogout = () => {
     logout();
     router.push({
-      pathname: "/",
+      pathname: "/memberloginpage",
+      query: { id: groupId },
     });
-  };
-  const handleMenuItemClick = (menuItem) => {
-    // Handle the click event based on the menuItem
-    switch (menuItem) {
-      case "Home":
-        {
-          navigateToDashboard;
-        }
-        break;
-      case "Groups":
-        {
-          navigateToDashboard;
-        }
-        break;
-      case "Members":
-        // Handle click for Members
-        break;
-      case "Support":
-        // Handle click for Support
-        break;
-      default:
-        // Handle any other items or provide a default action
-        break;
-    }
   };
 
   return (
@@ -250,14 +231,7 @@ const TopBar = () => {
                   <ListItemText>Dashboard</ListItemText>
                 </ListItemButton>
               </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton onClick={navigateToGroupsPage}>
-                  <ListItemIcon>
-                    <GroupWorkIcon />
-                  </ListItemIcon>
-                  <ListItemText>Groups</ListItemText>
-                </ListItemButton>
-              </ListItem>
+
               <ListItem disablePadding>
                 <ListItemButton onClick={handleLogout}>
                   <ListItemIcon>
@@ -275,9 +249,9 @@ const TopBar = () => {
         open={isLeftDrawerOpen}
         onClose={() => setIsLeftDrawerOpen(false)}
       />
-      <ProfileMenu open={open} onClose={handleClose} anchorEl={anchorEl} />
+      <MemberMenu open={open} onClose={handleClose} anchorEl={anchorEl} />
     </Box>
   );
 };
 
-export default TopBar;
+export default MemberTopBar;

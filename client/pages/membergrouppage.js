@@ -49,7 +49,7 @@ export default function MemberGroupPage() {
       });
   }, []);
   return (
-    <div style={{ padding: "1rem", marginTop: "6rem" }}>
+    <div style={{ padding: "1rem", marginTop: "6rem", marginLeft: "230px" }}>
       <div
         style={{
           display: "flex",

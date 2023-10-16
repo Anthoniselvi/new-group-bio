@@ -1,25 +1,28 @@
+// Login.js
+
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import styles from "@/styles/Login.module.css";
+import { useUserAuth } from "@/context/GroupContext";
 
-const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [error, setError] = useState(false);
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
+  const { adminLogin, error } = useUserAuth();
 
-  const handleClick = async () => {
+  const handleAdminLogin = async () => {
+    if (!username || !password) {
+      // You can add more specific validation if needed
+      return;
+    }
+
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/admin/add`, {
-        username,
-        password,
-      });
-      onLogin();
-      console.log("username: " + username);
-      router.push("/dashboard");
+      await adminLogin(username, password);
+      // If login is successful, it will redirect to the dashboard
     } catch (err) {
-      setError(true);
+      // Handle login error here
     }
   };
 
@@ -38,7 +41,7 @@ const Login = ({ onLogin }) => {
           className={styles.input}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={handleClick} className={styles.button}>
+        <button onClick={handleAdminLogin} className={styles.button}>
           Sign In
         </button>
         {error && <span className={styles.error}>Wrong Credentials!</span>}

@@ -1,16 +1,21 @@
-import Head from "next/head";
-import styles from "@/styles/Home.module.css";
+import { useUserAuth } from "@/context/GroupContext";
+import Dashboard from "./dashboard";
+import MemberGroupPage from "./membergrouppage";
 import Login from "@/components/Login";
+import MemberLoginPage from "./memberloginpage";
 
-export default function Home({ onLogin }) {
+export default function Home() {
+  const { isAdminLoggedIn, isMemberLoggedIn } = useUserAuth();
   return (
-    <>
-      <Head>
-        <title>XYZ Group Bio</title>
-      </Head>
-      <main className={styles.main}>
-        <Login onLogin={onLogin} />
-      </main>
-    </>
+    <div>
+      {isAdminLoggedIn && <Dashboard />}
+      {isMemberLoggedIn && <MemberGroupPage />}
+      {!isAdminLoggedIn && !isMemberLoggedIn && (
+        <div>
+          <Login />
+          <MemberLoginPage />
+        </div>
+      )}
+    </div>
   );
 }

@@ -6,12 +6,7 @@ import "../styles/globals.css";
 import { ApiContextProvider } from "@/context/GroupContext";
 
 class MyApp extends App {
-  constructor() {
-    super();
-    this.state = {
-      userLoggedIn: false,
-    };
-  }
+  // Remove the constructor and state as it's not needed for this approach
 
   componentDidMount() {
     // Scroll to top when navigating to a new page
@@ -22,16 +17,15 @@ class MyApp extends App {
 
   handleLogin = () => {
     // You can implement your login logic here
-    // If login is successful, update userLoggedIn state
-    this.setState({ userLoggedIn: true });
+    // If login is successful, you can use the context to update the login state
   };
 
   render() {
     const { Component, pageProps } = this.props;
     return (
       <ApiContextProvider>
-        <Layout userLoggedIn={this.state.userLoggedIn}>
-          <Component {...pageProps} onLogin={this.handleLogin} />
+        <Layout>
+          <Component {...pageProps} />
         </Layout>
       </ApiContextProvider>
     );

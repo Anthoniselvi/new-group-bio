@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import styles from "@/styles/Login.module.css";
+import { useUserAuth } from "@/context/GroupContext";
 
 const MemberLogin = () => {
   const [mobile, setMobile] = useState(null);
@@ -10,29 +11,9 @@ const MemberLogin = () => {
   const [memberId, setMemberId] = useState("");
   const router = useRouter();
   const { id: groupId } = router.query;
+  const { memberLogin, loggedMemberId } = useUserAuth();
 
-  const handleLogin = () => {
-    if (!mobile) {
-      setError("Please enter a mobile number.");
-      return;
-    }
-
-    const matchingMember = membersList.find(
-      (member) => member.mobile === parseInt(mobile)
-    );
-
-    if (matchingMember) {
-      setMemberId(matchingMember.memberId); // Store the memberId in state
-
-      router.push({
-        pathname: "/membergrouppage",
-        query: { id: groupId, memberId: matchingMember.memberId },
-      });
-    } else {
-      setError("Your mobile number is not registered.");
-    }
-  };
-  console.log("memberId: " + memberId);
+  // console.log("memberId: " + memberId);
   useEffect(() => {
     console.log("groupId: " + groupId);
     axios
@@ -46,6 +27,20 @@ const MemberLogin = () => {
       });
   }, [groupId]);
 
+  const handleMemberLogin = () => {
+    if (!mobile) {
+      setError("Please enter a mobile number.");
+      return;
+    }
+
+    memberLogin(mobile, membersList);
+    console.log("loggedMember in login:" + loggedMemberId);
+    router.push({
+      pathname: "/membergrouppage",
+      query: { id: groupId, memberId: loggedMemberId },
+    });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -57,7 +52,7 @@ const MemberLogin = () => {
           onChange={(e) => setMobile(e.target.value)}
         />
 
-        <button onClick={handleLogin} className={styles.button}>
+        <button onClick={handleMemberLogin} className={styles.button}>
           Sign In
         </button>
         {error && <span className={styles.error}>{error}</span>}

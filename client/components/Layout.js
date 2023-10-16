@@ -1,11 +1,15 @@
 import React from "react";
 import TopBar from "./TopBar";
+import MemberTopBar from "./MemberTopBar";
+import { useUserAuth } from "@/context/GroupContext";
 // import Sidebar from "./Sidebar";
 
-const Layout = ({ userLoggedIn, children }) => {
+const Layout = ({ children }) => {
+  const { isAdminLoggedIn, isMemberLoggedIn } = useUserAuth();
   return (
     <div>
-      {userLoggedIn && <TopBar />}
+      {isAdminLoggedIn && <TopBar />}
+      {isMemberLoggedIn && <MemberTopBar />}
       {/* {userLoggedIn && <Sidebar />} */}
       {children}
     </div>

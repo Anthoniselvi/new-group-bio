@@ -168,7 +168,7 @@ export default function Groups() {
           pending,
         };
       } catch (error) {
-        console.error(`Error fetching data for ${groupName}:`, error);
+        // console.error(`Error fetching data for ${groupName}:`, error);
         return {
           groupName,
           active: 0,

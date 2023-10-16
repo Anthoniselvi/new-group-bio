@@ -36,7 +36,14 @@ const ProfilePage = () => {
       });
   }, []);
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+        marginLeft: "230px",
+      }}
+    >
       <Typography
         sx={{
           color: "#000000",
