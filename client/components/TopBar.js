@@ -19,11 +19,16 @@ import { useMediaQuery } from "@mui/material";
 import { FiMenu } from "react-icons/fi";
 import LeftDrawer from "./Home/LeftDrawer";
 import ProfileMenu from "./Home/ProfileMenu";
+import LogoutIcon from "@mui/icons-material/Logout";
+import GroupWorkIcon from "@mui/icons-material/GroupWork";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import { useRouter } from "next/router";
 
 const drawerWidth = 240;
 
 const TopBar = ({ children }) => {
   //   const [opened, setOpened] = useState(false);
+  const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -38,9 +43,19 @@ const TopBar = ({ children }) => {
   const openLeftDrawer = () => {
     setIsLeftDrawerOpen(true);
   };
-  const navigateToDashboard = (item) => {
+  const navigateToDashboard = () => {
     router.push({
       pathname: "/dashboard",
+    });
+  };
+  const navigateToGroupsPage = () => {
+    router.push({
+      pathname: "/dashboard",
+    });
+  };
+  const handleLogout = () => {
+    router.push({
+      pathname: "/",
     });
   };
   const handleMenuItemClick = (menuItem) => {
@@ -215,7 +230,7 @@ const TopBar = ({ children }) => {
             }}
           >
             <List>
-              {["Home", "Groups", "Members", "Support"].map((text, index) => (
+              {/* {["Home", "Groups", "Members", "Support"].map((text, index) => (
                 <ListItem key={text} disablePadding>
                   <ListItemButton onClick={() => handleMenuItemClick(text)}>
                     <ListItemIcon>
@@ -224,7 +239,31 @@ const TopBar = ({ children }) => {
                     <ListItemText primary={text} />
                   </ListItemButton>
                 </ListItem>
-              ))}
+              ))} */}
+              <ListItem disablePadding>
+                <ListItemButton onClick={navigateToDashboard}>
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+                  <ListItemText>Dashboard</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={navigateToGroupsPage}>
+                  <ListItemIcon>
+                    <GroupWorkIcon />
+                  </ListItemIcon>
+                  <ListItemText>Groups</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={handleLogout}>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText>Logout</ListItemText>
+                </ListItemButton>
+              </ListItem>
             </List>
           </Box>
         </Drawer>
