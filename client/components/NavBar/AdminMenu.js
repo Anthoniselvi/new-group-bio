@@ -57,7 +57,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function ProfileMenu({ open, onClose, anchorEl }) {
+export default function AdminMenu({ open, onClose, anchorEl }) {
   const { logout } = useUserAuth();
   const router = useRouter();
   const handleLogout = () => {

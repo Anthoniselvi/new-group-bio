@@ -1,8 +1,9 @@
 import { useUserAuth } from "@/context/GroupContext";
 import Dashboard from "./dashboard";
 import MemberGroupPage from "./membergrouppage";
-import Login from "@/components/Login";
-import MemberLoginPage from "./memberloginpage";
+import AdminLogin from "@/components/Login/AdminLogin";
+// import MemberLoginPage from "./memberloginpage";
+import MemberLogin from "@/components/Login/MemberLogin";
 
 export default function Home() {
   const { isAdminLoggedIn, isMemberLoggedIn } = useUserAuth();
@@ -12,8 +13,8 @@ export default function Home() {
       {isMemberLoggedIn && <MemberGroupPage />}
       {!isAdminLoggedIn && !isMemberLoggedIn && (
         <div>
-          <Login />
-          <MemberLoginPage />
+          <AdminLogin />
+          <MemberLogin />
         </div>
       )}
     </div>

@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import SingleMemberProfile from "./SingleMemberProfile";
 import EdgeBox from "./EdgeBox";
 import { useMediaQuery } from "@mui/material";
-import { courseList } from "../Members/CourseList";
+import { courseList } from "../../Members/CourseList";
 
 export default function ListOfMembers({ singleGroup, selectedGroup }) {
   const isMobile = useMediaQuery("(max-width: 900px)");

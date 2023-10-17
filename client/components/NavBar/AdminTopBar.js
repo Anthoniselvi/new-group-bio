@@ -1,4 +1,4 @@
-import HomePage from "./Home/HomePage";
+// import HomePage from "../Home/HomePage";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -17,13 +17,20 @@ import MailIcon from "@mui/icons-material/Mail";
 import { FiChevronDown } from "react-icons/fi";
 import { useMediaQuery } from "@mui/material";
 import { FiMenu } from "react-icons/fi";
-import LeftDrawer from "./Home/LeftDrawer";
-import ProfileMenu from "./Home/ProfileMenu";
+import LeftDrawer from "./LeftDrawer";
+import AdminMenu from "./AdminMenu";
+import LogoutIcon from "@mui/icons-material/Logout";
+import GroupWorkIcon from "@mui/icons-material/GroupWork";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+// import logo from "../img/logo-big.png";
+import { useRouter } from "next/router";
+import { useUserAuth } from "@/context/GroupContext";
 
 const drawerWidth = 240;
 
-const FirstPage = ({ children }) => {
-  //   const [opened, setOpened] = useState(false);
+const AdminTopBar = () => {
+  const { logout } = useUserAuth();
+  const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -38,34 +45,21 @@ const FirstPage = ({ children }) => {
   const openLeftDrawer = () => {
     setIsLeftDrawerOpen(true);
   };
-  const navigateToDashboard = (item) => {
+  const navigateToDashboard = () => {
     router.push({
       pathname: "/dashboard",
     });
   };
-  const handleMenuItemClick = (menuItem) => {
-    // Handle the click event based on the menuItem
-    switch (menuItem) {
-      case "Home":
-        {
-          navigateToDashboard;
-        }
-        break;
-      case "Groups":
-        {
-          navigateToDashboard;
-        }
-        break;
-      case "Members":
-        // Handle click for Members
-        break;
-      case "Support":
-        // Handle click for Support
-        break;
-      default:
-        // Handle any other items or provide a default action
-        break;
-    }
+  const navigateToGroupsPage = () => {
+    router.push({
+      pathname: "/dashboard",
+    });
+  };
+  const handleLogout = () => {
+    logout();
+    router.push({
+      pathname: "/",
+    });
   };
 
   return (
@@ -91,13 +85,23 @@ const FirstPage = ({ children }) => {
                 width: "100%",
               }}
             >
-              <Typography
-                sx={{ fontFamily: "Poppins", fontWeight: 600, fontSize: 16 }}
-                noWrap
-                component="div"
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  alignItems: "center",
+                }}
               >
-                Group Bio
-              </Typography>
+                {" "}
+                {/* <img src={logo} /> */}
+                <Typography
+                  sx={{ fontFamily: "Poppins", fontWeight: 600, fontSize: 16 }}
+                  noWrap
+                  component="div"
+                >
+                  Group Bio
+                </Typography>
+              </div>
 
               <div
                 onClick={handleClick}
@@ -144,6 +148,7 @@ const FirstPage = ({ children }) => {
               }}
             >
               <div style={{ display: "flex", alignItems: "center" }}>
+                {/* <img src={logo} /> */}
                 <Typography
                   sx={{
                     fontFamily: "Poppins",
@@ -159,7 +164,13 @@ const FirstPage = ({ children }) => {
               </div>
 
               <div
-                style={{ display: "flex", gap: "10px", alignItems: "center" }}
+                onClick={handleClick}
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
               >
                 <div
                   style={{
@@ -192,6 +203,9 @@ const FirstPage = ({ children }) => {
               width: drawerWidth,
               boxSizing: "border-box",
             },
+            "& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
+              borderRight: "none",
+            },
           }}
         >
           <Toolbar />
@@ -207,45 +221,54 @@ const FirstPage = ({ children }) => {
                 fontWeight: 500,
               },
               "& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper": {
-                borderRight: "none !important", // Override the existing rule
+                borderRight: "none !important",
               },
             }}
           >
             <List>
-              {["Home", "Groups", "Members", "Support"].map((text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton onClick={() => handleMenuItemClick(text)}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
+              <ListItem disablePadding sx={{ marginLeft: "-20px" }}>
+                <ListItemButton onClick={navigateToDashboard}>
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+                  <ListItemText>Dashboard</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <ListItem
+                disablePadding
+                sx={{ marginLeft: "-20px", paddingBottom: "20px" }}
+              >
+                <ListItemButton onClick={navigateToGroupsPage}>
+                  <ListItemIcon>
+                    <GroupWorkIcon />
+                  </ListItemIcon>
+                  <ListItemText>Groups</ListItemText>
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+              <ListItem
+                disablePadding
+                sx={{ marginLeft: "-20px", paddingTop: "20px" }}
+              >
+                <ListItemButton onClick={handleLogout}>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText>Logout</ListItemText>
+                </ListItemButton>
+              </ListItem>
             </List>
           </Box>
         </Drawer>
       )}
 
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          // p: "0 4rem",
-        }}
-      >
-        {children}
-        {/* <Groups /> */}
-
-        {/* <SingleGroupPage /> */}
-      </Box>
       <LeftDrawer
         open={isLeftDrawerOpen}
         onClose={() => setIsLeftDrawerOpen(false)}
       />
-      <ProfileMenu open={open} onClose={handleClose} anchorEl={anchorEl} />
+      <AdminMenu open={open} onClose={handleClose} anchorEl={anchorEl} />
     </Box>
   );
 };
 
-export default FirstPage;
+export default AdminTopBar;

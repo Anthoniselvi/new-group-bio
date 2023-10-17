@@ -1,4 +1,4 @@
-import HomePage from "./Home/HomePage";
+// import HomePage from "../Home/HomePage";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -17,13 +17,13 @@ import MailIcon from "@mui/icons-material/Mail";
 import { FiChevronDown } from "react-icons/fi";
 import { useMediaQuery } from "@mui/material";
 import { FiMenu } from "react-icons/fi";
-import LeftDrawer from "./Home/LeftDrawer";
-import ProfileMenu from "./Home/ProfileMenu";
+import LeftDrawer from "./LeftDrawer";
+import AdminMenu from "./AdminMenu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useRouter } from "next/router";
-import MemberMenu from "./Home/MemberMenu";
+import MemberMenu from "./MemberMenu";
 import { useUserAuth } from "@/context/GroupContext";
 
 const drawerWidth = 240;

@@ -7,8 +7,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import { courseList } from "../Members/CourseList";
-import image from "../../img/picture1.png";
+import { courseList } from "../../Members/CourseList";
+
 export default function ActiveMembers({ singleGroup, selectedGroup }) {
   const getShortFormForCourse = (fullCourseName) => {
     const course = courseList.find(

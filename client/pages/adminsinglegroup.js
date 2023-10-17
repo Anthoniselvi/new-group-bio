@@ -2,10 +2,10 @@ import GroupsList from "@/components/Dashboard/GroupsList";
 import * as React from "react";
 import { useState } from "react";
 import AddGroup from "@/components/Dashboard/AddGroup";
-import HomePage from "@/components/Home/HomePage";
+// import HomePage from "@/components/Home/HomePage";
 import { Typography } from "@mui/material";
-import Groups from "@/components/Home/Groups";
-import SingleGroupPage from "@/components/Home/SingleGroupPage";
+import Groups from "@/components/AdminPages/AdminGroupPages/Groups";
+import SingleGroupPage from "@/components/AdminPages/AdminGroupPages/SingleGroupPage";
 
 export default function AdminSingleGroup() {
   const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);

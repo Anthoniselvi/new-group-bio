@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const ProfilePage = () => {
+const AdminProfilePage = () => {
   const [selectedGroup, setSelectedGroup] = useState({});
   const [selectedMember, setSelectedMember] = useState({});
   const router = useRouter();
@@ -147,4 +147,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default AdminProfilePage;

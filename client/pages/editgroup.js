@@ -1,4 +1,4 @@
-import EditGroupForm from "@/components/Home/EditGroupForm";
+import EditGroupForm from "@/components/AdminPages/AdminGroupPages/EditGroupForm";
 import React from "react";
 
 const EditGroup = () => {

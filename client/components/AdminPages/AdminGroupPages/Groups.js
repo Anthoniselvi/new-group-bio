@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import axios from "axios"; // Don't forget to import axios
 import { CollectionsOutlined } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ProfileMenu from "./ProfileMenu";
+import AdminMenu from "../../NavBar/AdminMenu";
 import GroupMenu from "./GroupMenu";
 
 const bull = (

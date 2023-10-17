@@ -1,4 +1,4 @@
-import CreateMemberForm from "@/components/Home/CreateMemberForm";
+import CreateMemberForm from "@/components/AdminPages/AdminPageForMembers/CreateMemberForm";
 import React from "react";
 
 const createmember = () => {

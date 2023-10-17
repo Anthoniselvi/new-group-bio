@@ -2,7 +2,7 @@ import * as React from "react";
 
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { courseList } from "../Members/CourseList";
+import { courseList } from "../../Members/CourseList";
 import { CloseOutlined } from "@mui/icons-material";
 
 export default function SingleMemberProfile({

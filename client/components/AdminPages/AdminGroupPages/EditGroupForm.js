@@ -5,10 +5,15 @@ import axios from "axios";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useRouter } from "next/router";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth, db, storage } from "../../firebase";
+import { auth, db, storage } from "../../../firebase";
+import { useUserAuth } from "@/context/GroupContext";
 
-const CreateGroupForm = () => {
+const EditGroupForm = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
+  const router = useRouter();
+  const { id: groupId } = router.query;
+  const { loggedMemberId } = useUserAuth();
+  console.log("groupId in editForm:" + groupId);
   const [file, setFile] = useState(null);
   const [per, setPerc] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
@@ -19,7 +24,7 @@ const CreateGroupForm = () => {
     groupDescription: "",
     groupImage: "",
   });
-  const router = useRouter();
+
   const navigateToDashboard = () => {
     router.push({
       pathname: "/dashboard",
@@ -146,7 +151,7 @@ const CreateGroupForm = () => {
             fontFamily: "Poppins",
           }}
         >
-          Create Group
+          Edit Group
         </Typography>
         <HighlightOffIcon
           onClick={navigateToDashboard}
@@ -316,7 +321,7 @@ const CreateGroupForm = () => {
           }}
           onClick={handleSubmit}
         >
-          Create
+          Save
         </Button>
 
         <Button
@@ -339,4 +344,4 @@ const CreateGroupForm = () => {
   );
 };
 
-export default CreateGroupForm;
+export default EditGroupForm;

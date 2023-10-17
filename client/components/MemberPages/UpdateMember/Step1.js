@@ -6,8 +6,8 @@ import { Select, MenuItem } from "@mui/material";
 import generateYearOptions from "./GenerateYear";
 import styles from "@/styles/Form.module.css";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth, db, storage } from "../../firebase";
-import { courseList } from "../Members/CourseList";
+import { auth, db, storage } from "../../../firebase";
+import { courseList } from "../../Members/CourseList";
 
 const Step1 = ({
   inputFieldValues,

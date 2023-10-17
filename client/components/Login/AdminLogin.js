@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "@/styles/Login.module.css";
 import { useUserAuth } from "@/context/GroupContext";
 
-const Login = () => {
+const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -46,4 +46,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

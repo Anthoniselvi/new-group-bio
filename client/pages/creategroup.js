@@ -1,4 +1,4 @@
-import CreateGroupForm from "@/components/Home/CreateGroupForm";
+import CreateGroupForm from "@/components/AdminPages/AdminGroupPages/CreateGroupForm";
 import React from "react";
 
 const CreateGroup = () => {
