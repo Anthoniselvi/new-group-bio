@@ -42,7 +42,7 @@ const EditGroupForm = () => {
     setFile(selectedFile);
   };
 
-  const updateGroup = () => {
+  const updateGroup = async () => {
     if (
       inputFieldValues.groupName.trim() === "" ||
       inputFieldValues.groupType === "Select Group Type"
@@ -56,6 +56,38 @@ const EditGroupForm = () => {
       return;
     }
 
+    // Upload the image if a new file is selected
+    if (file) {
+      const storageRef = ref(storage, `/groupImages/${groupId}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Handle the image upload progress (if needed)
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setPerc(progress);
+        },
+        (error) => {
+          console.error("Error uploading image:", error);
+        },
+        () => {
+          // Image upload successful, get the download URL
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            inputFieldValues.groupImage = downloadURL;
+            // Continue with updating the group
+            updateGroupData();
+          });
+        }
+      );
+    } else {
+      // No new image, continue with updating the group
+      updateGroupData();
+    }
+  };
+
+  const updateGroupData = () => {
     const updatedGroup = {
       groupName: inputFieldValues.groupName,
       groupType: inputFieldValues.groupType,
