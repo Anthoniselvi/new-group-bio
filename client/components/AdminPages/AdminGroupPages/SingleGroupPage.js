@@ -28,6 +28,7 @@ import ListOfMembers from "../AdminPageForMembers/ListOfMembers";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AdminMenu from "../../NavBar/AdminMenu";
 import SingleGroupMenu from "./SingleGroupMenu";
+import GroupMenu from "./GroupMenu";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -266,10 +267,11 @@ export default function SingleGroupPage() {
             + Add Member
           </button>
           <MoreVertIcon style={{ cursor: "pointer" }} onClick={handleClick} />
-          <SingleGroupMenu
+          <GroupMenu
             open={open}
             onClose={handleClose}
             anchorEl={anchorEl}
+            groupId={selectedGroup.groupId}
           />
         </div>
       </div>

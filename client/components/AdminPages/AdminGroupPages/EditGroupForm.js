@@ -298,7 +298,7 @@ const EditGroupForm = () => {
             }}
           >
             <img
-              style={{ width: "100%", height: "auto" }}
+              style={{ width: "100%", height: "100%" }}
               src={inputFieldValues.groupImage}
               alt="image"
               id="groupImage"
@@ -309,7 +309,7 @@ const EditGroupForm = () => {
                 cursor: "pointer",
                 position: "absolute",
                 marginLeft: "80%",
-                marginTop: "40%",
+                marginTop: "80%",
                 backgroundColor: "#f0f1f4",
                 width: "30px",
                 height: "30px",
