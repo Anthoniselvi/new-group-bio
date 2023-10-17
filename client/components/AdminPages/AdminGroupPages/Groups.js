@@ -1,8 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
+
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { FaLink } from "react-icons/fa";
@@ -16,6 +15,7 @@ import { CollectionsOutlined } from "@mui/icons-material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AdminMenu from "../../NavBar/AdminMenu";
 import GroupMenu from "./GroupMenu";
+import GroupCard from "./GroupCard";
 
 const bull = (
   <Box
@@ -42,112 +42,6 @@ const shareViaWhatsApp = (singleGroup) => {
   window.open(whatsappUrl, "_blank");
 };
 
-const card = (
-  singleGroup,
-  router,
-  groupData,
-  anchorEl,
-  handleClick,
-  handleClose
-) => {
-  return (
-    <React.Fragment>
-      <CardContent
-        sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-      >
-        <Typography
-          sx={{
-            fontFamily: "Poppins",
-            fontSize: 18,
-            fontWeight: 600,
-            color: "#000000",
-          }}
-          component="div"
-        >
-          {singleGroup.groupName}
-        </Typography>
-        <Typography
-          sx={{ fontFamily: "Poppins", color: "#75777A", fontSize: 16 }}
-        >
-          {singleGroup.groupDescription}
-        </Typography>
-        {groupData && (
-          <Typography
-            sx={{ fontFamily: "Poppins", fontSize: 20, color: "#000000" }}
-          >
-            Active - {groupData.active}
-            <br />
-            Pending - {groupData.pending}
-          </Typography>
-        )}
-      </CardContent>
-      <CardActions
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          backgroundColor: "#F8F8F7",
-          // paddingTop: "1rem",
-          // paddingBottom: "1rem",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            gap: "1rem",
-            backgroundColor: "#F8F8F7",
-            paddingTop: "1rem",
-            paddingBottom: "1rem",
-          }}
-        >
-          <Button
-            onClick={() => shareViaWhatsApp(singleGroup)}
-            size="small"
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: 14,
-              color: "#F5F5F5",
-              backgroundColor: "#222220",
-              padding: "5px 25px",
-              borderRadius: "20px",
-              textTransform: "none",
-              display: "flex",
-              gap: 1,
-              "&:hover": {
-                backgroundColor: "#222220",
-              },
-            }}
-          >
-            <FaLink /> Share Link
-          </Button>
-          <Button
-            onClick={() => navigateToSingleGroupProfiles(singleGroup, router)}
-            size="small"
-            sx={{
-              fontFamily: "Poppins",
-              fontSize: 14,
-              color: "#1B1B18",
-              backgroundColor: "#ffffff",
-              padding: "5px 25px",
-              borderRadius: "20px",
-              textTransform: "none",
-              display: "flex",
-              gap: 1,
-              border: "0.5px solid #e1e2e5",
-            }}
-          >
-            Open <HiOutlineExternalLink style={{ fontSize: 20 }} />
-          </Button>
-        </div>
-        <MoreVertIcon
-          style={{ cursor: "pointer" }}
-          onClick={() => handleClick(singleGroup.groupId)}
-        />
-      </CardActions>
-    </React.Fragment>
-  );
-};
-
 export default function Groups() {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
@@ -159,14 +53,6 @@ export default function Groups() {
   const { groupsList } = useUserAuth();
   const [groupCountArray, setGroupCountArray] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   useEffect(() => {
     const fetchDataForGroup = async (groupId, groupName) => {
@@ -259,22 +145,7 @@ export default function Groups() {
 
           return (
             <>
-              <Card variant="outlined" padding="1rem" key={singleGroup.groupId}>
-                {card(
-                  singleGroup,
-                  router,
-                  groupData,
-                  anchorEl,
-                  handleClick,
-                  handleClose
-                )}
-              </Card>
-              <GroupMenu
-                open={open}
-                onClose={handleClose}
-                anchorEl={anchorEl}
-                groupId={singleGroup.groupId}
-              />
+              <GroupCard singleGroup={singleGroup} groupData={groupData} />
             </>
           );
         })

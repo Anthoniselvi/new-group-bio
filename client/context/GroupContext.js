@@ -23,7 +23,7 @@ export function ApiContextProvider({ children }) {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [groupsList]);
 
   const adminLogin = async (username, password) => {
     try {

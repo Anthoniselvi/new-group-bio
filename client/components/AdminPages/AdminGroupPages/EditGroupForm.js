@@ -1,11 +1,10 @@
-import { Box, Typography, useMediaQuery, Button } from "@mui/material";
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Box, Typography, useMediaQuery, Button } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useRouter } from "next/router";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth, db, storage } from "../../../firebase";
+import { storage } from "../../../firebase";
 import { useUserAuth } from "@/context/GroupContext";
 
 const EditGroupForm = () => {
@@ -13,11 +12,10 @@ const EditGroupForm = () => {
   const router = useRouter();
   const { id: groupId } = router.query;
   const { loggedMemberId } = useUserAuth();
-  console.log("groupId in editForm:" + groupId);
+  const [selectedGroup, setSelectedGroup] = useState({});
   const [file, setFile] = useState(null);
   const [per, setPerc] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
-  const [groupsList, setGroupsList] = useState([]);
   const [inputFieldValues, setInputFieldValues] = useState({
     groupName: "",
     groupType: "Select Group Type",
@@ -30,6 +28,7 @@ const EditGroupForm = () => {
       pathname: "/dashboard",
     });
   };
+
   const handleFieldChange = (event, fieldName) => {
     const newValue = event.target.value;
     setInputFieldValues((prevValues) => ({
@@ -42,7 +41,8 @@ const EditGroupForm = () => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
   };
-  const handleSubmit = () => {
+
+  const updateGroup = () => {
     if (
       inputFieldValues.groupName.trim() === "" ||
       inputFieldValues.groupType === "Select Group Type"
@@ -56,75 +56,47 @@ const EditGroupForm = () => {
       return;
     }
 
-    if (file) {
-      const name = new Date().getTime() + file.name;
-      const storageRef = ref(storage, name);
-      const uploadTask = uploadBytesResumable(storageRef, file);
+    const updatedGroup = {
+      groupName: inputFieldValues.groupName,
+      groupType: inputFieldValues.groupType,
+      groupDescription: inputFieldValues.groupDescription,
+      groupImage: inputFieldValues.groupImage,
+    };
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setPerc(progress);
-          switch (snapshot.state) {
-            case "paused":
-              break;
-            case "running":
-              break;
-            default:
-              break;
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            const updatedInputFieldValues = {
-              ...inputFieldValues,
-              groupImage: downloadURL,
-            };
+    axios
+      .put(`${process.env.NEXT_PUBLIC_BASE_URL}/group/${groupId}`, updatedGroup)
+      .then((response) => {
+        console.log("Group updated successfully!");
+        console.log("updatedGroup: " + JSON.stringify(response.data));
 
-            axios
-              .post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/group/add`,
-                updatedInputFieldValues
-              )
-              .then((response) => {
-                console.log("Group added successfully!");
-                console.log("addedGroup: " + JSON.stringify(response.data));
-
-                const updatedGroupsList = [...groupsList, response.data];
-                setGroupsList(updatedGroupsList);
-                router.push({
-                  pathname: "/dashboard",
-                });
-              })
-              .catch((error) => {
-                console.error("Error adding Group: ", error);
-              });
-          });
-        }
-      );
-    } else {
-      axios
-        .post(`${process.env.NEXT_PUBLIC_BASE_URL}/group/add`, inputFieldValues)
-        .then((response) => {
-          console.log("Group added successfully!");
-          console.log("addedGroup: " + JSON.stringify(response.data));
-
-          const updatedGroupsList = [...groupsList, response.data];
-          setGroupsList(updatedGroupsList);
-          router.push({
-            pathname: "/dashboard",
-          });
-        })
-        .catch((error) => {
-          console.error("Error adding Group: ", error);
+        // You can choose to update the state or navigate to a different page.
+        setSelectedGroup(updatedGroup);
+        router.push({
+          pathname: "/dashboard",
         });
-    }
+      })
+      .catch((error) => {
+        console.error("Error updating Group: ", error);
+      });
   };
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
+      .then((response) => {
+        setSelectedGroup(response.data);
+        setInputFieldValues({
+          groupName: response.data.groupName,
+          groupType: response.data.groupType,
+          groupDescription: response.data.groupDescription,
+          groupImage: response.data.groupImage,
+        });
+        console.log("selectedGroup: " + JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [groupId]);
 
   return (
     <Box
@@ -159,10 +131,7 @@ const EditGroupForm = () => {
         />
       </div>
       <form
-        onSubmit={handleSubmit}
         style={{
-          // margin: "5% 0%",
-          // width: isMobile ? "250px" : "300px",
           display: "flex",
           flexDirection: "column",
           gap: "20px",
@@ -282,7 +251,7 @@ const EditGroupForm = () => {
           </label>
           {imageUrl && (
             <img
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "auto" }}
               src={imageUrl}
               alt="image"
             />
@@ -319,7 +288,7 @@ const EditGroupForm = () => {
             padding: "5px 20px",
             textTransform: "none",
           }}
-          onClick={handleSubmit}
+          onClick={updateGroup}
         >
           Save
         </Button>

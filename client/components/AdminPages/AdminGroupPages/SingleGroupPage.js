@@ -188,9 +188,27 @@ export default function SingleGroupPage() {
         padding: isMobile ? 0 : "2rem 4rem",
         "& .MuiButtonBase-root-MuiTab-root": {
           backgroundColor: "none",
+          textTransform: "none",
         },
         "& .MuiButtonBase-root-MuiTab-root.Mui-selected": {
           color: "red",
+          textTransform: "none",
+        },
+        "& .css-1h9z7r5-MuiButtonBase-root-MuiTab-root": {
+          fontFamily: "Poppins",
+          color: "#AAABAE",
+          fontSize: 14,
+          fontWeight: 500,
+          textTransform: "none",
+        },
+        "& .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected": {
+          color: "#191C1E",
+          fontSize: 14,
+          fontWeight: 500,
+          borderBottom: "red",
+        },
+        "& .css-1aquho2-MuiTabs-indicator": {
+          backgroundColor: "#FBC91B",
         },
       }}
     >
@@ -247,7 +265,7 @@ export default function SingleGroupPage() {
           >
             + Add Member
           </button>
-          <MoreVertIcon onClick={handleClick} />
+          <MoreVertIcon style={{ cursor: "pointer" }} onClick={handleClick} />
           <SingleGroupMenu
             open={open}
             onClose={handleClose}
@@ -264,7 +282,8 @@ export default function SingleGroupPage() {
           value={value}
           onChange={handleChange}
           //   indicatorColor="primary"
-          textColor="primary"
+          // textColor="primary"
+          textTransform="none"
           //   variant="fullWidth"
           aria-label="action tabs example"
           sx={{
@@ -273,7 +292,12 @@ export default function SingleGroupPage() {
             borderBottom: "1px solid #e1e2e5",
           }}
         >
-          <Tab label="Active" {...a11yProps(0)} />
+          <Tab
+            textTransform="none"
+            borderBottom="none"
+            label="Active"
+            {...a11yProps(0)}
+          />
           <Tab label="Pending" {...a11yProps(1)} />
         </Tabs>
       </AppBar>

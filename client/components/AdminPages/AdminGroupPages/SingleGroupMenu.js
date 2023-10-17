@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -14,7 +15,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
 import { useUserAuth } from "@/context/GroupContext";
 import { DeleteOutline, ShareOutlined } from "@mui/icons-material";
-
+import ShowAlert from "./ShowAlert";
+import axios from "axios";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -59,12 +61,21 @@ const StyledMenu = styled((props) => (
 }));
 
 export default function SingleGroupMenu({ open, onClose, anchorEl }) {
-  const { logout } = useUserAuth();
-  const handleLogout = () => {
-    logout();
-    router.push({
-      pathname: "/",
-    });
+  const router = useRouter();
+  const { id } = router.query;
+  const [alertVisible, setAlertVisible] = useState(false);
+  const handleDelete = () => {
+    axios
+      .delete(`${process.env.NEXT_PUBLIC_BASE_URL}/group/${id}`)
+
+      .then((response) => {
+        console.log("deleteGroup :" + JSON.stringify(response.data));
+        setAlertVisible(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+    return <ShowAlert />;
   };
   return (
     <div style={{ padding: "10px" }}>
@@ -82,11 +93,11 @@ export default function SingleGroupMenu({ open, onClose, anchorEl }) {
           disableRipple
           sx={{ borderBottom: "2px solid #e2e2df" }}
         >
-          <ShareOutlined />
-          Share
+          <EditIcon />
+          Edit
         </MenuItem>
 
-        <MenuItem onClick={handleLogout} disableRipple>
+        <MenuItem onClick={handleDelete} disableRipple>
           <DeleteOutline />
           Delete
         </MenuItem>

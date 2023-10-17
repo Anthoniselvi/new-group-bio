@@ -66,7 +66,7 @@ export default function GroupMenu({ open, onClose, anchorEl, groupId }) {
   const navigateToEditGroup = () => {
     router.push({
       pathname: "/editgroup",
-      query: { id: groupId, memberId: loggedMemberId },
+      query: { id: groupId },
     });
   };
 
@@ -81,7 +81,7 @@ export default function GroupMenu({ open, onClose, anchorEl, groupId }) {
         open={open}
         onClose={onClose}
       >
-        <MenuItem onClick={() => navigateToEditGroup(groupId)} disableRipple>
+        <MenuItem onClick={navigateToEditGroup} disableRipple>
           <EditIcon />
           Edit Group
         </MenuItem>
