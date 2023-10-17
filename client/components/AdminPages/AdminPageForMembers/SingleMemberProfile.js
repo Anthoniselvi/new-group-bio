@@ -1,5 +1,6 @@
 import * as React from "react";
-
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import LinkIcon from "@mui/icons-material/Link";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { courseList } from "../../Members/CourseList";
@@ -99,6 +100,10 @@ export default function SingleMemberProfile({
           >
             {profile.mobile}
           </Typography>
+          <div>
+            <LinkedInIcon style={{ cursor: "pointer" }} />
+            <LinkIcon style={{ cursor: "pointer" }} />
+          </div>
         </div>
 
         <div
@@ -188,7 +193,7 @@ export default function SingleMemberProfile({
               fontFamily: "Poppins",
             }}
           >
-            Services Offered <br />
+            Services Offered: <br />
             {profile.offers.split(" ").map((word, index) => (
               <span
                 key={index}

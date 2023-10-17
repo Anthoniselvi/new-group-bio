@@ -180,7 +180,7 @@ export default function SingleGroupPage() {
     <Box
       sx={{
         bgcolor: "background.paper",
-        marginLeft: "230px",
+        marginLeft: isMobile ? 0 : "230px",
         position: "relative",
         minHeight: 400,
         display: "flex",

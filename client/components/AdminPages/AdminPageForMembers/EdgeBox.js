@@ -49,7 +49,7 @@ export default function EdgeBox(props) {
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(70% - ${drawerBleeding}px)`,
+            height: `calc(90% - ${drawerBleeding}px)`,
             overflow: "visible",
             backgroundColor: "transparent",
           },
@@ -70,32 +70,6 @@ export default function EdgeBox(props) {
           keepMounted: true,
         }}
       >
-        {/* <StyledBox
-          sx={{
-            position: "absolute",
-            top: -drawerBleeding,
-            borderTopLeftRadius: 8,
-            borderTopRightRadius: 8,
-            visibility: "visible",
-            right: 0,
-            left: 0,
-          }}
-        >
-          <Puller />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              paddingRight: "10px",
-            }}
-          >
-            <Typography sx={{ p: 2, color: "text.secondary" }}>
-              Profile Details
-            </Typography>
-            <CloseOutlined onClick={toggleDrawer(false)} />
-          </div>
-        </StyledBox> */}
         <StyledBox
           sx={{
             // px: 2,
@@ -148,7 +122,17 @@ export default function EdgeBox(props) {
               fontWeight: 600,
             }}
           >
-            {profile.name} - {profile.mobile}
+            {profile.name}
+          </Typography>
+          <Typography
+            sx={{
+              color: "#333333",
+              fontFamily: "Poppins",
+              fontSize: 20,
+              fontWeight: 600,
+            }}
+          >
+            {profile.mobile}
           </Typography>
           <div>
             <LinkedInIcon style={{ cursor: "pointer" }} />
@@ -248,7 +232,20 @@ export default function EdgeBox(props) {
               }}
             >
               Services Offered: <br />
-              {profile.offers}
+              {profile.offers.split(" ").map((word, index) => (
+                <span
+                  key={index}
+                  style={{
+                    backgroundColor: "#e1e2e5",
+                    borderRadius: "4px",
+                    marginRight: "10px",
+                    padding: "0 2px",
+                    display: "inline",
+                  }}
+                >
+                  {word}{" "}
+                </span>
+              ))}
             </Typography>
           </div>
         </StyledBox>
