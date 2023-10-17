@@ -24,6 +24,7 @@ const EditGroupForm = () => {
     groupDescription: "",
     groupImage: "",
   });
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
 
   const navigateToDashboard = () => {
     router.push({
@@ -37,11 +38,13 @@ const EditGroupForm = () => {
       ...prevValues,
       [fieldName]: newValue,
     }));
+    setUnsavedChanges(true);
   };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
+    setUnsavedChanges(true);
   };
 
   const updateGroup = async () => {
@@ -140,6 +143,7 @@ const EditGroupForm = () => {
         alignItems: "left",
         marginLeft: "230px",
         padding: isMobile ? "5rem 1rem" : "5rem 8rem",
+        paddingBottom: 0,
       }}
     >
       <div
@@ -336,39 +340,54 @@ const EditGroupForm = () => {
           </div>
         </div>
       </form>
-      <div style={{ display: "flex", gap: "20px" }}>
-        <Button
-          sx={{
-            backgroundColor: "#FBC91B",
-            fontFamily: "Poppins",
-            fontSize: "14px",
-            fontWeight: 600,
-            borderRadius: 20,
-            color: "#222222",
-            padding: "5px 20px",
-            textTransform: "none",
+      {unsavedChanges && (
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            transform: unsavedChanges ? "translateY(0)" : "translateY(100px)",
+            transition: "transform 0.3s ease",
+            position: "fixed",
+            backgroundColor: "#fff",
+            width: "100%",
+            bottom: 0,
+            height: "10%",
+            alignItems: "center",
           }}
-          onClick={updateGroup}
         >
-          Save
-        </Button>
+          <Button
+            sx={{
+              backgroundColor: "#FBC91B",
+              fontFamily: "Poppins",
+              fontSize: "14px",
+              fontWeight: 600,
+              borderRadius: 20,
+              color: "#222222",
+              padding: "5px 20px",
+              textTransform: "none",
+            }}
+            onClick={updateGroup}
+          >
+            Save
+          </Button>
 
-        <Button
-          sx={{
-            fontFamily: "Poppins",
-            fontSize: "14px",
-            borderRadius: 20,
-            fontWeight: 600,
-            color: "#222222",
-            padding: "5px 20px",
-            border: "1px solid #dbdbd7",
-            textTransform: "none",
-          }}
-          onClick={navigateToDashboard}
-        >
-          Cancel
-        </Button>
-      </div>
+          <Button
+            sx={{
+              fontFamily: "Poppins",
+              fontSize: "14px",
+              borderRadius: 20,
+              fontWeight: 600,
+              color: "#222222",
+              padding: "5px 20px",
+              border: "1px solid #dbdbd7",
+              textTransform: "none",
+            }}
+            onClick={navigateToDashboard}
+          >
+            Cancel
+          </Button>
+        </div>
+      )}
     </Box>
   );
 };
