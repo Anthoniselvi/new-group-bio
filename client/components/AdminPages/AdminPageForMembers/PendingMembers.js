@@ -30,7 +30,7 @@ export default function PendingMembers({ singleGroup }) {
     }));
 
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
+    <Box sx={{ height: 300, width: "100%", padding: 0 }}>
       <DataGrid
         rows={rows}
         columns={columns}

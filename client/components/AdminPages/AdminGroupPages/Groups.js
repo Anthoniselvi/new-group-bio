@@ -107,7 +107,7 @@ export default function Groups() {
         flexDirection: "column",
         gap: "2rem",
         padding: isMobile ? 0 : "0 15rem",
-        marginLeft: "230px",
+        marginLeft: isMobile ? 0 : "230px",
         "& .MuiCard-root": {
           borderRadius: 3,
         },

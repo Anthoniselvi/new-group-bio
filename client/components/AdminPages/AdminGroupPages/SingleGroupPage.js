@@ -30,6 +30,7 @@ import AdminMenu from "../../NavBar/AdminMenu";
 import SingleGroupMenu from "./SingleGroupMenu";
 import GroupMenu from "./GroupMenu";
 import ShareIcon from "@mui/icons-material/Share";
+import GroupMobileMenu from "./GroupMobileMenu";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -215,48 +216,78 @@ export default function SingleGroupPage() {
       }}
     >
       {alertVisible && <ShowAlert />}
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: isMobile ? "column" : "row",
-          alignItems: isMobile ? "left" : "center",
-          justifyContent: isMobile ? "left" : "space-between",
-        }}
-      >
-        <Typography
-          sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+      {!isMobile ? (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "left",
+            justifyContent: "space-between",
+          }}
         >
-          Members - {selectedGroup.groupName}
-        </Typography>
-        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <ShareIcon style={{ cursor: "pointer" }} onClick={shareViaWhatsApp} />
-          <button
-            onClick={navigateToCreateMember}
-            style={{
-              backgroundColor: "#FBC91B",
-              color: "#222222",
-              fontSize: 14,
-              fontWeight: 600,
-              fontFamily: "Poppins",
-              textTransform: "none",
-              borderRadius: 20,
-              padding: "8px 12px",
-              border: "none",
-              cursor: "pointer",
-            }}
+          <Typography
+            sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
           >
-            + Add Member
-          </button>
-          <MoreVertIcon style={{ cursor: "pointer" }} onClick={handleClick} />
-          <GroupMenu
-            open={open}
-            onClose={handleClose}
-            anchorEl={anchorEl}
-            groupId={selectedGroup.groupId}
-          />
+            Members - {selectedGroup.groupName}
+          </Typography>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <ShareIcon
+              style={{ cursor: "pointer" }}
+              onClick={shareViaWhatsApp}
+            />
+            <button
+              onClick={navigateToCreateMember}
+              style={{
+                backgroundColor: "#FBC91B",
+                color: "#222222",
+                fontSize: 14,
+                fontWeight: 600,
+                fontFamily: "Poppins",
+                textTransform: "none",
+                borderRadius: 20,
+                padding: "8px 12px",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              + Add Member
+            </button>
+            <MoreVertIcon style={{ cursor: "pointer" }} onClick={handleClick} />
+            <GroupMenu
+              open={open}
+              onClose={handleClose}
+              anchorEl={anchorEl}
+              groupId={selectedGroup.groupId}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "left",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography
+            sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+          >
+            Members - {selectedGroup.groupName}
+          </Typography>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <MoreVertIcon style={{ cursor: "pointer" }} onClick={handleClick} />
+            <GroupMobileMenu
+              open={open}
+              onClose={handleClose}
+              anchorEl={anchorEl}
+              groupId={selectedGroup.groupId}
+            />
+          </div>
+        </div>
+      )}
       <AppBar
         position="static"
         color="default"

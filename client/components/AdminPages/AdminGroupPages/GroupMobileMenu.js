@@ -14,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
 import { useUserAuth } from "@/context/GroupContext";
+import AddIcon from "@mui/icons-material/Add";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -58,7 +59,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function GroupMenu({ open, onClose, anchorEl, groupId }) {
+export default function GroupMobileMenu({ open, onClose, anchorEl, groupId }) {
   console.log("groupId from Menu:" + groupId);
   const router = useRouter();
   // const { id: groupId, memberId } = router.query;
@@ -70,6 +71,12 @@ export default function GroupMenu({ open, onClose, anchorEl, groupId }) {
     });
   };
 
+  const navigateToCreateMember = (item) => {
+    router.push({
+      pathname: "/createmember",
+      query: { id: groupId },
+    });
+  };
   return (
     <div>
       <StyledMenu
@@ -81,12 +88,15 @@ export default function GroupMenu({ open, onClose, anchorEl, groupId }) {
         open={open}
         onClose={onClose}
       >
+        <MenuItem onClick={navigateToCreateMember} disableRipple>
+          <AddIcon />
+          Add Group
+        </MenuItem>
         <MenuItem onClick={navigateToEditGroup} disableRipple>
           <EditIcon />
           Edit Group
         </MenuItem>
 
-        {/* <Divider sx={{ my: 0.5 }} /> */}
         <MenuItem disableRipple>
           <DeleteIcon />
           Delete Group

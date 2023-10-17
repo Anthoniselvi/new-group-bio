@@ -57,7 +57,7 @@ export default function CreateMemberForm() {
         display: "flex",
         flexDirection: "column",
         alignItems: "left",
-        marginLeft: "230px",
+        marginLeft: isMobile ? 0 : "230px",
         padding: isMobile ? "5rem 1rem" : "5rem 8rem",
       }}
     >
