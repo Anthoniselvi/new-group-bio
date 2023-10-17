@@ -46,6 +46,7 @@ const MemberProfilePage = () => {
         flexDirection: "column",
         gap: "20px",
         marginLeft: isMobile ? 0 : "230px",
+        paddingLeft: "100px",
       }}
     >
       <Typography
@@ -88,20 +89,45 @@ const MemberProfilePage = () => {
               gap: "20px",
             }}
           >
-            <Typography
-              sx={{
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
                 borderBottom: "1px solid #e1e2e5",
-                color: "#000000",
-                fontFamily: "Poppins",
-                fontSize: 16,
-                fontWeight: 500,
+                paddingBottom: 2,
               }}
             >
-              Personal Information
-            </Typography>
+              <Typography
+                sx={{
+                  color: "#000000",
+                  fontFamily: "Poppins",
+                  fontSize: 16,
+                  fontWeight: 500,
+                }}
+              >
+                Personal Information
+              </Typography>
+              <Typography
+                sx={{
+                  color: "#3549E6",
+                  fontFamily: "Poppins",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              >
+                Edit
+              </Typography>
+            </div>
             <Typography>Name - {selectedMember.name}</Typography>
-            <Typography>Course - {selectedMember.course}</Typography>
-            <Typography>Year - {selectedMember.year}</Typography>
+            {selectedGroup.groupType === "0" ? (
+              <>
+                <Typography>Course - {selectedMember.course}</Typography>
+                <Typography>Year - {selectedMember.year}</Typography>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
           <div
             style={{
@@ -110,17 +136,36 @@ const MemberProfilePage = () => {
               gap: "20px",
             }}
           >
-            <Typography
-              sx={{
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
                 borderBottom: "1px solid #e1e2e5",
-                color: "#000000",
-                fontFamily: "Poppins",
-                fontSize: 16,
-                fontWeight: 500,
+                paddingBottom: 2,
               }}
             >
-              Business Information
-            </Typography>
+              <Typography
+                sx={{
+                  color: "#000000",
+                  fontFamily: "Poppins",
+                  fontSize: 16,
+                  fontWeight: 500,
+                }}
+              >
+                Business Information
+              </Typography>
+              <Typography
+                sx={{
+                  color: "#3549E6",
+                  fontFamily: "Poppins",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              >
+                Edit
+              </Typography>
+            </div>
             <Typography>Company Name - {selectedMember.company}</Typography>
             <Typography>Designation - {selectedMember.designation}</Typography>
             <Typography>Industry - {selectedMember.industry}</Typography>
@@ -133,17 +178,36 @@ const MemberProfilePage = () => {
               gap: "20px",
             }}
           >
-            <Typography
-              sx={{
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
                 borderBottom: "1px solid #e1e2e5",
-                color: "#000000",
-                fontFamily: "Poppins",
-                fontSize: 16,
-                fontWeight: 500,
+                paddingBottom: 2,
               }}
             >
-              Social Media Information
-            </Typography>
+              <Typography
+                sx={{
+                  color: "#000000",
+                  fontFamily: "Poppins",
+                  fontSize: 16,
+                  fontWeight: 500,
+                }}
+              >
+                Social Media Information
+              </Typography>
+              <Typography
+                sx={{
+                  color: "#3549E6",
+                  fontFamily: "Poppins",
+                  fontSize: 14,
+                  fontWeight: 500,
+                }}
+              >
+                Edit
+              </Typography>
+            </div>
             <Typography>LinkedIn - {selectedMember.linkedin}</Typography>
             <Typography>Website Name - {selectedMember.website}</Typography>
           </div>
