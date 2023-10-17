@@ -29,6 +29,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AdminMenu from "../../NavBar/AdminMenu";
 import SingleGroupMenu from "./SingleGroupMenu";
 import GroupMenu from "./GroupMenu";
+import ShareIcon from "@mui/icons-material/Share";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -229,26 +230,7 @@ export default function SingleGroupPage() {
           Members - {selectedGroup.groupName}
         </Typography>
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <MdDelete
-            onClick={handleDelete}
-            style={{ color: "#fe3640", fontSize: 20, cursor: "pointer" }}
-          />
-          <button
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#25d366", // WhatsApp green
-              color: "#fff",
-              borderRadius: "20px",
-              border: "none",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "5px",
-            }}
-            onClick={shareViaWhatsApp}
-          >
-            <FaLink /> Share Link
-          </button>
+          <ShareIcon style={{ cursor: "pointer" }} onClick={shareViaWhatsApp} />
           <button
             onClick={navigateToCreateMember}
             style={{

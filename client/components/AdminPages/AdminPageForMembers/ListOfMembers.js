@@ -141,7 +141,7 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
               </ListItem>
             );
           }
-          return null; // Return null for items with empty names
+          return null;
         })}
       </List>
       {selectedMember && (

@@ -82,7 +82,6 @@ export default function ActiveMembers({ singleGroup, selectedGroup }) {
                       }}
                     >
                       {item.name}
-                      {/* Anthoniselvi */}
                     </Typography>
                     {selectedGroup.groupType === "0" ? (
                       <Typography
@@ -97,7 +96,6 @@ export default function ActiveMembers({ singleGroup, selectedGroup }) {
                           item.year,
                           getShortFormForCourse(item.course)
                         )}
-                        {/* B.E, 2005 (EEE) */}
                       </Typography>
                     ) : (
                       <></>
@@ -165,7 +163,6 @@ export default function ActiveMembers({ singleGroup, selectedGroup }) {
                     {item.company}
                     <br />
                     {item.location}
-                    {/* Director Selvi Exports Virudhunagar */}
                   </Typography>
                   <Typography
                     sx={{
@@ -179,9 +176,7 @@ export default function ActiveMembers({ singleGroup, selectedGroup }) {
                     }}
                     component="div"
                   >
-                    {/* Services Offered: <br /> */}
                     {item.offers}
-                    {/* Manufacturing of Pulses */}
                   </Typography>
                 </CardContent>
               </Card>
