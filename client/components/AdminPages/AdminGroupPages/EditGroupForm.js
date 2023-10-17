@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../firebase";
 import { useUserAuth } from "@/context/GroupContext";
+import Edit from "@mui/icons-material/Edit";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const EditGroupForm = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -281,31 +283,57 @@ const EditGroupForm = () => {
           >
             Group Image
           </label>
-          {imageUrl && (
+          <div
+            style={{
+              width: "200px",
+              height: "200px",
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <img
               style={{ width: "100%", height: "auto" }}
-              src={imageUrl}
+              src={inputFieldValues.groupImage}
               alt="image"
+              id="groupImage"
             />
-          )}
-          <input
-            type="file"
-            id="file"
-            style={{
-              background: "#fff",
-              borderRadius: "7px",
-              width: "100%",
-              height: "44px",
-              padding: "8px 15px",
-              fontWeight: 400,
-              fontSize: "16px",
-              lineHeight: "20px",
-              color: "#101a34",
-              border: "1px solid #cad3dd",
-              fontFamily: "Poppins",
-            }}
-            onChange={(event) => handleFileChange(event, "groupImage")}
-          />
+            <label
+              htmlFor="image-upload"
+              style={{
+                cursor: "pointer",
+                position: "absolute",
+                marginLeft: "80%",
+                marginTop: "40%",
+                backgroundColor: "#f0f1f4",
+                width: "30px",
+                height: "30px",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CloudUploadIcon
+                style={{ cursor: "pointer", color: "#898b8e" }}
+              />
+            </label>
+            <input
+              type="file"
+              id="image-upload"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={(event) => {
+                handleFileChange(event, "groupImage");
+                // Update the image source
+                const imgElement = document.getElementById("groupImage");
+                if (imgElement && event.target.files[0]) {
+                  imgElement.src = URL.createObjectURL(event.target.files[0]);
+                }
+              }}
+            />
+          </div>
         </div>
       </form>
       <div style={{ display: "flex", gap: "20px" }}>
