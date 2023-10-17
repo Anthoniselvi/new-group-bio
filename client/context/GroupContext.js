@@ -12,6 +12,7 @@ export function ApiContextProvider({ children }) {
   const [isMemberLoggedIn, setIsMemberLoggedIn] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
+  const { id } = router.query;
   const [loggedMemberId, setLoggedMemberId] = useState("");
 
   useEffect(() => {
@@ -52,6 +53,10 @@ export function ApiContextProvider({ children }) {
     if (matchingMember) {
       setIsMemberLoggedIn(true);
       setLoggedMemberId(matchingMember.memberId);
+      router.push({
+        pathname: "/membergrouppage",
+        query: { id: id, memberId: matchingMember.memberId },
+      });
     } else {
       setError("Your mobile number is not registered.");
     }
