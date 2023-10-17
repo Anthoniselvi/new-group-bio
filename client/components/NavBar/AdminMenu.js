@@ -66,6 +66,12 @@ export default function AdminMenu({ open, onClose, anchorEl }) {
       pathname: "/",
     });
   };
+
+  const navigateToAdminProfile = () => {
+    router.push({
+      pathname: "/profile",
+    });
+  };
   return (
     <div style={{ padding: "10px" }}>
       <StyledMenu
@@ -78,12 +84,12 @@ export default function AdminMenu({ open, onClose, anchorEl }) {
         onClose={onClose}
       >
         <MenuItem
-          onClick={onClose}
+          onClick={navigateToAdminProfile}
           disableRipple
           sx={{ borderBottom: "2px solid #e2e2df" }}
         >
           <EditIcon />
-          Admin
+          Profile
         </MenuItem>
 
         <MenuItem onClick={handleLogout} disableRipple>
