@@ -11,16 +11,40 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { Typography } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
+import { useMediaQuery } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import GroupWorkIcon from "@mui/icons-material/GroupWork";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import Divider from "@mui/material/Divider";
+import { useUserAuth } from "@/context/GroupContext";
 
 export default function LeftDrawer({ open, onClose }) {
+  const isMobile = useMediaQuery("(max-width: 900px)");
+  const { logout, isAdminLoggedIn, isMemberLoggedIn } = useUserAuth();
+  const navigateToDashboard = () => {
+    router.push({
+      pathname: "/dashboard",
+    });
+  };
+  const navigateToGroupsPage = () => {
+    router.push({
+      pathname: "/dashboard",
+    });
+  };
+
+  const handleLogout = () => {
+    logout();
+    router.push({
+      pathname: "/",
+    });
+  };
   const list = (
     <Box
       sx={{
         width: "100vw",
         height: "100vh",
-        zIndex: 1200,
+        zIndex: 1500,
         padding: 2,
-        paddingLeft: 7,
         backgroundColor: "#f0f1f4",
       }}
       role="presentation"
@@ -30,34 +54,78 @@ export default function LeftDrawer({ open, onClose }) {
       <List
         sx={{ backgroundColor: "#ffffff", borderRadius: 6, height: "100%" }}
       >
-        <IoMdClose
-          style={{ marginLeft: "90%", fontSize: 20 }}
-          onClick={onClose}
-        />
-
-        <Typography
-          sx={{
-            fontFamily: "Poppins",
-            fontWeight: 600,
-            fontSize: 16,
-            paddingLeft: "5%",
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "5%",
             paddingBottom: "10%",
           }}
-          noWrap
-          component="div"
         >
-          Group Bio
-        </Typography>
-        {["Home", "Groups", "Members", "Support"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+          <Typography
+            sx={{
+              fontFamily: "Poppins",
+              fontWeight: 600,
+              fontSize: 16,
+            }}
+            noWrap
+            component="div"
+          >
+            Group Bio
+          </Typography>
+          <IoMdClose style={{ fontSize: 24 }} onClick={onClose} />
+        </div>
+
+        {isMobile && isAdminLoggedIn ? (
+          <>
+            <ListItem disablePadding>
+              <ListItemButton onClick={navigateToDashboard}>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText>Dashboard</ListItemText>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding sx={{ paddingBottom: "20px" }}>
+              <ListItemButton onClick={navigateToGroupsPage}>
+                <ListItemIcon>
+                  <GroupWorkIcon />
+                </ListItemIcon>
+                <ListItemText>Groups</ListItemText>
+              </ListItemButton>
+            </ListItem>
+            <Divider />
+            <ListItem disablePadding sx={{ paddingTop: "20px" }}>
+              <ListItemButton onClick={handleLogout}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText>Logout</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          </>
+        ) : (
+          <>
+            {" "}
+            <ListItem disablePadding>
+              <ListItemButton onClick={navigateToDashboard}>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText>Dashboard</ListItemText>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={handleLogout}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText>Logout</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          </>
+        )}
       </List>
     </Box>
   );
