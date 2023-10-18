@@ -25,6 +25,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 // import logo from "../img/logo-big.png";
 import { useRouter } from "next/router";
 import { useUserAuth } from "@/context/GroupContext";
+import AdminMobileMenu from "./AdminMobileMenu";
 
 const drawerWidth = 240;
 
@@ -35,9 +36,22 @@ const AdminTopBar = () => {
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const { id: groupId, memberId } = router.query;
+
+  const toggleDrawer = (newOpen) => () => {
+    setMenuOpen(newOpen);
   };
+
+  const handleClick = (event) => {
+    if (!isMobile) {
+      setAnchorEl(event.currentTarget);
+    } else {
+      setMenuOpen(true);
+      // setEdgeMember(item);
+    }
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -147,21 +161,18 @@ const AdminTopBar = () => {
                 width: "100%",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                {/* <img src={logo} /> */}
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 600,
-                    fontSize: 16,
-                  }}
-                  noWrap
-                  component="div"
-                >
-                  Group Bio
-                </Typography>
-                <FiMenu onClick={openLeftDrawer} />
-              </div>
+              <FiMenu onClick={openLeftDrawer} />
+              <Typography
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: 600,
+                  fontSize: 16,
+                }}
+                noWrap
+                component="div"
+              >
+                Group Bio
+              </Typography>
 
               <div
                 onClick={handleClick}
@@ -267,6 +278,13 @@ const AdminTopBar = () => {
         onClose={() => setIsLeftDrawerOpen(false)}
       />
       <AdminMenu open={open} onClose={handleLogout} anchorEl={anchorEl} />
+      {isMobile && (
+        <AdminMobileMenu
+          open={menuOpen}
+          onClose={handleLogout}
+          toggleDrawer={toggleDrawer}
+        />
+      )}
     </Box>
   );
 };

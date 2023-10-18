@@ -255,16 +255,6 @@ const MemberTopBar = () => {
             }}
           >
             <List>
-              {/* {["Home", "Groups", "Members", "Support"].map((text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton onClick={() => handleMenuItemClick(text)}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              ))} */}
               <ListItem disablePadding>
                 <ListItemButton onClick={navigateToDashboard}>
                   <ListItemIcon>

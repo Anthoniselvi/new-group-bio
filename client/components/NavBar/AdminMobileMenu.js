@@ -84,9 +84,8 @@ const Puller = styled(Box)(({ theme }) => ({
   left: "calc(50% - 15px)",
 }));
 
-export default function MemberMobileMenu(props) {
-  const { window, open, onClose, toggleDrawer, profile, selectedMember } =
-    props;
+export default function AdminMobileMenu(props) {
+  const { window, open, onClose, toggleDrawer, profile } = props;
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -105,11 +104,12 @@ export default function MemberMobileMenu(props) {
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(50% - ${drawerBleeding}px)`,
+            height: `calc(40% - ${drawerBleeding}px)`,
             overflow: "visible",
             backgroundColor: "#ffffff",
             borderTopLeftRadius: "20px",
             borderTopRightRadius: "20px",
+            // paddingTop: "2rem",
           },
         }}
       />
@@ -126,7 +126,7 @@ export default function MemberMobileMenu(props) {
           keepMounted: true,
         }}
       >
-        <div style={{ padding: "0px 20px" }}>
+        {/* <div style={{ padding: "0px 20px" }}>
           {console.log("name:" + selectedMember.name)}
           {!selectedMember.name ? (
             <></>
@@ -183,10 +183,10 @@ export default function MemberMobileMenu(props) {
               </div>
             </MenuItem>
           )}
-        </div>
+        </div> */}
         {/* <Divider sx={{ my: 0.5 }} /> */}
         <MenuItem
-          sx={{ display: "flex", gap: "10px" }}
+          sx={{ display: "flex", gap: "10px", paddingTop: "2rem" }}
           onClick={navigateToSelectedProfilePage}
           disableRipple
         >
@@ -194,7 +194,7 @@ export default function MemberMobileMenu(props) {
           Profile Settings
         </MenuItem>
         <MenuItem
-          sx={{ display: "flex", gap: "10px" }}
+          sx={{ display: "flex", gap: "10px", paddingTop: "2rem" }}
           onClick={onClose}
           disableRipple
         >
@@ -207,7 +207,7 @@ export default function MemberMobileMenu(props) {
   );
 }
 
-MemberMobileMenu.propTypes = {
+AdminMobileMenu.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.

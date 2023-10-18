@@ -90,7 +90,7 @@ export default function GroupMobileMenu({ open, onClose, anchorEl, groupId }) {
       >
         <MenuItem onClick={navigateToCreateMember} disableRipple>
           <AddIcon />
-          Add Group
+          Add Member
         </MenuItem>
         <MenuItem onClick={navigateToEditGroup} disableRipple>
           <EditIcon />
