@@ -229,8 +229,24 @@
   }
 }
 .content_container{
-  /* border:1px solid red; */
-  /* padding: 4rem 1rem; */
-  /* margin-left: 230px;
-  padding: 2rem; */
+  padding:2rem 0;
+}
+.header_container{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+}
+.stepper{
+  padding:2rem 0;
+}
+@media (max-width: 900px) {
+  .content_container{
+    padding:1rem 0;
+  }
+  .stepper{
+    padding:0.5rem 0;
+  }
+  }
+.step{
+  border: 1px solid #e1e2e5;
 }

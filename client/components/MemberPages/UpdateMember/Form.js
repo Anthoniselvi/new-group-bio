@@ -406,7 +406,11 @@ export default function Form() {
   return (
     <Box className={styles.content_container}>
       <ProgressSlider progressPercentage={calculateProgressPercentage()} />
-      <Stepper activeStep={activeStep} orientation="vertical">
+      <Stepper
+        activeStep={activeStep}
+        orientation="vertical"
+        className={styles.stepper}
+      >
         {steps(selectedGroup).map((step, index) => (
           <Step
             key={step.label}
@@ -473,7 +477,9 @@ export default function Form() {
                 </Typography>
               </div>
             </StepLabel>
-            <StepContent sx={{ p: 0, margin: 0, zIndex: 10, border: "none" }}>
+            <StepContent
+              sx={{ p: "0px 5px", margin: 0, zIndex: 10, border: "none" }}
+            >
               {stepContentVisibility[index] && (
                 <div>
                   {index === 0 && (
