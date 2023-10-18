@@ -10,7 +10,12 @@ const updatemember = () => {
   console.log("groupId in update:", groupId);
   console.log("memberId in update:", memberId);
   return (
-    <div style={{ padding: "6rem 2rem", marginLeft: isMobile ? 0 : "240px" }}>
+    <div
+      style={{
+        padding: isMobile ? "6rem 2rem" : "6rem 10rem",
+        marginLeft: isMobile ? 0 : "240px",
+      }}
+    >
       <Header />
       <Form />
     </div>

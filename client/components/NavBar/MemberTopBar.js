@@ -20,11 +20,14 @@ import { FiMenu } from "react-icons/fi";
 import LeftDrawer from "./LeftDrawer";
 import AdminMenu from "./AdminMenu";
 import LogoutIcon from "@mui/icons-material/Logout";
+import PersonIcon from "@mui/icons-material/Person";
 import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useRouter } from "next/router";
 import MemberMenu from "./MemberMenu";
 import { useUserAuth } from "@/context/GroupContext";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const drawerWidth = 240;
 
@@ -32,6 +35,7 @@ const MemberTopBar = () => {
   const { logout } = useUserAuth();
 
   const isMobile = useMediaQuery("(max-width: 900px)");
+  const [selectedMember, setSelectedMember] = useState({});
   const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -65,6 +69,20 @@ const MemberTopBar = () => {
       query: { id: groupId },
     });
   };
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
+      .then((response) => {
+        setSelectedMember(response.data);
+        console.log(
+          "selected member in form: " + JSON.stringify(response.data)
+        );
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [memberId]);
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#ffffff" }}>
@@ -114,7 +132,12 @@ const MemberTopBar = () => {
                     color: "#ffffff",
                   }}
                 >
-                  A
+                  {console.log("name:" + selectedMember.name)}
+                  {!selectedMember.name ? (
+                    <PersonIcon />
+                  ) : (
+                    selectedMember.name[0]
+                  )}
                 </div>
                 <FiChevronDown />
               </div>
@@ -172,7 +195,11 @@ const MemberTopBar = () => {
                     color: "#ffffff",
                   }}
                 >
-                  A
+                  {!selectedMember.name ? (
+                    <PersonIcon />
+                  ) : (
+                    selectedMember.name[0]
+                  )}
                 </div>
                 <FiChevronDown />
               </div>
@@ -251,7 +278,7 @@ const MemberTopBar = () => {
       />
       <MemberMenu
         open={open}
-        onClose={handleClose}
+        onClose={handleLogout}
         anchorEl={anchorEl}
         memberId={memberId}
       />

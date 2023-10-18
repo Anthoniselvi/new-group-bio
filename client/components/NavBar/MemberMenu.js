@@ -10,8 +10,11 @@ import FileCopyIcon from "@mui/icons-material/FileCopy";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -65,6 +68,7 @@ export default function MemberMenu({ open, onClose, anchorEl }) {
   //   const handleClose = () => {
   //     setAnchorEl(null);
   //   };
+  const [selectedMember, setSelectedMember] = useState({});
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
 
@@ -74,22 +78,23 @@ export default function MemberMenu({ open, onClose, anchorEl }) {
       query: { id: groupId, memberId: memberId },
     });
   };
-
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
+      .then((response) => {
+        setSelectedMember(response.data);
+        console.log(
+          "selected member in form: " + JSON.stringify(response.data)
+        );
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [memberId]);
   return (
     <div>
-      {/* <Button
-        id="demo-customized-button"
-        aria-controls={open ? "demo-customized-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        variant="contained"
-        disableElevation
-        onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
-      >
-        Options
-      </Button> */}
       <StyledMenu
+        sx={{ padding: "20px" }}
         id="demo-customized-menu"
         MenuListProps={{
           "aria-labelledby": "demo-customized-button",
@@ -98,17 +103,67 @@ export default function MemberMenu({ open, onClose, anchorEl }) {
         open={open}
         onClose={onClose}
       >
-        <MenuItem onClick={onClose} disableRipple>
-          <EditIcon />
-          Name
-        </MenuItem>
-        {/* <MenuItem onClick={onClose} disableRipple>
-          <FileCopyIcon />
-          Duplicate
-        </MenuItem> */}
-        <Divider sx={{ my: 0.5 }} />
+        <div style={{ padding: "0px 20px" }}>
+          {console.log("name:" + selectedMember.name)}
+          {!selectedMember.name ? (
+            <></>
+          ) : (
+            <MenuItem
+              onClick={onClose}
+              disableRipple
+              sx={{
+                display: "flex",
+                alignItems: "left",
+                gap: "20px",
+                borderBottom: "1px solid #e1e2e5",
+                padding: "1rem 2rem",
+                paddingLeft: 0,
+              }}
+            >
+              <div
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: "50%",
+                  backgroundColor: "#79909d",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 20,
+                  color: "#ffffff",
+                }}
+              >
+                {selectedMember.name[0]}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <p
+                  style={{
+                    color: "#1B1B18",
+                    fontFamily: "Poppins",
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  {selectedMember.name}
+                </p>
+
+                <p
+                  style={{
+                    color: "#1B1B18A6",
+                    fontFamily: "Poppins",
+                    fontSize: 14,
+                    fontWeight: 400,
+                  }}
+                >
+                  {selectedMember.mobile}
+                </p>
+              </div>
+            </MenuItem>
+          )}
+        </div>
+        {/* <Divider sx={{ my: 0.5 }} /> */}
         <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
-          <PersonIcon />
+          <PersonOutlineIcon />
           Profile Settings
         </MenuItem>
         <MenuItem onClick={onClose} disableRipple>

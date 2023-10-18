@@ -104,27 +104,29 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                     >
                       {item.name}
                     </Typography>
-                    {selectedGroup.groupType === "0" ? (
-                      <Typography
-                        sx={{
-                          display: "inline",
-                          color: "#75777A",
-                          fontSize: 14,
-                          fontFamily: "Poppins",
-                        }}
-                      >
-                        {formatCourseInfo(
-                          item.course,
-                          item.year,
-                          getShortFormForCourse(item.course)
-                        )}
-                      </Typography>
-                    ) : (
-                      <></>
-                    )}
+                    <>
+                      {selectedGroup.groupType === "0" ? (
+                        <Typography
+                          sx={{
+                            display: "inline",
+                            color: "#75777A",
+                            fontSize: 14,
+                            fontFamily: "Poppins",
+                          }}
+                        >
+                          {formatCourseInfo(
+                            item.course,
+                            item.year,
+                            getShortFormForCourse(item.course)
+                          )}
+                        </Typography>
+                      ) : (
+                        <></>
+                      )}
+                    </>
                     <Typography
                       sx={{
-                        display: "inline",
+                        // display: "inline",
                         color: "#75777A",
                         fontSize: 14,
                         fontFamily: "Poppins",
@@ -134,7 +136,7 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                     </Typography>
                     <Typography
                       sx={{
-                        display: "inline",
+                        // display: "inline",
                         color: "#454749",
                         fontSize: 16,
                         fontWeight: 500,

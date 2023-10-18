@@ -150,19 +150,9 @@ export default function SingleMemberProfile({
               fontFamily: "Poppins",
             }}
           >
-            {profile.designation}
+            {profile.designation}, {profile.company}
           </Typography>
-          <Typography
-            sx={{
-              display: "inline",
-              color: "#333333",
-              fontSize: 14,
-              fontWeight: 500,
-              fontFamily: "Poppins",
-            }}
-          >
-            {profile.company}
-          </Typography>
+
           <Typography
             sx={{
               display: "inline",
