@@ -134,7 +134,7 @@ export default function EdgeBox(props) {
           >
             {profile.mobile}
           </Typography>
-          <div>
+          <div style={{ display: "flex", gap: "20px" }}>
             <LinkedInIcon style={{ cursor: "pointer" }} />
             <LinkIcon style={{ cursor: "pointer" }} />
           </div>

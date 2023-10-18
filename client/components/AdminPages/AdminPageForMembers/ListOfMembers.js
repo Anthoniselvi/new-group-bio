@@ -53,20 +53,27 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                 data-starts-with={item.name.charAt(0).toLowerCase()}
               >
                 <div
-                  style={{ display: "flex", gap: "50px", alignItems: "center" }}
+                  style={{
+                    display: "flex",
+                    gap: isMobile ? "20px" : "50px",
+                    alignItems: "center",
+                  }}
                 >
                   <ListItemAvatar>
                     {item.image ? (
                       <Avatar
                         alt="Remy Sharp"
                         src={item.image}
-                        sx={{ width: "80px", height: "80px" }}
+                        sx={{
+                          width: isMobile ? "50px" : "80px",
+                          height: isMobile ? "50px" : "80px",
+                        }}
                       />
                     ) : (
                       <div
                         style={{
-                          width: "80px",
-                          height: "80px",
+                          width: isMobile ? "50px" : "80px",
+                          height: isMobile ? "50px" : "80px",
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
@@ -80,7 +87,7 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                       </div>
                     )}
                   </ListItemAvatar>
-                  <Typography
+                  <div
                     sx={{
                       display: "flex",
                       flexDirection: "column",
@@ -136,7 +143,7 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                     >
                       {item.offers}
                     </Typography>
-                  </Typography>
+                  </div>
                 </div>
               </ListItem>
             );

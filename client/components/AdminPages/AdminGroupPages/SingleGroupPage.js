@@ -181,13 +181,14 @@ export default function SingleGroupPage() {
     <Box
       sx={{
         bgcolor: "background.paper",
-        marginLeft: isMobile ? 0 : "230px",
+
         position: "relative",
         minHeight: 400,
         display: "flex",
         flexDirection: "column",
         gap: "30px",
         width: isMobile ? "100vw" : "calc(100vw - 250px)",
+        marginLeft: isMobile ? 0 : "230px",
         padding: isMobile ? 0 : "2rem 4rem",
         "& .MuiButtonBase-root-MuiTab-root": {
           backgroundColor: "none",

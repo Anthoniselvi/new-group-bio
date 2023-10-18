@@ -7,12 +7,14 @@ import AddedMembers from "@/components/Members/AddedMembers";
 import axios from "axios";
 import ListOfMembers from "@/components/AdminPages/AdminPageForMembers/ListOfMembers";
 import { useUserAuth } from "@/context/GroupContext";
+import { useMediaQuery } from "@mui/material";
 
 export default function MemberSingleGroupPage() {
   const [createMemberModalOpen, setCreateMemberModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState({});
   const [singleGroupMembers, setSingleGroupMembers] = useState([]);
   const { loggedMemberId } = useUserAuth();
+  const isMobile = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
 
@@ -50,7 +52,13 @@ export default function MemberSingleGroupPage() {
       });
   }, []);
   return (
-    <div style={{ padding: "1rem", marginTop: "6rem", marginLeft: "230px" }}>
+    <div
+      style={{
+        marginTop: "6rem",
+        marginLeft: isMobile ? 0 : "230px",
+        padding: isMobile ? "1rem" : "2rem 4rem",
+      }}
+    >
       <div
         style={{
           display: "flex",
