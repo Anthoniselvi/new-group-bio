@@ -53,10 +53,17 @@ export function ApiContextProvider({ children }) {
     if (matchingMember) {
       setIsMemberLoggedIn(true);
       setLoggedMemberId(matchingMember.memberId);
-      router.push({
-        pathname: "/membergrouppage",
-        query: { id: id, memberId: matchingMember.memberId },
-      });
+      if (!matchingMember.name) {
+        router.push({
+          pathname: "/updatemember",
+          query: { id: id, memberId: matchingMember.memberId },
+        });
+      } else {
+        router.push({
+          pathname: "/membergrouppage",
+          query: { id: id, memberId: matchingMember.memberId },
+        });
+      }
     } else {
       setError("Your mobile number is not registered.");
     }

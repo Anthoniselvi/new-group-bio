@@ -17,7 +17,21 @@ export default function MemberSingleGroupPage() {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
+  const [selectedMember, setSelectedMember] = useState({});
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
+      .then((response) => {
+        setSelectedMember(response.data);
+        console.log(
+          "selected member in form: " + JSON.stringify(response.data)
+        );
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [memberId]);
   const navigateToUpdateMember = () => {
     router.push({
       pathname: "/updatemember",
@@ -68,19 +82,23 @@ export default function MemberSingleGroupPage() {
         }}
       >
         <h2>{selectedGroup.groupName}</h2>
-        <button
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#00b4d8",
-            color: "#fff",
-            borderRadius: "20px",
-            border: "none",
-            cursor: "pointer",
-          }}
-          onClick={() => navigateToUpdateMember(memberId)}
-        >
-          Update
-        </button>
+        {!selectedMember.name ? (
+          <button
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#00b4d8",
+              color: "#fff",
+              borderRadius: "20px",
+              border: "none",
+              cursor: "pointer",
+            }}
+            onClick={() => navigateToUpdateMember(memberId)}
+          >
+            Update
+          </button>
+        ) : (
+          <></>
+        )}
 
         {createMemberModalOpen ? (
           <AddMember

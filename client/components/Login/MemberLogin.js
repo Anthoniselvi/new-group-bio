@@ -35,10 +35,10 @@ const MemberLogin = () => {
 
     memberLogin(mobile, membersList);
     console.log("loggedMember in login:" + loggedMemberId);
-    router.push({
-      pathname: "/membergrouppage",
-      query: { id: groupId, memberId: loggedMemberId },
-    });
+    // router.push({
+    //   pathname: "/updatemember",
+    //   query: { id: groupId, memberId: loggedMemberId },
+    // });
   };
 
   return (

@@ -43,7 +43,7 @@ export default function LeftDrawer({ open, onClose }) {
       sx={{
         width: "100vw",
         height: "100vh",
-        zIndex: 1500,
+        zIndex: 1200,
         padding: 2,
         backgroundColor: "#f0f1f4",
       }}
