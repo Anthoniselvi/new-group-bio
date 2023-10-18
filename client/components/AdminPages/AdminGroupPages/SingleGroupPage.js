@@ -31,6 +31,7 @@ import SingleGroupMenu from "./SingleGroupMenu";
 import GroupMenu from "./GroupMenu";
 import ShareIcon from "@mui/icons-material/Share";
 import GroupMobileMenu from "./GroupMobileMenu";
+import PendingMembersTable from "../AdminPageForMembers/PendingMembersTable";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -190,6 +191,7 @@ export default function SingleGroupPage() {
         width: isMobile ? "100vw" : "calc(100vw - 250px)",
         marginLeft: isMobile ? 0 : "230px",
         padding: isMobile ? 0 : "2rem 4rem",
+        paddingRight: "1rem",
         "& .MuiButtonBase-root-MuiTab-root": {
           backgroundColor: "none",
           textTransform: "none",
@@ -213,6 +215,10 @@ export default function SingleGroupPage() {
         },
         "& .css-1aquho2-MuiTabs-indicator": {
           backgroundColor: "#FBC91B",
+        },
+        "& .css-19kzrtu": {
+          padding: 1,
+          paddingRight: 4,
         },
       }}
     >
@@ -333,7 +339,8 @@ export default function SingleGroupPage() {
           />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <PendingMembers singleGroup={singleGroupMembers} />
+          {/* <PendingMembers singleGroup={singleGroupMembers} /> */}
+          <PendingMembersTable singleGroup={singleGroupMembers} />
         </TabPanel>
       </SwipeableViews>
       {/* {fabs.map((fab, index) => (
