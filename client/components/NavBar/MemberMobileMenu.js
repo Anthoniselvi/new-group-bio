@@ -1,20 +1,24 @@
 import * as React from "react";
+import PropTypes from "prop-types";
+import { Global } from "@emotion/react";
 import { styled, alpha } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { grey } from "@mui/material/colors";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
+import Typography from "@mui/material/Typography";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Avatar from "@mui/material/Avatar";
+import { CloseOutlined } from "@mui/icons-material";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import LinkIcon from "@mui/icons-material/Link";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import PersonIcon from "@mui/icons-material/Person";
-import LogoutIcon from "@mui/icons-material/Logout";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import LogoutIcon from "@mui/icons-material/Logout";
+const drawerBleeding = 56;
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -58,9 +62,34 @@ const StyledMenu = styled((props) => (
     },
   },
 }));
+const Root = styled("div")(({ theme }) => ({
+  height: "100%",
+  backgroundColor:
+    theme.palette.mode === "light"
+      ? grey[100]
+      : theme.palette.background.default,
+}));
 
-export default function MemberMenu({ open, onClose, anchorEl }) {
-  const [selectedMember, setSelectedMember] = useState({});
+const StyledBox = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
+}));
+
+const Puller = styled(Box)(({ theme }) => ({
+  width: 30,
+  height: 6,
+  backgroundColor: theme.palette.mode === "light" ? grey[300] : grey[900],
+  borderRadius: 3,
+  position: "absolute",
+  top: 8,
+  left: "calc(50% - 15px)",
+}));
+
+export default function MemberMobileMenu(props) {
+  const { window, open, onClose, toggleDrawer, profile, selectedMember } =
+    props;
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
 
@@ -70,31 +99,40 @@ export default function MemberMenu({ open, onClose, anchorEl }) {
       query: { id: groupId, memberId: memberId },
     });
   };
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
-      .then((response) => {
-        setSelectedMember(response.data);
-        console.log(
-          "selected member in form: " + JSON.stringify(response.data)
-        );
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [memberId]);
   return (
-    <div>
-      <StyledMenu
-        sx={{ padding: "20px" }}
-        id="demo-customized-menu"
-        MenuListProps={{
-          "aria-labelledby": "demo-customized-button",
+    <Root>
+      <CssBaseline />
+      <Global
+        styles={{
+          ".MuiDrawer-root > .MuiPaper-root": {
+            height: `calc(50% - ${drawerBleeding}px)`,
+            overflow: "visible",
+            backgroundColor: "#ffffff",
+            borderTopLeftRadius: "20px",
+            borderTopRightRadius: "20px",
+          },
         }}
-        anchorEl={anchorEl}
+      />
+
+      <SwipeableDrawer
+        container={container}
+        anchor="bottom"
         open={open}
-        onClose={onClose}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+        swipeAreaWidth={drawerBleeding}
+        disableSwipeToOpen={false}
+        ModalProps={{
+          keepMounted: true,
+        }}
       >
+        {/* <StyledMenu
+          sx={{ padding: "20px" }}
+          id="demo-customized-menu"
+          MenuListProps={{
+            "aria-labelledby": "demo-customized-button",
+          }}
+        > */}
         <div style={{ padding: "0px 20px" }}>
           {console.log("name:" + selectedMember.name)}
           {!selectedMember.name ? (
@@ -154,15 +192,32 @@ export default function MemberMenu({ open, onClose, anchorEl }) {
           )}
         </div>
         {/* <Divider sx={{ my: 0.5 }} /> */}
-        <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
+        <MenuItem
+          sx={{ display: "flex", gap: "10px" }}
+          onClick={navigateToSelectedProfilePage}
+          disableRipple
+        >
           <PersonOutlineIcon />
           Profile Settings
         </MenuItem>
-        <MenuItem onClick={onClose} disableRipple>
+        <MenuItem
+          sx={{ display: "flex", gap: "10px" }}
+          onClick={onClose}
+          disableRipple
+        >
           <LogoutIcon />
           Logout
         </MenuItem>
-      </StyledMenu>
-    </div>
+        {/* </StyledMenu> */}
+      </SwipeableDrawer>
+    </Root>
   );
 }
+
+MemberMobileMenu.propTypes = {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func,
+};

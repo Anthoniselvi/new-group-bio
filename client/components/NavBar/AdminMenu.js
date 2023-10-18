@@ -11,6 +11,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useRouter } from "next/router";
 import { useUserAuth } from "@/context/GroupContext";
 
@@ -58,14 +59,7 @@ const StyledMenu = styled((props) => (
 }));
 
 export default function AdminMenu({ open, onClose, anchorEl }) {
-  const { logout } = useUserAuth();
   const router = useRouter();
-  const handleLogout = () => {
-    logout();
-    router.push({
-      pathname: "/",
-    });
-  };
 
   const navigateToAdminProfile = () => {
     router.push({
@@ -88,11 +82,11 @@ export default function AdminMenu({ open, onClose, anchorEl }) {
           disableRipple
           sx={{ borderBottom: "2px solid #e2e2df" }}
         >
-          <EditIcon />
+          <PersonOutlineIcon />
           Profile
         </MenuItem>
 
-        <MenuItem onClick={handleLogout} disableRipple>
+        <MenuItem onClick={onClose} disableRipple>
           <LogoutIcon />
           Logout
         </MenuItem>

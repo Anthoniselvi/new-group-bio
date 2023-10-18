@@ -28,6 +28,7 @@ import MemberMenu from "./MemberMenu";
 import { useUserAuth } from "@/context/GroupContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import MemberMobileMenu from "./MemberMobileMenu";
 
 const drawerWidth = 240;
 
@@ -40,10 +41,24 @@ const MemberTopBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = React.useState(false);
   const { id: groupId, memberId } = router.query;
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+
+  const toggleDrawer = (newOpen) => () => {
+    setMenuOpen(newOpen);
   };
+
+  const handleClick = (event) => {
+    if (!isMobile) {
+      setAnchorEl(event.currentTarget);
+    } else {
+      setMenuOpen(true);
+      // setEdgeMember(item);
+    }
+  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -164,22 +179,22 @@ const MemberTopBar = () => {
                 width: "100%",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <Typography
-                  sx={{
-                    fontFamily: "Poppins",
-                    fontWeight: 600,
-                    fontSize: 16,
-                  }}
-                  noWrap
-                  component="div"
-                >
-                  Group Bio
-                </Typography>
-                <FiMenu onClick={openLeftDrawer} />
-              </div>
+              <FiMenu onClick={openLeftDrawer} />
+
+              <Typography
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: 600,
+                  fontSize: 16,
+                }}
+                noWrap
+                component="div"
+              >
+                Group Bio
+              </Typography>
 
               <div
+                onClick={handleClick}
                 style={{ display: "flex", gap: "10px", alignItems: "center" }}
               >
                 <div
@@ -282,6 +297,14 @@ const MemberTopBar = () => {
         anchorEl={anchorEl}
         memberId={memberId}
       />
+      {isMobile && (
+        <MemberMobileMenu
+          open={menuOpen}
+          onClose={handleLogout}
+          toggleDrawer={toggleDrawer}
+          selectedMember={selectedMember}
+        />
+      )}
     </Box>
   );
 };
