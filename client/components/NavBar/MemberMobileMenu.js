@@ -85,7 +85,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 export default function MemberMobileMenu(props) {
-  const { window, open, onClose, toggleDrawer, profile, selectedMember } =
+  const { window, open, onClose, toggleDrawer, setOpen, selectedMember } =
     props;
 
   const container =
@@ -98,6 +98,7 @@ export default function MemberMobileMenu(props) {
       pathname: "/profile",
       query: { id: groupId, memberId: memberId },
     });
+    setOpen(false);
   };
   return (
     <Root>

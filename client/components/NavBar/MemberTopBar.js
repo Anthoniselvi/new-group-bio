@@ -290,6 +290,7 @@ const MemberTopBar = () => {
       {isMobile && (
         <MemberMobileMenu
           open={menuOpen}
+          setOpen={setMenuOpen}
           onClose={handleLogout}
           toggleDrawer={toggleDrawer}
           selectedMember={selectedMember}

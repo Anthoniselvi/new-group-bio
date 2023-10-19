@@ -23,6 +23,7 @@ export default function LeftDrawer({ open, onClose }) {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const { logout, isAdminLoggedIn, isMemberLoggedIn } = useUserAuth();
   const router = useRouter();
+  const { id: groupId, memberId } = router.query;
   const navigateToDashboard = () => {
     router.push({
       pathname: "/dashboard",
@@ -33,7 +34,12 @@ export default function LeftDrawer({ open, onClose }) {
       pathname: "/dashboard",
     });
   };
-
+  const navigateToDashboardforMember = () => {
+    router.push({
+      pathname: "/membergrouppage",
+      query: { id: groupId, memberId },
+    });
+  };
   const handleLogout = () => {
     logout();
     router.push({
@@ -111,7 +117,7 @@ export default function LeftDrawer({ open, onClose }) {
           <>
             {" "}
             <ListItem disablePadding>
-              <ListItemButton onClick={navigateToDashboard}>
+              <ListItemButton onClick={navigateToDashboardforMember}>
                 <ListItemIcon>
                   <DashboardIcon />
                 </ListItemIcon>
