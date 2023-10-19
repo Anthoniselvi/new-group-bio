@@ -281,6 +281,7 @@ const AdminTopBar = () => {
       {isMobile && (
         <AdminMobileMenu
           open={menuOpen}
+          setOpen={setMenuOpen}
           onClose={handleLogout}
           toggleDrawer={toggleDrawer}
         />

@@ -17,10 +17,12 @@ import GroupWorkIcon from "@mui/icons-material/GroupWork";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import Divider from "@mui/material/Divider";
 import { useUserAuth } from "@/context/GroupContext";
+import { useRouter } from "next/router";
 
 export default function LeftDrawer({ open, onClose }) {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const { logout, isAdminLoggedIn, isMemberLoggedIn } = useUserAuth();
+  const router = useRouter();
   const navigateToDashboard = () => {
     router.push({
       pathname: "/dashboard",

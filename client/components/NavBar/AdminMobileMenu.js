@@ -85,7 +85,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 export default function AdminMobileMenu(props) {
-  const { window, open, onClose, toggleDrawer, profile } = props;
+  const { window, open, setOpen, onClose, toggleDrawer, profile } = props;
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -95,8 +95,9 @@ export default function AdminMobileMenu(props) {
   const navigateToSelectedProfilePage = () => {
     router.push({
       pathname: "/profile",
-      query: { id: groupId, memberId: memberId },
+      // query: { id: groupId, memberId: memberId },
     });
+    setOpen(false);
   };
   return (
     <Root>
