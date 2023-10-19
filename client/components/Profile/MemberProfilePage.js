@@ -46,7 +46,7 @@ const MemberProfilePage = () => {
         flexDirection: "column",
         gap: "20px",
         marginLeft: isMobile ? 0 : "230px",
-        paddingLeft: "100px",
+        paddingLeft: isMobile ? "10px" : "100px",
       }}
     >
       <Typography
@@ -65,7 +65,7 @@ const MemberProfilePage = () => {
         <div
           style={{
             border: "1px solid #e1e2e5",
-            width: "50%",
+            width: isMobile ? "100%" : "50%",
             display: "flex",
             flexDirection: "column",
             gap: "30px",
@@ -216,7 +216,7 @@ const MemberProfilePage = () => {
         <div
           style={{
             border: "1px solid #e1e2e5",
-            width: "50%",
+            width: isMobile ? "100%" : "50%",
             display: "flex",
             flexDirection: "column",
             gap: "30px",
