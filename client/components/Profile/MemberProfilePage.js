@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useUserAuth } from "@/context/GroupContext";
 import { useMediaQuery } from "@mui/material";
+import DialogProfile from "./DialogProfile";
 
 const MemberProfilePage = () => {
   const [selectedGroup, setSelectedGroup] = useState({});
@@ -15,6 +16,15 @@ const MemberProfilePage = () => {
   console.log("groupId in form:", groupId);
   console.log("memberId in form:", memberId);
   const isMobile = useMediaQuery("(max-width: 900px)");
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
@@ -27,7 +37,7 @@ const MemberProfilePage = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [memberId, selectedMember]);
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
@@ -109,11 +119,13 @@ const MemberProfilePage = () => {
                 Personal Information
               </Typography>
               <Typography
+                onClick={handleClickOpen}
                 sx={{
                   color: "#3549E6",
                   fontFamily: "Poppins",
                   fontSize: 14,
                   fontWeight: 500,
+                  cursor: "pointer",
                 }}
               >
                 Edit
@@ -155,7 +167,7 @@ const MemberProfilePage = () => {
               >
                 Business Information
               </Typography>
-              <Typography
+              {/* <Typography
                 sx={{
                   color: "#3549E6",
                   fontFamily: "Poppins",
@@ -164,7 +176,7 @@ const MemberProfilePage = () => {
                 }}
               >
                 Edit
-              </Typography>
+              </Typography> */}
             </div>
             <Typography>Company Name - {selectedMember.company}</Typography>
             <Typography>Designation - {selectedMember.designation}</Typography>
@@ -197,7 +209,7 @@ const MemberProfilePage = () => {
               >
                 Social Media Information
               </Typography>
-              <Typography
+              {/* <Typography
                 sx={{
                   color: "#3549E6",
                   fontFamily: "Poppins",
@@ -206,7 +218,7 @@ const MemberProfilePage = () => {
                 }}
               >
                 Edit
-              </Typography>
+              </Typography> */}
             </div>
             <Typography>LinkedIn - {selectedMember.linkedin}</Typography>
             <Typography>Website Name - {selectedMember.website}</Typography>
@@ -265,6 +277,7 @@ const MemberProfilePage = () => {
                   fontFamily: "Poppins",
                   fontSize: 14,
                   fontWeight: 500,
+                  cursor: "pointer",
                 }}
               >
                 Edit Details
@@ -275,6 +288,13 @@ const MemberProfilePage = () => {
           </div>
         </div>
       )}
+      <DialogProfile
+        open={open}
+        onClose={handleClose}
+        selectedMember={selectedMember}
+        setSelectedMember={setSelectedMember}
+        selectedGroup={selectedGroup}
+      />
     </div>
   );
 };

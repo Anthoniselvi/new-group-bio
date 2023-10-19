@@ -283,7 +283,8 @@ const MemberTopBar = () => {
       />
       <MemberMenu
         open={open}
-        onClose={handleLogout}
+        onClose={handleClose}
+        handleLogout={handleLogout}
         anchorEl={anchorEl}
         memberId={memberId}
       />

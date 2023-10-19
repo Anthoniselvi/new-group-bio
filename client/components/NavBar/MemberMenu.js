@@ -59,7 +59,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function MemberMenu({ open, onClose, anchorEl }) {
+export default function MemberMenu({ open, onClose, anchorEl, handleLogout }) {
   const [selectedMember, setSelectedMember] = useState({});
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
@@ -69,6 +69,7 @@ export default function MemberMenu({ open, onClose, anchorEl }) {
       pathname: "/profile",
       query: { id: groupId, memberId: memberId },
     });
+    onClose();
   };
   useEffect(() => {
     axios
@@ -158,7 +159,7 @@ export default function MemberMenu({ open, onClose, anchorEl }) {
           <PersonOutlineIcon />
           Profile Settings
         </MenuItem>
-        <MenuItem onClick={onClose} disableRipple>
+        <MenuItem onClick={handleLogout} disableRipple>
           <LogoutIcon />
           Logout
         </MenuItem>
