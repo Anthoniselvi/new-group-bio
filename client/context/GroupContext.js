@@ -32,7 +32,8 @@ export function ApiContextProvider({ children }) {
         username,
         password,
       });
-      setIsAdminLoggedIn(true);
+      localStorage.setItem("isAdminLoggedIn", "true");
+      setIsAdminLoggedIn(localStorage.getItem("isAdminLoggedIn"));
       router.push("/dashboard");
     } catch (err) {
       setError(true);
@@ -51,7 +52,8 @@ export function ApiContextProvider({ children }) {
     );
     console.log("matchMember:" + JSON.stringify(matchingMember));
     if (matchingMember) {
-      setIsMemberLoggedIn(true);
+      localStorage.setItem("isMemberLoggedIn", "true");
+      setIsMemberLoggedIn(localStorage.getItem("isMemberLoggedIn"));
       setLoggedMemberId(matchingMember.memberId);
       if (!matchingMember.name) {
         router.push({
@@ -74,8 +76,16 @@ export function ApiContextProvider({ children }) {
   const logout = () => {
     setIsAdminLoggedIn(false);
     setIsMemberLoggedIn(false);
+    localStorage.removeItem("isAdminLoggedIn");
+    localStorage.removeItem("isMemberLoggedIn");
   };
 
+  useEffect(() => {
+    const isAdmin = localStorage.getItem("isAdminLoggedIn");
+    const isMember = localStorage.getItem("isMemberLoggedIn");
+    setIsAdminLoggedIn(isAdmin);
+    setIsMemberLoggedIn(isMember);
+  }, [isAdminLoggedIn, isMemberLoggedIn]);
   return (
     <userAuthContext.Provider
       value={{

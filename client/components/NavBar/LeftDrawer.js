@@ -21,7 +21,7 @@ import { useRouter } from "next/router";
 
 export default function LeftDrawer({ open, onClose }) {
   const isMobile = useMediaQuery("(max-width: 900px)");
-  const { logout, isAdminLoggedIn, isMemberLoggedIn } = useUserAuth();
+  const { logout, isAdminLoggedIn } = useUserAuth();
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
   const navigateToDashboard = () => {
