@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useUserAuth } from "@/context/GroupContext";
 import { useMediaQuery } from "@mui/material";
-import DialogProfile from "./DialogProfile";
-
+import DialogMemberProfile from "./DialogMemberProfile";
+import DialogAdminProfile from "./DialogAdminProfile";
 const MemberProfilePage = () => {
   const [selectedGroup, setSelectedGroup] = useState({});
   const [selectedMember, setSelectedMember] = useState({});
@@ -16,7 +16,8 @@ const MemberProfilePage = () => {
   console.log("groupId in form:", groupId);
   console.log("memberId in form:", memberId);
   const isMobile = useMediaQuery("(max-width: 900px)");
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openAdmin, setOpenAdmin] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,6 +25,12 @@ const MemberProfilePage = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleClickOpenAdmin = () => {
+    setOpenAdmin(true);
+  };
+  const handleCloseAdmin = () => {
+    setOpenAdmin(false);
   };
   useEffect(() => {
     axios
@@ -272,6 +279,7 @@ const MemberProfilePage = () => {
                 Details
               </Typography>
               <Typography
+                onClick={handleClickOpenAdmin}
                 sx={{
                   color: "#3549E6",
                   fontFamily: "Poppins",
@@ -288,13 +296,14 @@ const MemberProfilePage = () => {
           </div>
         </div>
       )}
-      <DialogProfile
+      <DialogMemberProfile
         open={open}
         onClose={handleClose}
         selectedMember={selectedMember}
         setSelectedMember={setSelectedMember}
         selectedGroup={selectedGroup}
       />
+      <DialogAdminProfile open={openAdmin} onClose={handleCloseAdmin} />
     </div>
   );
 };

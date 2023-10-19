@@ -16,14 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DialogProfile({
-  open,
-  onClose,
-  //   selectedMember,
-  //   setSelectedMember,
-  selectedGroup,
-}) {
-  //   console.log("selected:" + JSON.stringify(selectedMember));
+export default function DialogAdminProfile({ open, onClose }) {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [editedMember, setEditedMember] = useState({});
   const router = useRouter();
@@ -150,13 +143,13 @@ export default function DialogProfile({
                       border: "1px solid #cad3dd",
                       fontFamily: "Poppins",
                     }}
-                    value={editedMember.name}
-                    onChange={(event) =>
-                      setEditedMember({
-                        ...editedMember,
-                        name: event.target.value,
-                      })
-                    }
+                    // value={editedMember.name}
+                    // onChange={(event) =>
+                    //   setEditedMember({
+                    //     ...editedMember,
+                    //     name: event.target.value,
+                    //   })
+                    // }
                   />
                 </div>
                 <div
@@ -175,7 +168,7 @@ export default function DialogProfile({
                       fontWeight: 500,
                     }}
                   >
-                    Contact Number
+                    UserName
                   </label>
                   <input
                     name="mobile"
@@ -192,13 +185,13 @@ export default function DialogProfile({
                       border: "1px solid #cad3dd",
                       fontFamily: "Poppins",
                     }}
-                    value={editedMember.mobile}
-                    onChange={(event) =>
-                      setEditedMember({
-                        ...editedMember,
-                        mobile: event.target.value,
-                      })
-                    }
+                    // value={editedMember.mobile}
+                    // onChange={(event) =>
+                    //   setEditedMember({
+                    //     ...editedMember,
+                    //     mobile: event.target.value,
+                    //   })
+                    // }
                   />
                 </div>
                 <div
@@ -217,7 +210,7 @@ export default function DialogProfile({
                       fontWeight: 500,
                     }}
                   >
-                    Company Name
+                    Password
                   </label>
                   <input
                     name="company"
@@ -234,139 +227,13 @@ export default function DialogProfile({
                       border: "1px solid #cad3dd",
                       fontFamily: "Poppins",
                     }}
-                    value={editedMember.company}
-                    onChange={(event) =>
-                      setEditedMember({
-                        ...editedMember,
-                        company: event.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                  }}
-                >
-                  <label
-                    style={{
-                      fontFamily: "Poppins",
-                      fontSize: "14px",
-                      lineHeight: "18px",
-                      color: "#191C1E",
-                      fontWeight: 500,
-                    }}
-                  >
-                    Designation
-                  </label>
-                  <input
-                    name="designation"
-                    style={{
-                      background: "#fff",
-                      borderRadius: "7px",
-                      width: "100%",
-                      height: "44px",
-                      padding: "8px 15px",
-                      fontWeight: 400,
-                      fontSize: "16px",
-                      lineHeight: "20px",
-                      color: "#101a34",
-                      border: "1px solid #cad3dd",
-                      fontFamily: "Poppins",
-                    }}
-                    value={editedMember.designation}
-                    onChange={(event) =>
-                      setEditedMember({
-                        ...editedMember,
-                        designation: event.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                  }}
-                >
-                  <label
-                    style={{
-                      fontFamily: "Poppins",
-                      fontSize: "14px",
-                      lineHeight: "18px",
-                      color: "#191C1E",
-                      fontWeight: 500,
-                    }}
-                  >
-                    Industry
-                  </label>
-                  <input
-                    name="industry"
-                    style={{
-                      background: "#fff",
-                      borderRadius: "7px",
-                      width: "100%",
-                      height: "44px",
-                      padding: "8px 15px",
-                      fontWeight: 400,
-                      fontSize: "16px",
-                      lineHeight: "20px",
-                      color: "#101a34",
-                      border: "1px solid #cad3dd",
-                      fontFamily: "Poppins",
-                    }}
-                    value={editedMember.industry}
-                    onChange={(event) =>
-                      setEditedMember({
-                        ...editedMember,
-                        industry: event.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                  }}
-                >
-                  <label
-                    style={{
-                      fontFamily: "Poppins",
-                      fontSize: "14px",
-                      lineHeight: "18px",
-                      color: "#191C1E",
-                      fontWeight: 500,
-                    }}
-                  >
-                    Services Offered
-                  </label>
-                  <input
-                    name="offers"
-                    style={{
-                      background: "#fff",
-                      borderRadius: "7px",
-                      width: "100%",
-                      height: "44px",
-                      padding: "8px 15px",
-                      fontWeight: 400,
-                      fontSize: "16px",
-                      lineHeight: "20px",
-                      color: "#101a34",
-                      border: "1px solid #cad3dd",
-                      fontFamily: "Poppins",
-                    }}
-                    value={editedMember.offers}
-                    onChange={(event) =>
-                      setEditedMember({
-                        ...editedMember,
-                        offers: event.target.value,
-                      })
-                    }
+                    // value={editedMember.company}
+                    // onChange={(event) =>
+                    //   setEditedMember({
+                    //     ...editedMember,
+                    //     company: event.target.value,
+                    //   })
+                    // }
                   />
                 </div>
               </form>

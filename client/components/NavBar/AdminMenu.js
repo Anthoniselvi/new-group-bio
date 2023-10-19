@@ -65,6 +65,7 @@ export default function AdminMenu({ open, onClose, anchorEl }) {
     router.push({
       pathname: "/profile",
     });
+    onClose();
   };
   return (
     <div style={{ padding: "10px" }}>
