@@ -11,6 +11,9 @@ import { Typography, Box, useMediaQuery } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import axios from "axios";
 import { useRouter } from "next/router";
+import TextField from "@mui/material";
+import generateYearOptions from "../MemberPages/UpdateMember/GenerateYear";
+import { courseList } from "../Members/CourseList";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -159,6 +162,112 @@ export default function DialogMemberProfile({
                     }
                   />
                 </div>
+                {console.log("groupType:" + JSON.stringify(selectedGroup))}
+                {selectedGroup.groupType === "0" ? (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                      }}
+                    >
+                      <label
+                        style={{
+                          fontFamily: "Poppins",
+                          fontSize: "14px",
+                          lineHeight: "18px",
+                          color: "#191C1E",
+                          fontWeight: 500,
+                        }}
+                      >
+                        Course
+                      </label>
+                      <select
+                        id="course"
+                        name="course"
+                        style={{
+                          background: "#fff",
+                          borderRadius: "7px",
+                          width: "100%",
+                          height: "44px",
+                          padding: "8px 15px",
+                          fontWeight: 400,
+                          fontSize: "16px",
+                          lineHeight: "20px",
+                          color: "#101a34",
+                          border: "1px solid #cad3dd",
+                          fontFamily: "Poppins",
+                        }}
+                        value={editedMember.course}
+                        onChange={(event) =>
+                          setEditedMember({
+                            ...editedMember,
+                            course: event.target.value,
+                          })
+                        }
+                      >
+                        {courseList.map((courseItem, index) => (
+                          <option key={index} value={courseItem.course}>
+                            {courseItem.course}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+                      }}
+                    >
+                      <label
+                        style={{
+                          fontFamily: "Poppins",
+                          fontSize: "14px",
+                          lineHeight: "18px",
+                          color: "#191C1E",
+                          fontWeight: 500,
+                        }}
+                      >
+                        Year
+                      </label>
+
+                      <select
+                        id="year"
+                        name="year"
+                        style={{
+                          background: "#fff",
+                          borderRadius: "7px",
+                          width: "100%",
+                          height: "44px",
+                          padding: "8px 15px",
+                          fontWeight: 400,
+                          fontSize: "16px",
+                          lineHeight: "20px",
+                          color: "#101a34",
+                          border: "1px solid #cad3dd",
+                          fontFamily: "Poppins",
+                        }}
+                        value={editedMember.year}
+                        onChange={(event) =>
+                          setEditedMember({
+                            ...editedMember,
+                            year: event.target.value,
+                          })
+                        }
+                      >
+                        {generateYearOptions().map((year) => (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
                 <div
                   style={{
                     display: "flex",

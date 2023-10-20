@@ -13,7 +13,7 @@ const MemberProfilePage = () => {
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
   const { isMemberLoggedIn } = useUserAuth();
-  console.log("groupId in form:", groupId);
+
   console.log("memberId in form:", memberId);
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [open, setOpen] = useState(false);
@@ -56,6 +56,7 @@ const MemberProfilePage = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
+  console.log("selected gp:", JSON.stringify(selectedGroup));
   return (
     <div
       style={{
