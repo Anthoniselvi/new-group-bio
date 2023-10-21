@@ -248,6 +248,55 @@ export default function EdgeBox(props) {
               ))}
             </Typography>
           </div>
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              transform: "translateY(0)",
+              transition: "transform 0.3s ease",
+              position: "fixed",
+              backgroundColor: "#fff",
+              width: "100%",
+              bottom: 0,
+              height: "10%",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0 20px",
+            }}
+          >
+            <a
+              href={`https://wa.me/${profile.mobile}`}
+              target="_blank"
+              style={{
+                backgroundColor: "#FBC91B",
+                fontFamily: "Poppins",
+                fontSize: "14px",
+                fontWeight: 600,
+                borderRadius: 20,
+                color: "#222222",
+                padding: "5px 20px",
+                textTransform: "none",
+              }}
+            >
+              WhatsApp
+            </a>
+            <a
+              href={`tel:+91${profile.mobile}`}
+              target="_blank"
+              style={{
+                backgroundColor: "#FBC91B",
+                fontFamily: "Poppins",
+                fontSize: "14px",
+                fontWeight: 600,
+                borderRadius: 20,
+                color: "#222222",
+                padding: "5px 20px",
+                textTransform: "none",
+              }}
+            >
+              Call
+            </a>
+          </div>
         </StyledBox>
       </SwipeableDrawer>
     </Root>
