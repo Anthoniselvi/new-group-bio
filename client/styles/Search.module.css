@@ -1,0 +1,81 @@
+.container{
+    padding: 1rem;
+    padding-top: 8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+   
+}
+.imageContainer{    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    /* border: 1px solid red; */
+    margin: 0 auto;
+}
+.image{
+    border-radius: 10px;
+}
+.linkicon{
+    display: flex;
+    gap: 1em;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.heading{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
+.headingtext{
+    font-size: 35px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+.contentheading{
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #000;
+}
+.contenttext{
+    font-size: 16px;
+    font-weight: 600;
+}
+.personal, .business{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: left;
+    justify-content: left;
+    width: 100%;
+}
+.span{
+    font-weight: normal;
+}
+.row{
+    display: flex;
+    flex-direction: column;
+    gap:0.3em;
+}
+.nameInitial{
+    width:70px;
+    height: 70px;
+    background-color: #003049;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.firstletter{
+    color: #fff;
+    font-size: 40px;
+}

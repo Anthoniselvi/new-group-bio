@@ -33,6 +33,8 @@ import ShareIcon from "@mui/icons-material/Share";
 import GroupMobileMenu from "./GroupMobileMenu";
 import PendingMembersTable from "../AdminPageForMembers/PendingMembersTable";
 import SearchIcon from "@mui/icons-material/Search";
+import SearchBar from "./SearchBar";
+import SearchedMembers from "./SearchedMembers";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -95,7 +97,11 @@ export default function SingleGroupPage() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [searchResults, setSearchResults] = useState([]);
 
+  const handleSearch = (results) => {
+    setSearchResults(results);
+  };
   const navigateToCreateMember = (item) => {
     router.push({
       pathname: "/createmember",
@@ -159,26 +165,6 @@ export default function SingleGroupPage() {
     setValue(index);
   };
 
-  // const transitionDuration = {
-  //   enter: theme.transitions.duration.enteringScreen,
-  //   exit: theme.transitions.duration.leavingScreen,
-  // };
-
-  // const fabs = [
-  //   {
-  //     color: "primary",
-  //     sx: fabStyle,
-  //     icon: <AddIcon />,
-  //     label: "Add",
-  //   },
-  //   {
-  //     color: "secondary",
-  //     sx: fabStyle,
-  //     icon: <EditIcon />,
-  //     label: "Edit",
-  //   },
-  // ];
-
   return (
     <Box
       sx={{
@@ -240,6 +226,13 @@ export default function SingleGroupPage() {
           </Typography>
 
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            {/* <SearchIcon /> */}
+            <SearchBar
+              singleGroupMembers={singleGroupMembers}
+              onSearch={handleSearch}
+              searchResults={searchResults}
+              setSearchResults={setSearchResults}
+            />
             <ShareIcon
               style={{ cursor: "pointer" }}
               onClick={shareViaWhatsApp}
@@ -304,10 +297,7 @@ export default function SingleGroupPage() {
         <Tabs
           value={value}
           onChange={handleChange}
-          //   indicatorColor="primary"
-          // textColor="primary"
           textTransform="none"
-          //   variant="fullWidth"
           aria-label="action tabs example"
           sx={{
             backgroundColor: "#ffffff",
@@ -330,37 +320,22 @@ export default function SingleGroupPage() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          {/* <ActiveMembers
-            singleGroup={singleGroupMembers}
-            selectedGroup={selectedGroup}
-          /> */}
-          <ListOfMembers
-            singleGroup={singleGroupMembers}
-            selectedGroup={selectedGroup}
-          />
+          {console.log(
+            "searchresult in singlegrouppage:" + JSON.stringify(searchResults)
+          )}
+          {searchResults.length === 0 ? (
+            <ListOfMembers
+              singleGroup={singleGroupMembers}
+              selectedGroup={selectedGroup}
+            />
+          ) : (
+            <SearchedMembers searchResults={searchResults} />
+          )}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          {/* <PendingMembers singleGroup={singleGroupMembers} /> */}
           <PendingMembersTable singleGroup={singleGroupMembers} />
         </TabPanel>
       </SwipeableViews>
-      {/* {fabs.map((fab, index) => (
-        <Zoom
-          key={fab.color}
-          in={value === index}
-          timeout={transitionDuration}
-          style={{
-            transitionDelay: `${
-              value === index ? transitionDuration.exit : 0
-            }ms`,
-          }}
-          unmountOnExit
-        >
-          <Fab sx={fab.sx} aria-label={fab.label} color={fab.color}>
-            {fab.icon}
-          </Fab>
-        </Zoom>
-      ))} */}
     </Box>
   );
 }
