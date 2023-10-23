@@ -5,7 +5,13 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Typography } from "@mui/material";
 import styles from "@/styles/Search.module.css";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import { useMediaQuery } from "@mui/material";
 const SearchedMembers = ({ searchResults }) => {
+  const isMobile = useMediaQuery("(max-width: 900px)");
   console.log(
     "searchResults in searchedMembers:" + JSON.stringify(searchResults)
   );
@@ -24,92 +30,108 @@ const SearchedMembers = ({ searchResults }) => {
       </div>
 
       {searchResults.map((item) => (
-        <Card
+        <ListItem
+          //   onClick={() => showSingleMemberProfile(item)}
+          alignItems="flex-start"
           key={item.memberId}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            boxShadow: "0px 1px 5px 1px #90e0ef",
-            padding: "1em",
-            paddingTop: 0,
-            paddingBottom: 0,
-          }}
-          // onClick={() => navigateToSingleProfile(item)}
+          data-starts-with={item.name.charAt(0).toLowerCase()}
         >
-          {item.image ? (
-            <img
-              src={item.image}
-              alt="Profile"
-              style={{
-                width: "80px",
-                height: "80px",
-                borderRadius: "50%",
-              }}
-            />
-          ) : (
-            <div className={styles.nameInitial}>
-              <p className={styles.firstletter}>
-                {getFirstLetterCapital(item.name)}
-              </p>
-            </div>
-          )}
-          <Box
-            sx={{
+          <div
+            style={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "top",
-              width: "100%",
+              gap: isMobile ? "20px" : "50px",
+              alignItems: "center",
             }}
           >
-            <CardContent
+            <ListItemAvatar>
+              {item.image ? (
+                <Avatar
+                  alt="Remy Sharp"
+                  src={item.image}
+                  sx={{
+                    width: isMobile ? "50px" : "80px",
+                    height: isMobile ? "50px" : "80px",
+                  }}
+                />
+              ) : (
+                <div
+                  style={{
+                    width: isMobile ? "50px" : "80px",
+                    height: isMobile ? "50px" : "80px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    background: "#00b4d8",
+                    borderRadius: "50%",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.name.charAt(0).toUpperCase()}
+                </div>
+              )}
+            </ListItemAvatar>
+            <div
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.5em",
-                padding: 0,
-                paddingLeft: "1em",
-                paddingTop: "1em",
+                gap: "5px",
               }}
             >
               <Typography
-                component="div"
                 sx={{
-                  fontFamily: "Sans-serif",
-                  fontSize: "17px",
+                  color: "#333333",
+                  fontSize: 16,
                   fontWeight: 600,
+                  fontFamily: "Poppins",
                 }}
               >
                 {item.name}
               </Typography>
-
+              {/* <>
+                {selectedGroup.groupType === "0" ? (
+                  <Typography
+                    sx={{
+                      display: "inline",
+                      color: "#75777A",
+                      fontSize: 14,
+                      fontFamily: "Poppins",
+                    }}
+                  >
+                    {formatCourseInfo(
+                      item.course,
+                      item.year,
+                      getShortFormForCourse(item.course)
+                    )}
+                  </Typography>
+                ) : (
+                  <></>
+                )}
+              </> */}
               <Typography
                 sx={{
-                  fontFamily: "Sans-serif",
-                  fontSize: "14px",
-                  color: "#999999",
+                  // display: "inline",
+                  color: "#75777A",
+                  fontSize: 14,
+                  fontFamily: "Poppins",
                 }}
-                component="div"
               >
-                {item.designation}, {item.company}
-                <br />
                 {item.location}
               </Typography>
-
               <Typography
                 sx={{
-                  fontFamily: "Sans-serif",
-                  fontSize: "14px",
-                  color: "#000000",
+                  // display: "inline",
+                  color: "#454749",
+                  fontSize: 16,
+                  fontWeight: 500,
+                  fontFamily: "Poppins",
                 }}
-                component="div"
               >
-                Services Offered: <br />
                 {item.offers}
               </Typography>
-            </CardContent>
-          </Box>
-        </Card>
+            </div>
+          </div>
+        </ListItem>
       ))}
     </div>
   );
