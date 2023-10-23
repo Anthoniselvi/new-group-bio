@@ -81,6 +81,7 @@ export default function SearchBar({
 
     setSearchResults(filteredData);
     setSearchVisible(false);
+    // setSearchQuery("");
   };
   console.log("search in searchbar:" + JSON.stringify(searchResults));
   return (

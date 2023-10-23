@@ -13,14 +13,14 @@ const MemberLogin = () => {
   const { id: groupId } = router.query;
   const { memberLogin, loggedMemberId } = useUserAuth();
 
-  console.log("memberId in login: " + loggedMemberId);
+  // console.log("memberId in login: " + loggedMemberId);
   useEffect(() => {
-    console.log("groupId: " + groupId);
+    // console.log("groupId: " + groupId);
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${groupId}`)
       .then((response) => {
         setMembersList(response.data);
-        console.log("membersList: " + JSON.stringify(response.data));
+        // console.log("membersList: " + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -34,7 +34,7 @@ const MemberLogin = () => {
     }
 
     memberLogin(mobile, membersList);
-    console.log("loggedMember in login:" + loggedMemberId);
+    // console.log("loggedMember in login:" + loggedMemberId);
     // router.push({
     //   pathname: "/updatemember",
     //   query: { id: groupId, memberId: loggedMemberId },

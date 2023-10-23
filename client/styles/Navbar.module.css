@@ -22,16 +22,22 @@ align-items: center;
 border: 1px solid #e1e2e5;
 border-radius: 20px;
 overflow: hidden;
+margin-top: 10%;
+margin-bottom: 10%;
 /* box-shadow: 0 0 5px #FBC91B */
 }
 .searchContainer:hover,
 .searchContainer:focus{
     border: 1px solid #222222;
+  
 }
 @media (min-width: 900px) {
     .searchContainer{
         width: 30%;
         margin-left: 40%;
+        margin-top: 0;
+        margin-bottom: 0;
+        
     }
     .searchInput{
         width: 50%;

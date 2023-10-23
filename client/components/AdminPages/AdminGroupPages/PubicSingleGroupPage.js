@@ -11,36 +11,14 @@ import { useMediaQuery } from "@mui/material";
 import MembersListForPublic from "../AdminPageForMembers/MembersListForPublic";
 
 export default function PublicSingleGroupPage() {
-  const [createMemberModalOpen, setCreateMemberModalOpen] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState({});
   const [singleGroupMembers, setSingleGroupMembers] = useState([]);
-  const { loggedMemberId } = useUserAuth();
+
   const isMobile = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
-  const { id: groupId, memberId } = router.query;
-  const [selectedMember, setSelectedMember] = useState({});
+  const { id: groupId } = router.query;
+  console.log("groupId:" + groupId);
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
-      .then((response) => {
-        setSelectedMember(response.data);
-        console.log(
-          "selected member in form: " + JSON.stringify(response.data)
-        );
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [memberId]);
-  const navigateToUpdateMember = () => {
-    router.push({
-      pathname: "/updatemember",
-      query: { id: groupId, memberId: loggedMemberId },
-    });
-  };
-  console.log("memberId recd in member's group page:" + memberId);
-  console.log("groupId recd in member's group page:" + groupId);
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
@@ -74,46 +52,8 @@ export default function PublicSingleGroupPage() {
         padding: isMobile ? "1rem" : "2rem 4rem",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingBottom: "1rem",
-        }}
-      >
-        <h2>{selectedGroup.groupName}</h2>
-        {!selectedMember.name ? (
-          <button
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#00b4d8",
-              color: "#fff",
-              borderRadius: "20px",
-              border: "none",
-              cursor: "pointer",
-            }}
-            onClick={() => navigateToUpdateMember(memberId)}
-          >
-            Update
-          </button>
-        ) : (
-          <></>
-        )}
+      <h2>{selectedGroup.groupName}</h2>
 
-        {createMemberModalOpen ? (
-          <AddMember
-            open={createMemberModalOpen}
-            onClose={() => setCreateMemberModalOpen(false)}
-            name={selectedGroup.groupName}
-            groupId={groupId}
-          />
-        ) : (
-          <></>
-        )}
-      </div>
-      {/* <AddedMembers /> */}
-      {/* <MembersList /> */}
       <MembersListForPublic
         singleGroup={singleGroupMembers}
         selectedGroup={selectedGroup}
