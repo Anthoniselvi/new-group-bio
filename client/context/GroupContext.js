@@ -39,18 +39,18 @@ export function ApiContextProvider({ children }) {
       setError(true);
     }
   };
-  console.log("AdminLogged: " + isAdminLoggedIn);
+  // console.log("AdminLogged: " + isAdminLoggedIn);
   const memberLogin = (mobile, membersList) => {
-    console.log("mobile:" + mobile);
+    // console.log("mobile:" + mobile);
     if (!mobile) {
       setError("Please enter a mobile number.");
       return;
     }
-    console.log("Members: " + JSON.stringify(membersList));
+    // console.log("Members: " + JSON.stringify(membersList));
     const matchingMember = membersList.find(
       (member) => member.mobile === parseInt(mobile)
     );
-    console.log("matchMember:" + JSON.stringify(matchingMember));
+    // console.log("matchMember:" + JSON.stringify(matchingMember));
     if (matchingMember) {
       localStorage.setItem("isMemberLoggedIn", "true");
       setIsMemberLoggedIn(localStorage.getItem("isMemberLoggedIn"));
@@ -70,8 +70,8 @@ export function ApiContextProvider({ children }) {
       setError("Your mobile number is not registered.");
     }
   };
-  console.log("MemberLogin: " + isMemberLoggedIn);
-  console.log("loggedMember:" + loggedMemberId);
+  // console.log("MemberLogin: " + isMemberLoggedIn);
+  // console.log("loggedMember:" + loggedMemberId);
 
   const logout = () => {
     setIsAdminLoggedIn(false);

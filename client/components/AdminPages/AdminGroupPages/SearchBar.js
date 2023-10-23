@@ -3,6 +3,10 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState, useEffect } from "react";
+import { useMediaQuery } from "@mui/material";
+import styles from "@/styles/Navbar.module.css";
+import { useRouter } from "next/router";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -50,66 +54,68 @@ export default function SearchBar({
   onSearch,
   searchResults,
   setSearchResults,
+  searchQuery,
+  setSearchQuery,
 }) {
-  const [openSearch, setOpenSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  //   const [searchResults, setSearchResults] = useState([]);
+  const [searchVisible, setSearchVisible] = useState(false);
 
-  const openSearchBar = () => {
-    setOpenSearch(true);
+  const router = useRouter();
+  const isMobile = useMediaQuery("(max-width: 900px)");
+
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+  const handleSearchEnter = (e) => {
+    if (e.key === "Enter") {
+      handleSearchClick();
+    }
   };
 
-  const handleSearch = () => {
-    if (searchQuery.trim() === "") {
-      // If the search input is empty, you can choose to handle this case or do nothing.
-      setSearchResults([]);
-      return;
-    }
+  const handleSearchClick = () => {
+    const filteredData = singleGroupMembers.filter(
+      (item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.offers.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-    // Perform the search and update the search results
-    const results = singleGroupMembers.filter((member) => {
-      const searchTerms = [
-        member.name,
-        member.company,
-        member.industry,
-        member.offers,
-      ].join(" ");
-      return searchTerms.toLowerCase().includes(searchQuery.toLowerCase());
-    });
-
-    setSearchResults(results);
+    setSearchResults(filteredData);
+    setSearchVisible(false);
   };
-
-  useEffect(() => {
-    if (!openSearch) {
-      // Clear the search query and results when closing the search bar
-      setSearchQuery("");
-      setSearchResults([]);
-    }
-  }, [openSearch]);
-
-  useEffect(() => {
-    // Pass the search results to the parent component when they change
-    onSearch(searchResults);
-  }, [searchResults, onSearch]);
-  console.log("search: " + JSON.stringify(searchResults));
+  console.log("search in searchbar:" + JSON.stringify(searchResults));
   return (
     <>
-      {!openSearch ? (
-        <SearchIcon onClick={openSearchBar} />
-      ) : (
-        <Search onClick={handleSearch}>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
+      <div className={styles.searchContainer}>
+        {!searchVisible && (
+          <input
+            type="text"
+            required
+            placeholder="Search by Name / Company / Services"
+            className={`${styles.searchInput} ${styles.searchInputFocused}`}
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearchInputChange}
+            onKeyPress={handleSearchEnter}
+            autoFocus // Set autofocus here
+            ref={(input) => input && input.focus()}
           />
-        </Search>
-      )}
+        )}
+
+        <div className={styles.search}>
+          <SearchIcon
+            style={{
+              color: "#222222",
+              // color: "black",
+              fontSize: "20px",
+              fontWeight: 600,
+              "&:hover": {
+                transition: "0.3s ease",
+                transform: "scale(1.4)",
+              },
+            }}
+            onClick={handleSearchClick}
+          />
+        </div>
+      </div>
     </>
   );
 }

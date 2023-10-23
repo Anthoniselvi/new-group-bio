@@ -6,8 +6,8 @@ import { useUserAuth } from "@/context/GroupContext";
 
 const Layout = ({ children }) => {
   const { isAdminLoggedIn, isMemberLoggedIn } = useUserAuth();
-  console.log("adminlog:" + isAdminLoggedIn);
-  console.log("memberlog:" + isMemberLoggedIn);
+  // console.log("adminlog:" + isAdminLoggedIn);
+  // console.log("memberlog:" + isMemberLoggedIn);
   return (
     <div>
       {isAdminLoggedIn && <AdminTopBar />}

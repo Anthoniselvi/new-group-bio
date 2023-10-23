@@ -60,7 +60,7 @@ const StyledMenu = styled((props) => (
 }));
 
 export default function GroupMobileMenu({ open, onClose, anchorEl, groupId }) {
-  console.log("groupId from Menu:" + groupId);
+  // console.log("groupId from Menu:" + groupId);
   const router = useRouter();
   // const { id: groupId, memberId } = router.query;
   const { loggedMemberId } = useUserAuth();

@@ -15,6 +15,7 @@ import UpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { green } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import AddedMembers from "../../Members/AddedMembers";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import MembersList from "../../Members/MembersList";
 import ActiveMembers from "../AdminPageForMembers/ActiveMembers";
 import PendingMembers from "../AdminPageForMembers/PendingMembers";
@@ -85,7 +86,7 @@ export default function SingleGroupPage() {
   const [value, setValue] = React.useState(0);
   const router = useRouter();
   const { id } = router.query;
-
+  const [searchQuery, setSearchQuery] = useState("");
   const [singleGroupMembers, setSingleGroupMembers] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState({});
   const profileCardsRef = useRef(null);
@@ -98,7 +99,7 @@ export default function SingleGroupPage() {
     setAnchorEl(null);
   };
   const [searchResults, setSearchResults] = useState([]);
-
+  const [displayListOfMembers, setDisplayListOfMembers] = useState(true);
   const handleSearch = (results) => {
     setSearchResults(results);
   };
@@ -108,6 +109,10 @@ export default function SingleGroupPage() {
       query: { id: id },
     });
   };
+  const navigateToListOfMembers = () => {
+    setDisplayListOfMembers(true);
+    setSearchResults([]);
+  };
   useEffect(() => {
     if (id) {
       axios
@@ -115,7 +120,7 @@ export default function SingleGroupPage() {
 
         .then((response) => {
           setSingleGroupMembers(response.data);
-          console.log("singleGroup :" + JSON.stringify(response.data));
+          // console.log("singleGroup :" + JSON.stringify(response.data));
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -128,7 +133,7 @@ export default function SingleGroupPage() {
 
       .then((response) => {
         setSelectedGroup(response.data);
-        console.log("selectedGroup :" + JSON.stringify(response.data));
+        // console.log("selectedGroup :" + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -149,7 +154,7 @@ export default function SingleGroupPage() {
       .delete(`${process.env.NEXT_PUBLIC_BASE_URL}/group/${id}`)
 
       .then((response) => {
-        console.log("deleteGroup :" + JSON.stringify(response.data));
+        // console.log("deleteGroup :" + JSON.stringify(response.data));
         setAlertVisible(true);
       })
       .catch((error) => {
@@ -211,82 +216,103 @@ export default function SingleGroupPage() {
     >
       {alertVisible && <ShowAlert />}
       {!isMobile ? (
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "left",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography
-            sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+        <>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "left",
+              justifyContent: "space-between",
+            }}
           >
-            Members - {selectedGroup.groupName}
-          </Typography>
-
-          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            {/* <SearchIcon /> */}
-            <SearchBar
-              singleGroupMembers={singleGroupMembers}
-              onSearch={handleSearch}
-              searchResults={searchResults}
-              setSearchResults={setSearchResults}
-            />
-            <ShareIcon
-              style={{ cursor: "pointer" }}
-              onClick={shareViaWhatsApp}
-            />
-            <button
-              onClick={navigateToCreateMember}
-              style={{
-                backgroundColor: "#FBC91B",
-                color: "#222222",
-                fontSize: 14,
-                fontWeight: 600,
-                fontFamily: "Poppins",
-                textTransform: "none",
-                borderRadius: 20,
-                padding: "8px 12px",
-                border: "none",
-                cursor: "pointer",
-              }}
+            <Typography
+              sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
             >
-              + Add Member
-            </button>
-            <MoreVertIcon style={{ cursor: "pointer" }} onClick={handleClick} />
-            <GroupMenu
-              open={open}
-              onClose={handleClose}
-              anchorEl={anchorEl}
-              groupId={selectedGroup.groupId}
-            />
-          </div>
-        </div>
-      ) : (
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "left",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography
-            sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
-          >
-            Members - {selectedGroup.groupName}
-          </Typography>
+              Members - {selectedGroup.groupName}
+            </Typography>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            <MoreVertIcon style={{ cursor: "pointer" }} onClick={handleClick} />
-            <GroupMobileMenu
-              open={open}
-              onClose={handleClose}
-              anchorEl={anchorEl}
-              groupId={selectedGroup.groupId}
-            />
+            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+              {/* <SearchIcon /> */}
+
+              <ShareIcon
+                style={{ cursor: "pointer" }}
+                onClick={shareViaWhatsApp}
+              />
+              <button
+                onClick={navigateToCreateMember}
+                style={{
+                  backgroundColor: "#FBC91B",
+                  color: "#222222",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  fontFamily: "Poppins",
+                  textTransform: "none",
+                  borderRadius: 20,
+                  padding: "8px 12px",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                + Add Member
+              </button>
+              <MoreVertIcon
+                style={{ cursor: "pointer" }}
+                onClick={handleClick}
+              />
+              <GroupMenu
+                open={open}
+                onClose={handleClose}
+                anchorEl={anchorEl}
+                groupId={selectedGroup.groupId}
+              />
+            </div>
           </div>
+          <SearchBar
+            singleGroupMembers={singleGroupMembers}
+            onSearch={handleSearch}
+            searchResults={searchResults}
+            setSearchResults={setSearchResults}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+        </>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: "50px" }}>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "left",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography
+              sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+            >
+              Members - {selectedGroup.groupName}
+            </Typography>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+              <MoreVertIcon
+                style={{ cursor: "pointer" }}
+                onClick={handleClick}
+              />
+              <GroupMobileMenu
+                open={open}
+                onClose={handleClose}
+                anchorEl={anchorEl}
+                groupId={selectedGroup.groupId}
+              />
+            </div>
+          </div>
+          <SearchBar
+            singleGroupMembers={singleGroupMembers}
+            onSearch={handleSearch}
+            searchResults={searchResults}
+            setSearchResults={setSearchResults}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
         </div>
       )}
       <AppBar
@@ -320,16 +346,29 @@ export default function SingleGroupPage() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          {console.log(
-            "searchresult in singlegrouppage:" + JSON.stringify(searchResults)
-          )}
-          {searchResults.length === 0 ? (
+          {console.log("search in singlegp:" + JSON.stringify(searchResults))}
+          {searchResults.length === 0 && displayListOfMembers ? (
             <ListOfMembers
               singleGroup={singleGroupMembers}
               selectedGroup={selectedGroup}
             />
           ) : (
-            <SearchedMembers searchResults={searchResults} />
+            <>
+              <div
+                style={{ display: "flex", gap: "10px", alignItems: "center" }}
+              >
+                <KeyboardBackspaceIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={navigateToListOfMembers}
+                />
+                Results for <strong>"{searchQuery}"</strong>
+              </div>
+              <SearchedMembers
+                searchResults={searchResults}
+                singleGroup={singleGroupMembers}
+                selectedGroup={selectedGroup}
+              />
+            </>
           )}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
