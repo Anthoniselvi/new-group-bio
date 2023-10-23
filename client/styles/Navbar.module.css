@@ -26,7 +26,7 @@ overflow: hidden;
 }
 .searchContainer:hover,
 .searchContainer:focus{
-    border: 1px solid red;
+    border: 1px solid #222222;
 }
 @media (min-width: 900px) {
     .searchContainer{

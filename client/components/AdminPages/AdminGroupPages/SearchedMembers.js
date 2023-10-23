@@ -22,6 +22,9 @@ const SearchedMembers = ({ searchResults, singleGroup, selectedGroup }) => {
   const [edgeMember, setEdgeMember] = useState(null);
   const [open, setOpen] = React.useState(false);
 
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
   const getFirstLetterCapital = (name) => {
     return name.charAt(0).toUpperCase();
   };
@@ -35,10 +38,10 @@ const SearchedMembers = ({ searchResults, singleGroup, selectedGroup }) => {
     }
   };
   return (
-    <div>
-      {console.log(
+    <div style={{ display: "flex", gap: "50px" }}>
+      {/* {console.log(
         "search in SearchedMembers:" + JSON.stringify(searchResults)
-      )}
+      )} */}
       {searchResults ? (
         <>
           {searchResults.map((item) => (
