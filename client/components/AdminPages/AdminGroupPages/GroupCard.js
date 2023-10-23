@@ -25,15 +25,23 @@ const GroupCard = ({ singleGroup, groupData }) => {
     });
   };
 
+  // const shareViaWhatsApp = (singleGroup) => {
+  //   const currentUrl = window.location.origin; // Get the base URL
+  //   const sharedUrl = `${currentUrl}/memberloginpage?id=${singleGroup.groupId}`; // Append the id query parameter
+  //   const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+  //     sharedUrl
+  //   )}`;
+  //   window.open(whatsappUrl, "_blank");
+  // };
+
   const shareViaWhatsApp = (singleGroup) => {
     const currentUrl = window.location.origin; // Get the base URL
-    const sharedUrl = `${currentUrl}/memberloginpage?id=${singleGroup.groupId}`; // Append the id query parameter
+    const sharedUrl = `${currentUrl}/publicgrouppage?id=${singleGroup.groupId}`; // Append the id query parameter
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
       sharedUrl
     )}`;
     window.open(whatsappUrl, "_blank");
   };
-
   const displayContent = singleGroup.groupImage ? (
     <img
       src={singleGroup.groupImage}
