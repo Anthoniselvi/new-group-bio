@@ -13,6 +13,8 @@ import Avatar from "@mui/material/Avatar";
 import { CloseOutlined } from "@mui/icons-material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LinkIcon from "@mui/icons-material/Link";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import CallIcon from "@mui/icons-material/Call";
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({
@@ -260,41 +262,41 @@ export default function EdgeBox(props) {
               bottom: 0,
               height: "10%",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: "space-around",
               padding: "0 20px",
+              // backgroundColor: "#FBC91B",
             }}
           >
             <a
               href={`https://wa.me/${profile.mobile}`}
               target="_blank"
               style={{
-                backgroundColor: "#FBC91B",
+                backgroundColor: "#29ad17",
                 fontFamily: "Poppins",
                 fontSize: "14px",
                 fontWeight: 600,
-                borderRadius: 20,
+                borderRadius: "50%",
                 color: "#222222",
-                padding: "5px 20px",
-                textTransform: "none",
+                padding: "10px",
               }}
             >
-              WhatsApp
+              <WhatsAppIcon />
             </a>
             <a
               href={`tel:+91${profile.mobile}`}
               target="_blank"
               style={{
-                backgroundColor: "#FBC91B",
+                backgroundColor: "#0673ef",
                 fontFamily: "Poppins",
                 fontSize: "14px",
                 fontWeight: 600,
-                borderRadius: 20,
+                borderRadius: "50%",
                 color: "#222222",
-                padding: "5px 20px",
+                padding: "10px",
                 textTransform: "none",
               }}
             >
-              Call
+              <CallIcon />
             </a>
           </div>
         </StyledBox>
