@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -11,7 +11,10 @@ import { useMediaQuery } from "@mui/material";
 import { courseList } from "../../Members/CourseList";
 import { useUserAuth } from "@/context/GroupContext";
 import { useRouter } from "next/router";
-export default function MembersListForPublic({ singleGroup, selectedGroup }) {
+import axios from "axios";
+
+export default function MembersListForPublic() {
+
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [selectedMember, setSelectedMember] = useState(null);
   const [edgeMember, setEdgeMember] = useState(null);
@@ -49,120 +52,154 @@ export default function MembersListForPublic({ singleGroup, selectedGroup }) {
       });
     }
   };
+  const [selectedGroup, setSelectedGroup] = useState({});
+  const [singleGroupMembers, setSingleGroupMembers] = useState([]);
 
+  useEffect(() => {
+    console.log("groupId:" + groupId);
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
+
+      .then((response) => {
+        setSelectedGroup(response.data);
+        console.log("selectedGroup :" + JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log("groupId:" + groupId);
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${groupId}`)
+
+      .then((response) => {
+        setSingleGroupMembers(response.data);
+        console.log("singleGroup :" + JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   return (
     <div style={{ display: "flex", gap: "50px" }}>
       <List sx={{ width: "100%" }}>
-        {singleGroup.map((item) => {
-          if (item.name !== "") {
-            return (
-              <ListItem
-                onClick={() => showSingleMemberProfile(item)}
-                alignItems="flex-start"
-                key={item.profileId}
-                data-starts-with={item.name.charAt(0).toLowerCase()}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    gap: isMobile ? "20px" : "50px",
-                    alignItems: "center",
-                  }}
+        {Array.isArray(singleGroupMembers) ? (
+          singleGroupMembers.map((item) => {
+            if (item.name !== "") {
+              return (
+                <ListItem
+                  onClick={() => showSingleMemberProfile(item)}
+                  alignItems="flex-start"
+                  key={item.memberId}
+                  data-starts-with={item.name.charAt(0).toLowerCase()}
                 >
-                  <ListItemAvatar>
-                    {item.image ? (
-                      <Avatar
-                        alt="Remy Sharp"
-                        src={item.image}
-                        sx={{
-                          width: isMobile ? "50px" : "80px",
-                          height: isMobile ? "50px" : "80px",
-                        }}
-                      />
-                    ) : (
-                      <div
-                        style={{
-                          width: isMobile ? "50px" : "80px",
-                          height: isMobile ? "50px" : "80px",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          background: "#00b4d8",
-                          borderRadius: "50%",
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {item.name.charAt(0).toUpperCase()}
-                      </div>
-                    )}
-                  </ListItemAvatar>
                   <div
-                    sx={{
+                    style={{
                       display: "flex",
-                      flexDirection: "column",
-                      gap: "5px",
+                      gap: isMobile ? "20px" : "50px",
+                      alignItems: "center",
                     }}
                   >
-                    <Typography
-                      sx={{
-                        color: "#333333",
-                        fontSize: 16,
-                        fontWeight: 600,
-                        fontFamily: "Poppins",
-                      }}
-                    >
-                      {item.name}
-                    </Typography>
-                    <>
-                      {selectedGroup.groupType === "0" ? (
-                        <Typography
+                    <ListItemAvatar>
+                      {item.image ? (
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={item.image}
                           sx={{
-                            display: "inline",
-                            color: "#75777A",
-                            fontSize: 14,
-                            fontFamily: "Poppins",
+                            width: isMobile ? "50px" : "80px",
+                            height: isMobile ? "50px" : "80px",
+                          }}
+                        />
+                      ) : (
+                        <div
+                          style={{
+                            width: isMobile ? "50px" : "80px",
+                            height: isMobile ? "50px" : "80px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            background: "#00b4d8",
+                            borderRadius: "50%",
+                            fontSize: "20px",
+                            fontWeight: "bold",
                           }}
                         >
-                          {formatCourseInfo(
-                            item.course,
-                            item.year,
-                            getShortFormForCourse(item.course)
-                          )}
-                        </Typography>
-                      ) : (
-                        <></>
+                          {item.name.charAt(0).toUpperCase()}
+                        </div>
                       )}
-                    </>
-                    <Typography
+                    </ListItemAvatar>
+                    <div
                       sx={{
-                        // display: "inline",
-                        color: "#75777A",
-                        fontSize: 14,
-                        fontFamily: "Poppins",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "5px",
                       }}
                     >
-                      {item.location}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        // display: "inline",
-                        color: "#454749",
-                        fontSize: 16,
-                        fontWeight: 500,
-                        fontFamily: "Poppins",
-                      }}
-                    >
-                      {item.offers}
-                    </Typography>
+                      <Typography
+                        sx={{
+                          color: "#333333",
+                          fontSize: 16,
+                          fontWeight: 600,
+                          fontFamily: "Poppins",
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                      <>
+                        {selectedGroup.groupType === "0" ? (
+                          <Typography
+                            sx={{
+                              display: "inline",
+                              color: "#75777A",
+                              fontSize: 14,
+                              fontFamily: "Poppins",
+                            }}
+                          >
+                            {formatCourseInfo(
+                              item.course,
+                              item.year,
+                              getShortFormForCourse(item.course)
+                            )}
+                          </Typography>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                      <Typography
+                        sx={{
+                          // display: "inline",
+                          color: "#75777A",
+                          fontSize: 14,
+                          fontFamily: "Poppins",
+                        }}
+                      >
+                        {item.location}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          // display: "inline",
+                          color: "#454749",
+                          fontSize: 16,
+                          fontWeight: 500,
+                          fontFamily: "Poppins",
+                        }}
+                      >
+                        {item.offers}
+                      </Typography>
+                    </div>
                   </div>
-                </div>
-              </ListItem>
-            );
-          }
-          return null;
-        })}
+                </ListItem>
+              );
+            }
+            return null;
+          })
+        ) : (
+          <div>No members found</div>
+        )}
       </List>
+
       {selectedMember && (
         <SingleMemberProfile
           profile={selectedMember}

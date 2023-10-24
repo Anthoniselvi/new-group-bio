@@ -36,14 +36,15 @@ export const postProfile = (req, res) => {
     return res
       .status(400)
       .json(
-        "Name, location, Company, Designation, Industry, Offers, Linkedin and Website are mandatory fields"
+        "Name, location, Company, Designation, Industry, Offers, Linkedin, and Website are mandatory fields"
       );
   }
+
   // Retrieve the groupType for the specified groupId
   Groups.findOne({ groupId })
     .then((group) => {
       if (!group) {
-        return res.status(404).json("Group not found");
+        return res.status(200).json({ message: "Group not found" });
       }
 
       // Check groupType and validate course and year accordingly
@@ -73,10 +74,10 @@ export const postProfile = (req, res) => {
 
       newProfile
         .save()
-        .then(() => res.json("Profile added"))
-        .catch((err) => res.status(400).json("Error: " + err));
+        .then(() => res.json({ message: "Profile added successfully" }))
+        .catch((err) => res.status(400).json({ message: "Error: " + err }));
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json({ message: "Error: " + err }));
 };
 
 export const getAllProfiles = (req, res) => {
@@ -86,28 +87,30 @@ export const getAllProfiles = (req, res) => {
 };
 
 export const getProfileById = (req, res) => {
-  const profileId = req.params.profileId; // Use req.params._id directly
+  const profileId = req.params.profileId;
   console.log("profileId: " + profileId);
+
   Profiles.findOne({ profileId: profileId })
     .then((profile) => {
       if (!profile) {
-        return res.status(404).json("Profile not found");
+        return res.status(200).json({ message: "Profile not found" });
       }
       res.json(profile);
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json({ message: "Error: " + err }));
 };
 
 export const deleteProfile = (req, res) => {
   const profileId = req.params.profileId;
+
   Profiles.deleteOne({ profileId: profileId })
     .then((result) => {
       if (result.deletedCount === 0) {
-        return res.status(404).json("Entry not found");
+        return res.status(200).json({ message: "Profile not found" });
       }
-      res.json("Entry deleted successfully");
+      res.json({ message: "Profile deleted successfully" });
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json({ message: "Error: " + err }));
 };
 
 export const updateProfile = (req, res) => {
@@ -119,7 +122,7 @@ export const updateProfile = (req, res) => {
   Profiles.findOne({ profileId })
     .then((profile) => {
       if (!profile) {
-        return res.status(404).json("Profile not found");
+        return res.status(200).json({ message: "Profile not found" });
       }
 
       // Update the profile data with the parsed JSON data
@@ -138,10 +141,10 @@ export const updateProfile = (req, res) => {
 
       profile
         .save()
-        .then(() => res.json("Profile updated"))
-        .catch((err) => res.status(400).json("Error: " + err));
+        .then(() => res.json({ message: "Profile updated successfully" }))
+        .catch((err) => res.status(400).json({ message: "Error: " + err }));
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json({ message: "Error: " + err }));
 };
 
 export const getProfilesByGroupId = (req, res) => {
@@ -152,10 +155,10 @@ export const getProfilesByGroupId = (req, res) => {
   Profiles.find({ groupId: groupId })
     .then((profiles) => {
       if (!profiles || profiles.length === 0) {
-        return res.status(404).json("Profiles not found");
+        return res.status(200).json({ message: "Profiles not found" });
       }
       res.json(profiles);
       console.log("Profiles by groupId: " + JSON.stringify(profiles));
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json({ message: "Error: " + err }));
 };

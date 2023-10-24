@@ -40,26 +40,27 @@ export const getAllGroups = (req, res) => {
 
 export const updateGroup = (req, res) => {
   const groupId = req.params.groupId;
-
   const updatedData = req.body;
 
   Groups.findOne({ groupId })
     .then((group) => {
       if (!group) {
-        return res.status(404).json("Group not found");
+        return res.status(200).json({ message: "Group not found" });
       }
 
+      // Update group properties
       group.groupName = updatedData.groupName;
       group.groupType = updatedData.groupType;
       group.groupDescription = updatedData.groupDescription;
       group.groupImage = updatedData.groupImage;
 
+      // Save the updated group
       group
         .save()
-        .then(() => res.json("Group updated"))
-        .catch((err) => res.status(400).json("Error: " + err));
+        .then(() => res.json({ message: "Group updated successfully" }))
+        .catch((err) => res.status(400).json({ message: "Error: " + err }));
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json({ message: "Error: " + err }));
 };
 
 export const deleteGroup = (req, res) => {
@@ -70,13 +71,15 @@ export const deleteGroup = (req, res) => {
       Groups.deleteOne({ groupId: groupId })
         .then((result) => {
           if (result.deletedCount === 0) {
-            return res.status(404).json("Group not found");
+            return res.status(200).json({ message: "Group not found" });
           }
-          res.json("Group and associated members deleted successfully");
+          res.json({
+            message: "Group and associated members deleted successfully",
+          });
         })
-        .catch((err) => res.status(400).json("Error: " + err));
+        .catch((err) => res.status(400).json({ message: "Error: " + err }));
     })
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json({ message: "Error: " + err }));
 };
 
 export const getSingleGroupbyGroupId = (req, res) => {
@@ -84,7 +87,7 @@ export const getSingleGroupbyGroupId = (req, res) => {
   Groups.findOne({ groupId })
     .then((group) => {
       if (!group) {
-        return res.status(404).json("Group not found");
+        return res.status(200).json({ message: "Group not found" });
       }
       res.json(group);
     })

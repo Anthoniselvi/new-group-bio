@@ -5,7 +5,7 @@ import styles from "@/styles/Login.module.css";
 import { useUserAuth } from "@/context/GroupContext";
 
 const MemberLogin = () => {
-  const [mobile, setMobile] = useState(null);
+  const [mobile, setMobile] = useState("");
   const [membersList, setMembersList] = useState([]);
   const [error, setError] = useState(false);
   const [memberId, setMemberId] = useState("");

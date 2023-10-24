@@ -1,8 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { FaLink } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
@@ -10,37 +7,8 @@ import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
 import { useUserAuth } from "@/context/GroupContext";
 import { useState, useEffect } from "react";
-import axios from "axios"; // Don't forget to import axios
-import { CollectionsOutlined } from "@mui/icons-material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import AdminMenu from "../../NavBar/AdminMenu";
-import GroupMenu from "./GroupMenu";
+import axios from "axios";
 import GroupCard from "./GroupCard";
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
-
-const navigateToSingleGroupProfiles = (singleGroup, router) => {
-  router.push({
-    pathname: "/adminsinglegroup",
-    query: { id: singleGroup.groupId },
-  });
-};
-
-const shareViaWhatsApp = (singleGroup) => {
-  const currentUrl = window.location.origin; // Get the base URL
-  const sharedUrl = `${currentUrl}/memberloginpage?id=${singleGroup.groupId}`; // Append the id query parameter
-  const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
-    sharedUrl
-  )}`;
-  window.open(whatsappUrl, "_blank");
-};
 
 export default function Groups() {
   const isMobile = useMediaQuery("(max-width: 900px)");
