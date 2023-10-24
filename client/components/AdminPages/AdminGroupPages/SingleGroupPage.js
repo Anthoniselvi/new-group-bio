@@ -216,7 +216,13 @@ export default function SingleGroupPage() {
     >
       {alertVisible && <ShowAlert />}
       {!isMobile ? (
-        <>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <div
             style={{
               width: "100%",
@@ -275,7 +281,7 @@ export default function SingleGroupPage() {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
-        </>
+        </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "50px" }}>
           <div
@@ -318,7 +324,7 @@ export default function SingleGroupPage() {
       <AppBar
         position="static"
         color="default"
-        sx={{ boxShadow: "none", padding: 0 }}
+        sx={{ boxShadow: "none", padding: 0, marginTop: isMobile ? "20%" : 0 }}
       >
         <Tabs
           value={value}
