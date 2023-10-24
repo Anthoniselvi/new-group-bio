@@ -8,7 +8,6 @@ const userAuthContext = createContext();
 
 export function ApiContextProvider({ children }) {
   const [groupsList, setGroupsList] = useState([]);
-  const [membersList, setMembersList] = useState([]);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [isMemberLoggedIn, setIsMemberLoggedIn] = useState(false);
   const [error, setError] = useState(false);
@@ -40,20 +39,8 @@ export function ApiContextProvider({ children }) {
       setError(true);
     }
   };
-  useEffect(() => {
-    // console.log("groupId: " + groupId);
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${id}`)
-      .then((response) => {
-        setMembersList(response.data);
-        // console.log("membersList: " + JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
   // console.log("AdminLogged: " + isAdminLoggedIn);
-  const memberLogin = (mobile) => {
+  const memberLogin = (mobile, membersList) => {
     // console.log("mobile:" + mobile);
     if (!mobile) {
       setError("Please enter a mobile number.");
