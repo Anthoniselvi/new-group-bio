@@ -1,26 +1,24 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import AdminLogin from "@/components/Login/AdminLogin";
 import {
   toBeInTheDocument,
   toHaveValue,
 } from "@testing-library/jest-dom/matchers";
 import { useRouter } from "next/router";
+import { useUserAuth } from "@/context/GroupContext";
+import userEvent from "@testing-library/user-event";
 
-// Mock the useRouter function to provide a dummy implementation
 jest.mock("next/router", () => ({
   useRouter: () => ({
     push: jest.fn(),
   }),
 }));
 
-// Mock the useUserAuth hook to provide required values
 jest.mock("@/context/GroupContext", () => ({
   useUserAuth: () => ({
-    adminLogin: async () => {
-      // Mock your adminLogin function as needed for testing
-    },
-    error: null, // Set the error value as needed for your test
+    mockFn: jest.fn(),
+    error: null,
   }),
 }));
 
@@ -32,7 +30,6 @@ describe("AdminLogin", () => {
       name: "Log In",
     });
 
-    // expect(header).toBeInTheDocument();
     expect.extend({ toBeInTheDocument });
   });
 
@@ -48,4 +45,56 @@ describe("AdminLogin", () => {
     expect.extend({ toHaveValue });
     expect.extend({ toHaveValue });
   });
+
+  // it("should call handleAdminLogin when the button is clicked", async () => {
+  //   const mockAdminLogin = jest.fn();
+
+  //   // Mock the adminLogin function
+  //   mockAdminLogin.mockImplementation(async (username, password) => {
+  //     // Your mock implementation here
+  //     expect(username).toBe("testuser");
+  //     expect(password).toBe("testpassword");
+  //     return true; // Mock a successful login
+  //   });
+
+  //   render(<AdminLogin handleAdminLogin={mockAdminLogin} />);
+
+  //   const nameInput = screen.getByPlaceholderText("username");
+  //   const passwordInput = screen.getByPlaceholderText("password");
+  //   const button = screen.getByRole("button");
+
+  //   fireEvent.change(nameInput, { target: { value: "testuser" } });
+  //   fireEvent.change(passwordInput, { target: { value: "testpassword" } });
+  //   fireEvent.click(button);
+
+  //   await waitFor(() => {
+  //     expect(mockAdminLogin).toHaveBeenCalled();
+  //     // expect(mockAdminLogin).toHaveBeenCalledWith("testuser", "testpassword");
+  //   });
+
+  //   // Ensure that the adminLogin function was called with the expected arguments
+  //   await waitFor(() => {
+  //     // expect(mockAdminLogin).toHaveBeenCalled();
+  //     expect(mockAdminLogin).toHaveBeenCalledWith("testuser", "testpassword");
+  //   });
+  // });
+
+  // it("should call handleAdminLogin when the button is clicked", () => {
+  //   const mockAdminLogin = jest.fn();
+
+  //   render(<AdminLogin handleAdminLogin={mockAdminLogin} />);
+
+  //   const usernameInput = screen.getByPlaceholderText("username");
+  //   const passwordInput = screen.getByPlaceholderText("password");
+
+  //   userEvent.type(usernameInput, "testuser"); // Use userEvent.type to simulate typing
+  //   userEvent.type(passwordInput, "testpassword");
+
+  //   const button = screen.getByRole("button");
+
+  //   userEvent.click(button);
+
+  //   expect(mockAdminLogin).toHaveBeenCalled();
+  //   expect(mockAdminLogin).toHaveBeenCalledWith("testuser", "testpassword");
+  // });
 });
