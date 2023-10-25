@@ -92,7 +92,7 @@ export default function SearchBar({
             type="text"
             required
             placeholder="Search by Name / Company / Services"
-            className={`${styles.searchInput} ${styles.searchInputFocused}`}
+            // className={`${styles.searchInput} ${styles.searchInputFocused}`}
             value={searchQuery}
             onChange={handleSearchInputChange}
             onKeyPress={handleSearchEnter}
