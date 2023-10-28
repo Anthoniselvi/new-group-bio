@@ -3,11 +3,14 @@ import MemberLogin from "@/components/Login/MemberLogin";
 import { toBeInTheDocument } from "@testing-library/jest-dom/matchers";
 import axios from "axios";
 import { act } from "react-dom/test-utils";
+import MockAdapter from "axios-mock-adapter";
+
+const memberLoginMock = jest.fn();
 
 // Mock the useUserAuth context
 jest.mock("@/context/GroupContext", () => ({
   useUserAuth: () => ({
-    memberLogin: jest.fn(),
+    memberLogin: memberLoginMock,
     loggedMemberId: "some-logged-member-id",
   }),
 }));
@@ -28,10 +31,6 @@ describe("MemberLogin", () => {
 
   it("handles member login with valid input", async () => {
     const { container } = render(<MemberLogin />);
-    const memberLoginMock = jest.fn();
-
-    // Mock the axios call for fetching members
-    axios.get = jest.fn().mockResolvedValue({ data: [] });
 
     // Find the input element and set a valid mobile number
     const inputElement = container.querySelector("input");
@@ -43,10 +42,8 @@ describe("MemberLogin", () => {
       fireEvent.click(signInButton);
     });
 
-    // Assert that the memberLogin function was called with the correct parameters
-    // expect(memberLoginMock).toHaveBeenCalledWith("1234567890", []);
-
-    // Perform any other assertions inside `act` as needed
+    // Assert that the memberLogin function from useUserAuth is called with the correct parameters
+    expect(memberLoginMock).toHaveBeenCalledWith("1234567890", []);
   });
 
   it("handles member login with invalid input", () => {
