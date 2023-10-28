@@ -32,7 +32,7 @@ const MemberLogin = () => {
       setError("Please enter a mobile number.");
       return;
     }
-
+    console.log("membersList:" + JSON.stringify(membersList));
     memberLogin(mobile, membersList);
     // console.log("loggedMember in login:" + loggedMemberId);
     // router.push({

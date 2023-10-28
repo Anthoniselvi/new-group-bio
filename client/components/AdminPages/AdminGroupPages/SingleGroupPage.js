@@ -113,6 +113,11 @@ export default function SingleGroupPage() {
     setDisplayListOfMembers(true);
     setSearchResults([]);
   };
+  const navigateToDashboard = () => {
+    router.push({
+      pathname: "/dashboard",
+    });
+  };
   useEffect(() => {
     if (id) {
       axios
@@ -232,11 +237,23 @@ export default function SingleGroupPage() {
               justifyContent: "space-between",
             }}
           >
-            <Typography
-              sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                alignItems: "center",
+              }}
             >
-              {selectedGroup.groupName}
-            </Typography>
+              <KeyboardBackspaceIcon
+                style={{ cursor: "pointer" }}
+                onClick={navigateToDashboard}
+              />
+              <Typography
+                sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+              >
+                {selectedGroup.groupName}
+              </Typography>
+            </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
               {/* <SearchIcon /> */}
@@ -293,11 +310,23 @@ export default function SingleGroupPage() {
               justifyContent: "space-between",
             }}
           >
-            <Typography
-              sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                alignItems: "center",
+              }}
             >
-              {selectedGroup.groupName}
-            </Typography>
+              <KeyboardBackspaceIcon
+                style={{ cursor: "pointer" }}
+                onClick={navigateToDashboard}
+              />
+              <Typography
+                sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
+              >
+                {selectedGroup.groupName}
+              </Typography>
+            </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
               <MoreVertIcon
