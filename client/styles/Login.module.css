@@ -32,6 +32,8 @@
     color: #000000;
     font-weight: 600;
     cursor: pointer;
+    background-color: #FBC91B;
+   color: #222222;
   }
   
   .error {
