@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { Typography, Button } from "@mui/material";
@@ -12,6 +12,9 @@ const GroupCard = ({ singleGroup, groupData }) => {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const truncatedDescription = singleGroup.groupDescription.slice(0, 100);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -102,8 +105,45 @@ const GroupCard = ({ singleGroup, groupData }) => {
             <Typography
               sx={{ fontFamily: "Poppins", color: "#75777A", fontSize: 16 }}
             >
-              {singleGroup.groupDescription}
+              {showFullDescription ? (
+                singleGroup.groupDescription
+              ) : (
+                <>
+                  {" "}
+                  {truncatedDescription}{" "}
+                  {singleGroup.groupDescription.length > 100 &&
+                    !showFullDescription && (
+                      <Button
+                        sx={{ textTransform: "none" }}
+                        onClick={() => setShowFullDescription(true)}
+                      >
+                        Read More ...
+                      </Button>
+                    )}
+                </>
+              )}
             </Typography>
+            {/* {singleGroup.groupDescription.length > 100 &&
+              !showFullDescription && (
+                <Button
+                  onClick={() => setShowFullDescription(true)}
+                  size="small"
+                  sx={{
+                    fontFamily: "Poppins",
+                    fontSize: 14,
+                    color: "#1B1B18",
+                    backgroundColor: "#ffffff",
+                    padding: "5px 25px",
+                    borderRadius: "20px",
+                    textTransform: "none",
+                    display: "flex",
+                    gap: 1,
+                    border: "0.5px solid #e1e2e5",
+                  }}
+                >
+                  Read More
+                </Button>
+              )} */}
           </div>
           {displayContent}
         </div>
