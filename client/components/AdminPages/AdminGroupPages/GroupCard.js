@@ -75,6 +75,7 @@ const GroupCard = ({ singleGroup, groupData }) => {
         border: "1px solid #e1e2e5",
         borderRadius: "10px",
         overflow: "hidden",
+        maxHeight: showFullDescription ? "100%" : "280px",
       }}
     >
       <CardContent
