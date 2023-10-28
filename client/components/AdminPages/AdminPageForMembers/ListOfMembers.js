@@ -9,26 +9,23 @@ import SingleMemberProfile from "./SingleMemberProfile";
 import EdgeBox from "./EdgeBox";
 import { useMediaQuery } from "@mui/material";
 import { courseList } from "../../Members/CourseList";
+import Button from "@mui/material/Button";
 
 export default function ListOfMembers({ singleGroup, selectedGroup }) {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [selectedMember, setSelectedMember] = useState(null);
   const [edgeMember, setEdgeMember] = useState(null);
   const [open, setOpen] = React.useState(false);
+  const [showFullOffers, setShowFullOffers] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-  const getShortFormForCourse = (fullCourseName) => {
-    const course = courseList.find(
-      (courseItem) => courseItem.course === fullCourseName
-    );
-    return course ? course.shortform : fullCourseName;
-  };
 
-  const formatCourseInfo = (course, year, shortform) => {
-    const cleanedCourse = course.replace(/\s*\([^)]*\)\s*/, "");
-    return `${cleanedCourse.replace(/\)$/, "")}, ${year} (${shortform})`;
+  // Helper function to truncate text
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) return text;
+    return text.slice(0, maxLength);
   };
 
   const showSingleMemberProfile = (item) => {
@@ -41,13 +38,14 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
   };
 
   return (
-    <div style={{ display: "flex", gap: "50px" }}>
+    <div style={{ display: "flex" }}>
       <List sx={{ width: "100%" }}>
         {Array.isArray(singleGroup) ? (
           singleGroup.map((item) => {
             if (item.name !== "") {
               return (
                 <ListItem
+                  sx={{ maxHeight: "120px" }}
                   onClick={() => showSingleMemberProfile(item)}
                   alignItems="flex-start"
                   key={item.profileId}
@@ -92,7 +90,10 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                       sx={{
                         display: "flex",
                         flexDirection: "column",
+                        alignItems: "center",
                         gap: "5px",
+                        width: "300px",
+                        border: "1px solid red",
                       }}
                     >
                       <Typography
@@ -105,29 +106,27 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                       >
                         {item.name}
                       </Typography>
-                      <>
-                        {selectedGroup.groupType === "0" ? (
-                          <Typography
-                            sx={{
-                              display: "inline",
-                              color: "#75777A",
-                              fontSize: 14,
-                              fontFamily: "Poppins",
-                            }}
-                          >
-                            {formatCourseInfo(
-                              item.course,
-                              item.year,
-                              getShortFormForCourse(item.course)
-                            )}
-                          </Typography>
-                        ) : (
-                          <></>
-                        )}
-                      </>
+                      {selectedGroup.groupType === "0" ? (
+                        <Typography
+                          sx={{
+                            display: "inline",
+                            color: "#75777A",
+                            fontSize: 14,
+                            fontFamily: "Poppins",
+                          }}
+                        >
+                          {formatCourseInfo(
+                            item.course,
+                            item.year,
+                            getShortFormForCourse(item.course)
+                          )}
+                        </Typography>
+                      ) : (
+                        <></>
+                      )}
                       <Typography
                         sx={{
-                          // display: "inline",
+                          display: "inline",
                           color: "#75777A",
                           fontSize: 14,
                           fontFamily: "Poppins",
@@ -135,17 +134,29 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                       >
                         {item.location}
                       </Typography>
+                      <br />
                       <Typography
                         sx={{
-                          // display: "inline",
+                          display: "inline",
                           color: "#454749",
                           fontSize: 16,
                           fontWeight: 500,
                           fontFamily: "Poppins",
                         }}
                       >
-                        {item.offers}
+                        {showFullOffers
+                          ? item.offers
+                          : truncateText(item.offers, 50)}
                       </Typography>
+                      {item.offers.length > 50 && (
+                        <Button
+                          sx={{ textTransform: "none" }}
+                          // onClick={() => setShowFullOffers(!showFullOffers)}
+                        >
+                          {/* {showFullOffers ? "Read Less" : "Read More"} */}
+                          {!showFullOffers && "Read More"}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </ListItem>

@@ -182,7 +182,7 @@ export default function SingleGroupPage() {
         gap: "30px",
         width: isMobile ? "100vw" : "calc(100vw - 250px)",
         marginLeft: isMobile ? 0 : "230px",
-        padding: isMobile ? 0 : "2rem 4rem",
+        padding: isMobile ? 0 : "0 4rem",
         paddingRight: "1rem",
         "& .MuiButtonBase-root-MuiTab-root": {
           backgroundColor: "none",
@@ -221,6 +221,7 @@ export default function SingleGroupPage() {
             width: "100%",
             display: "flex",
             flexDirection: "column",
+            gap: "10%",
           }}
         >
           <div
@@ -234,7 +235,7 @@ export default function SingleGroupPage() {
             <Typography
               sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
             >
-              Members - {selectedGroup.groupName}
+              {selectedGroup.groupName}
             </Typography>
 
             <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
@@ -295,7 +296,7 @@ export default function SingleGroupPage() {
             <Typography
               sx={{ fontSize: 24, fontWeight: 600, fontFamily: "Poppins" }}
             >
-              Members - {selectedGroup.groupName}
+              {selectedGroup.groupName}
             </Typography>
 
             <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
@@ -321,10 +322,24 @@ export default function SingleGroupPage() {
           />
         </div>
       )}
+      <Typography
+        sx={{
+          fontSize: 20,
+          fontWeight: 600,
+          fontFamily: "Poppins",
+          marginTop: isMobile ? "15%" : "5%",
+        }}
+      >
+        Members
+      </Typography>
       <AppBar
         position="static"
         color="default"
-        sx={{ boxShadow: "none", padding: 0, marginTop: isMobile ? "20%" : 0 }}
+        sx={{
+          boxShadow: "none",
+          padding: 0,
+          marginTop: 0,
+        }}
       >
         <Tabs
           value={value}
@@ -346,6 +361,7 @@ export default function SingleGroupPage() {
           <Tab label="Pending" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
+
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
@@ -353,6 +369,7 @@ export default function SingleGroupPage() {
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           {console.log("search in singlegp:" + JSON.stringify(searchResults))}
+
           {searchResults.length === 0 && displayListOfMembers ? (
             <ListOfMembers
               singleGroup={singleGroupMembers}
