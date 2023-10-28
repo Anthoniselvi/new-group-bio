@@ -188,7 +188,8 @@ export default function SingleMemberProfile({
               }}
             >
               Services Offered: <br />
-              {profile.offers.split(" ").map((word, index) => (
+              {profile.offers}
+              {/* {profile.offers.split(" ").map((word, index) => (
                 <span
                   key={index}
                   style={{
@@ -201,7 +202,7 @@ export default function SingleMemberProfile({
                 >
                   {word}{" "}
                 </span>
-              ))}
+              ))} */}
             </Typography>
           </div>
         </div>

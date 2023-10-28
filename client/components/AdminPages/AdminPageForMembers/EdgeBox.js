@@ -234,7 +234,8 @@ export default function EdgeBox(props) {
               }}
             >
               Services Offered: <br />
-              {profile.offers.split(" ").map((word, index) => (
+              {profile.offers}
+              {/* {profile.offers.split(" ").map((word, index) => (
                 <span
                   key={index}
                   style={{
@@ -247,7 +248,7 @@ export default function EdgeBox(props) {
                 >
                   {word}{" "}
                 </span>
-              ))}
+              ))} */}
             </Typography>
           </div>
           <div
