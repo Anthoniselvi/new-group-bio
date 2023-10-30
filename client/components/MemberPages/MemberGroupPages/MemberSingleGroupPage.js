@@ -18,6 +18,7 @@ export default function MemberSingleGroupPage() {
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
   const [selectedMember, setSelectedMember] = useState({});
+  const [dataLoaded, setDataLoaded] = useState(false); // Track whether data is loaded
 
   useEffect(() => {
     axios
@@ -27,23 +28,23 @@ export default function MemberSingleGroupPage() {
         console.log(
           "selected member in form: " + JSON.stringify(response.data)
         );
+        setDataLoaded(true); // Set dataLoaded to true when data is available
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, [memberId]);
+
   const navigateToUpdateMember = () => {
     router.push({
       pathname: "/updatemember",
       query: { id: groupId, memberId: loggedMemberId },
     });
   };
-  console.log("memberId recd in member's group page:" + memberId);
-  console.log("groupId recd in member's group page:" + groupId);
+
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
-
       .then((response) => {
         setSelectedGroup(response.data);
         console.log("selectedGroup :" + JSON.stringify(response.data));
@@ -56,7 +57,6 @@ export default function MemberSingleGroupPage() {
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${groupId}`)
-
       .then((response) => {
         setSingleGroupMembers(response.data);
         console.log("singleGroup :" + JSON.stringify(response.data));
@@ -65,6 +65,7 @@ export default function MemberSingleGroupPage() {
         console.error("Error fetching data:", error);
       });
   }, []);
+
   return (
     <div
       style={{
@@ -82,7 +83,7 @@ export default function MemberSingleGroupPage() {
         }}
       >
         <h2>{selectedGroup.groupName}</h2>
-        {!selectedMember.name ? (
+        {dataLoaded && !selectedMember.name ? ( // Check if data is loaded before rendering
           <button
             style={{
               padding: "10px 20px",
@@ -96,10 +97,7 @@ export default function MemberSingleGroupPage() {
           >
             Update
           </button>
-        ) : (
-          <></>
-        )}
-
+        ) : null}
         {createMemberModalOpen ? (
           <AddMember
             open={createMemberModalOpen}
@@ -107,12 +105,8 @@ export default function MemberSingleGroupPage() {
             name={selectedGroup.groupName}
             groupId={groupId}
           />
-        ) : (
-          <></>
-        )}
+        ) : null}
       </div>
-      {/* <AddedMembers /> */}
-      {/* <MembersList /> */}
       <ListOfMembers
         singleGroup={singleGroupMembers}
         selectedGroup={selectedGroup}

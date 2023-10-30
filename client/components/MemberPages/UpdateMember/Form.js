@@ -526,7 +526,7 @@ export default function Form() {
                     borderRadius: "20px",
                   }}
                 >
-                  Back
+                  Cancel
                 </Button>
                 {console.log("memberId :" + memberId, selectedMember.memberId)}
                 <Button
@@ -545,7 +545,7 @@ export default function Form() {
                 >
                   {activeStep === steps(selectedGroup).length - 1
                     ? "Finish"
-                    : "Continue"}
+                    : "Save"}
                 </Button>
               </div>{" "}
             </StepContent>
