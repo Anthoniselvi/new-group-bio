@@ -36,7 +36,18 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
       setEdgeMember(item);
     }
   };
+  const getShortFormForCourse = (fullCourseName) => {
+    const course = courseList.find(
+      (courseItem) => courseItem.course === fullCourseName
+    );
+    return course ? course.shortform : fullCourseName;
+  };
 
+  const formatCourseInfo = (course, year, shortform) => {
+    const cleanedCourse = course.replace(/\s*\([^)]*\)\s*/, "");
+    return `${cleanedCourse.replace(/\)$/, "")}, ${year} (${shortform})`;
+  };
+  let hasNonEmptyName = false;
   return (
     <div style={{ display: "flex" }}>
       <List sx={{ width: "100%" }}>

@@ -395,7 +395,7 @@ export default function Form() {
           console.log("updatedProfile: " + JSON.stringify(response.data));
           router.push({
             pathname: "/membergrouppage",
-            query: { id: groupId },
+            query: { id: groupId, memberId: memberId },
           });
         })
         .catch((error) => {

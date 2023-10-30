@@ -155,12 +155,12 @@ export default function MemberMenu({ open, onClose, anchorEl, handleLogout }) {
           )}
         </div>
         {console.log("name:" + selectedMember.name)}
-        {selectedMember.name && (
+        {selectedMember.name ? (
           <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
             <PersonOutlineIcon />
             Profile Settings
           </MenuItem>
-        )}
+        ) : null}
         <MenuItem onClick={handleLogout} disableRipple>
           <LogoutIcon />
           Logout

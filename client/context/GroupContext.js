@@ -46,7 +46,7 @@ export function ApiContextProvider({ children }) {
       setError("Please enter a mobile number.");
       return;
     }
-    // console.log("Members: " + JSON.stringify(membersList));
+    console.log("Members: " + JSON.stringify(membersList));
     const matchingMember = membersList.find(
       (member) => member.mobile === parseInt(mobile)
     );
