@@ -35,13 +35,60 @@ export default function SingleMemberProfile({
           gap: "20px",
           alignprofiles: "center",
           width: "50%",
-          position: "relative",
         }}
       >
         <CloseOutlined
-          style={{ alignSelf: "flex-end" }}
+          style={{ alignSelf: "flex-end", position: "relative" }}
           onClick={() => setSelectedMember(false)}
         />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+            // transform: "translateY(0)",
+            // transition: "transform 0.3s ease",
+            position: "absolute",
+            // right: 20,
+            // top: 90,
+            height: "10%",
+            alignSelf: "flex-end",
+            justifyContent: "space-around",
+            marginTop: "7%",
+          }}
+        >
+          <a
+            href={`https://wa.me/${profile.mobile}`}
+            target="_blank"
+            style={{
+              backgroundColor: "#29ad17",
+              fontFamily: "Poppins",
+              fontSize: "14px",
+              fontWeight: 600,
+              borderRadius: "50%",
+              color: "#222222",
+              padding: "10px",
+            }}
+          >
+            <WhatsAppIcon />
+          </a>
+          <a
+            href={`tel:+91${profile.mobile}`}
+            target="_blank"
+            style={{
+              backgroundColor: "#0673ef",
+              fontFamily: "Poppins",
+              fontSize: "14px",
+              fontWeight: 600,
+              borderRadius: "50%",
+              color: "#222222",
+              padding: "10px",
+              textTransform: "none",
+            }}
+          >
+            <CallIcon />
+          </a>
+        </div>
         <div
           style={{
             display: "flex",
@@ -206,55 +253,6 @@ export default function SingleMemberProfile({
             </Typography>
           </div>
         </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          // transform: "translateY(0)",
-          // transition: "transform 0.3s ease",
-          position: "absolute",
-          right: 20,
-          top: 90,
-          height: "10%",
-          alignItems: "center",
-          justifyContent: "space-around",
-          // padding: "0 20px",
-          // backgroundColor: "#FBC91B",
-        }}
-      >
-        <a
-          href={`https://wa.me/${profile.mobile}`}
-          target="_blank"
-          style={{
-            backgroundColor: "#29ad17",
-            fontFamily: "Poppins",
-            fontSize: "14px",
-            fontWeight: 600,
-            borderRadius: "50%",
-            color: "#222222",
-            padding: "10px",
-          }}
-        >
-          <WhatsAppIcon />
-        </a>
-        <a
-          href={`tel:+91${profile.mobile}`}
-          target="_blank"
-          style={{
-            backgroundColor: "#0673ef",
-            fontFamily: "Poppins",
-            fontSize: "14px",
-            fontWeight: 600,
-            borderRadius: "50%",
-            color: "#222222",
-            padding: "10px",
-            textTransform: "none",
-          }}
-        >
-          <CallIcon />
-        </a>
       </div>
     </>
   );

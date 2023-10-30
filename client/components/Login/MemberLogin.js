@@ -32,16 +32,13 @@ const MemberLogin = () => {
       setError("Please enter a mobile number.");
       return;
     }
-    console.log("membersList: " + JSON.stringify(membersList));
-    const matchingMember = membersList.find(
-      (member) => member.mobile === parseInt(mobile)
-    );
-
-    if (matchingMember) {
-      memberLogin(mobile, membersList);
-    } else {
-      setError("Your mobile number is not registered.");
-    }
+    console.log("membersList:" + JSON.stringify(membersList));
+    memberLogin(mobile, membersList);
+    // console.log("loggedMember in login:" + loggedMemberId);
+    // router.push({
+    //   pathname: "/updatemember",
+    //   query: { id: groupId, memberId: loggedMemberId },
+    // });
   };
 
   return (
