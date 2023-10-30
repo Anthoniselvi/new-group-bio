@@ -33,7 +33,7 @@ export default function MemberSingleGroupPage() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [memberId]);
+  }, [groupId]);
 
   const navigateToUpdateMember = () => {
     router.push({

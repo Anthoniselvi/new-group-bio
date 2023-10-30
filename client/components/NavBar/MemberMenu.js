@@ -140,7 +140,7 @@ export default function MemberMenu({ open, onClose, anchorEl, handleLogout }) {
                   {selectedMember.name}
                 </p>
 
-                <p
+                {/* <p
                   style={{
                     color: "#1B1B18A6",
                     fontFamily: "Poppins",
@@ -149,16 +149,18 @@ export default function MemberMenu({ open, onClose, anchorEl, handleLogout }) {
                   }}
                 >
                   {selectedMember.mobile}
-                </p>
+                </p> */}
               </div>
             </MenuItem>
           )}
         </div>
-        {/* <Divider sx={{ my: 0.5 }} /> */}
-        <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
-          <PersonOutlineIcon />
-          Profile Settings
-        </MenuItem>
+        {console.log("name:" + selectedMember.name)}
+        {selectedMember.name && (
+          <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
+            <PersonOutlineIcon />
+            Profile Settings
+          </MenuItem>
+        )}
         <MenuItem onClick={handleLogout} disableRipple>
           <LogoutIcon />
           Logout

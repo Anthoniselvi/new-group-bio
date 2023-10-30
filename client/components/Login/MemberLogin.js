@@ -32,8 +32,7 @@ const MemberLogin = () => {
       setError("Please enter a mobile number.");
       return;
     }
-
-    // Check if the provided mobile number is in the membersList
+    console.log("membersList: " + JSON.stringify(membersList));
     const matchingMember = membersList.find(
       (member) => member.mobile === parseInt(mobile)
     );

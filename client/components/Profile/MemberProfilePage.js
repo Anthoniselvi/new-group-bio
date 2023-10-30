@@ -7,6 +7,9 @@ import { useUserAuth } from "@/context/GroupContext";
 import { useMediaQuery } from "@mui/material";
 import DialogMemberProfile from "./DialogMemberProfile";
 import DialogAdminProfile from "./DialogAdminProfile";
+import DialogPersonalInfo from "./DialogPersonalInfo";
+import DialogBusinessInfo from "./DialogBusinessInfo";
+import DialogSocialInfo from "./DialogSocialInfo";
 const MemberProfilePage = () => {
   const [selectedGroup, setSelectedGroup] = useState({});
   const [selectedMember, setSelectedMember] = useState({});
@@ -18,13 +21,25 @@ const MemberProfilePage = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [open, setOpen] = useState(false);
   const [openAdmin, setOpenAdmin] = useState(false);
-
+  const [businessOpen, setBusinessOpen] = useState(false);
+  const [socialOpen, setSocialOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const handleBusinessOpen = () => {
+    setBusinessOpen(true);
+  };
+  const handleSocialOpen = () => {
+    setSocialOpen(true);
+  };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleBusinessClose = () => {
+    setBusinessOpen(false);
+  };
+  const handleSocialClose = () => {
+    setSocialOpen(false);
   };
   const handleClickOpenAdmin = () => {
     setOpenAdmin(true);
@@ -90,16 +105,6 @@ const MemberProfilePage = () => {
             padding: "20px",
           }}
         >
-          <Typography
-            sx={{
-              color: "#000000",
-              fontFamily: "Poppins",
-              fontSize: 16,
-              fontWeight: 600,
-            }}
-          >
-            Phone Number - {selectedMember.mobile}
-          </Typography>
           <div
             style={{
               display: "flex",
@@ -139,7 +144,8 @@ const MemberProfilePage = () => {
                 Edit
               </Typography>
             </div>
-            <Typography>Name - {selectedMember.name}</Typography>
+            <Typography>{selectedMember.name}</Typography>
+            <Typography>{selectedMember.mobile}</Typography>
             {selectedGroup.groupType === "0" ? (
               <>
                 <Typography>Course - {selectedMember.course}</Typography>
@@ -175,21 +181,23 @@ const MemberProfilePage = () => {
               >
                 Business Information
               </Typography>
-              {/* <Typography
+              <Typography
+                onClick={handleBusinessOpen}
                 sx={{
                   color: "#3549E6",
                   fontFamily: "Poppins",
                   fontSize: 14,
                   fontWeight: 500,
+                  cursor: "pointer",
                 }}
               >
                 Edit
-              </Typography> */}
+              </Typography>
             </div>
-            <Typography>Company Name - {selectedMember.company}</Typography>
-            <Typography>Designation - {selectedMember.designation}</Typography>
-            <Typography>Industry - {selectedMember.industry}</Typography>
-            <Typography>Services Offered - {selectedMember.offers}</Typography>
+            <Typography>{selectedMember.company}</Typography>
+            <Typography>{selectedMember.designation}</Typography>
+            <Typography>{selectedMember.industry}</Typography>
+            <Typography>{selectedMember.offers}</Typography>
           </div>
           <div
             style={{
@@ -217,19 +225,21 @@ const MemberProfilePage = () => {
               >
                 Social Media Information
               </Typography>
-              {/* <Typography
+              <Typography
+                onClick={handleSocialOpen}
                 sx={{
                   color: "#3549E6",
                   fontFamily: "Poppins",
                   fontSize: 14,
                   fontWeight: 500,
+                  cursor: "pointer",
                 }}
               >
                 Edit
-              </Typography> */}
+              </Typography>
             </div>
-            <Typography>LinkedIn - {selectedMember.linkedin}</Typography>
-            <Typography>Website Name - {selectedMember.website}</Typography>
+            <Typography>{selectedMember.linkedin}</Typography>
+            <Typography>{selectedMember.website}</Typography>
           </div>
         </div>
       ) : (
@@ -297,9 +307,30 @@ const MemberProfilePage = () => {
           </div>
         </div>
       )}
-      <DialogMemberProfile
+      {/* <DialogMemberProfile
         open={open}
         onClose={handleClose}
+        selectedMember={selectedMember}
+        setSelectedMember={setSelectedMember}
+        selectedGroup={selectedGroup}
+      /> */}
+      <DialogPersonalInfo
+        open={open}
+        onClose={handleClose}
+        selectedMember={selectedMember}
+        setSelectedMember={setSelectedMember}
+        selectedGroup={selectedGroup}
+      />
+      <DialogBusinessInfo
+        open={businessOpen}
+        onClose={handleBusinessClose}
+        selectedMember={selectedMember}
+        setSelectedMember={setSelectedMember}
+        selectedGroup={selectedGroup}
+      />
+      <DialogSocialInfo
+        open={socialOpen}
+        onClose={handleSocialClose}
         selectedMember={selectedMember}
         setSelectedMember={setSelectedMember}
         selectedGroup={selectedGroup}
