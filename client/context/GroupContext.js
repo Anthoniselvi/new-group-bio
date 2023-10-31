@@ -41,7 +41,7 @@ export function ApiContextProvider({ children }) {
   };
 
   const memberLogin = (mobile, membersList) => {
-    console.log("Members: " + JSON.stringify(membersList));
+    // console.log("Members: " + JSON.stringify(membersList));
     const matchingMember = membersList.find(
       (member) => member.mobile === parseInt(mobile)
     );

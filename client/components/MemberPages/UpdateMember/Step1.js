@@ -17,7 +17,7 @@ const Step1 = ({
   mobile,
   selectedGroupType,
 }) => {
-  console.log("groupType in Step1:" + selectedGroupType);
+  // console.log("groupType in Step1:" + selectedGroupType);
   const [file, setFile] = useState(null);
   const [per, setPerc] = useState(null);
   const [imageUrl, setImageUrl] = useState("");

@@ -5,10 +5,10 @@ import { useRouter } from "next/router";
 
 const updatemember = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
-  const router = useRouter();
-  const { id: groupId, memberId } = router.query;
-  console.log("groupId in update:", groupId);
-  console.log("memberId in update:", memberId);
+  // const router = useRouter();
+  // const { id: groupId, memberId } = router.query;
+  // console.log("groupId in update:", groupId);
+  // console.log("memberId in update:", memberId);
   return (
     <div
       style={{

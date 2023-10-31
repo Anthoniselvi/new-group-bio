@@ -42,7 +42,7 @@ export const getAllMembers = (req, res) => {
 
 export const getMemberbyMemberId = (req, res) => {
   const memberId = req.params.memberId;
-  console.log("memberId: " + memberId);
+  // console.log("memberId: " + memberId);
 
   Members.findOne({ memberId: memberId })
     .then((member) => {
@@ -108,7 +108,7 @@ export const getAllMembersByGroupId = (req, res) => {
         return res.status(200).json({ message: "Members not found" });
       }
       res.json(members);
-      console.log("Members by groupId: " + JSON.stringify(members));
+      // console.log("Members by groupId: " + JSON.stringify(members));
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };

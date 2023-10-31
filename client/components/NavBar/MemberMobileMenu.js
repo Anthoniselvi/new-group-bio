@@ -128,7 +128,7 @@ export default function MemberMobileMenu(props) {
         }}
       >
         <div style={{ padding: "0px 20px" }}>
-          {console.log("name:" + selectedMember.name)}
+          {/* {console.log("name:" + selectedMember.name)} */}
           {!selectedMember.name || selectedMember.name === "" ? (
             <></>
           ) : (

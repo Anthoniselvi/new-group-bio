@@ -27,7 +27,7 @@ export default function CreateMemberForm() {
       .then((response) => {
         console.log("Member added successfully!");
         console.log("addedMember: " + JSON.stringify(response.data));
-        onClose();
+        // onClose();
       })
       .catch((error) => {
         console.error("Error adding Member: ", error);

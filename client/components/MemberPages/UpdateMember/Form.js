@@ -46,16 +46,16 @@ export default function Form() {
   const [selectedMember, setSelectedMember] = useState({});
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
-  console.log("groupId in form:", groupId);
-  console.log("memberId in form:", memberId);
+  // console.log("groupId in form:", groupId);
+  // console.log("memberId in form:", memberId);
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
       .then((response) => {
         setSelectedMember(response.data);
-        console.log(
-          "selected member in form: " + JSON.stringify(response.data)
-        );
+        // console.log(
+        //   "selected member in form: " + JSON.stringify(response.data)
+        // );
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -66,7 +66,7 @@ export default function Form() {
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
       .then((response) => {
         setSelectedGroup(response.data);
-        console.log("selected group in form: " + JSON.stringify(response.data));
+        // console.log("selected group in form: " + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -528,7 +528,7 @@ export default function Form() {
                 >
                   Cancel
                 </Button>
-                {console.log("memberId :" + memberId, selectedMember.memberId)}
+                {/* {console.log("memberId :" + memberId, selectedMember.memberId)} */}
                 <Button
                   variant="contained"
                   onClick={
