@@ -191,11 +191,11 @@ export default function SingleGroupPage() {
         paddingRight: "1rem",
         "& .MuiButtonBase-root-MuiTab-root": {
           backgroundColor: "none",
-          textTransform: "none",
+          // textTransform: "none",
         },
         "& .MuiButtonBase-root-MuiTab-root.Mui-selected": {
           color: "red",
-          textTransform: "none",
+          // textTransform: "none",
         },
         "& .css-1h9z7r5-MuiButtonBase-root-MuiTab-root": {
           fontFamily: "Poppins",
@@ -270,7 +270,7 @@ export default function SingleGroupPage() {
                   fontSize: 14,
                   fontWeight: 600,
                   fontFamily: "Poppins",
-                  textTransform: "none",
+                  // textTransform: "none",
                   borderRadius: 20,
                   padding: "8px 12px",
                   border: "none",
@@ -373,7 +373,7 @@ export default function SingleGroupPage() {
         <Tabs
           value={value}
           onChange={handleChange}
-          textTransform="none"
+          // textTransform="none"
           aria-label="action tabs example"
           sx={{
             backgroundColor: "#ffffff",
@@ -382,8 +382,8 @@ export default function SingleGroupPage() {
           }}
         >
           <Tab
-            textTransform="none"
-            borderBottom="none"
+            // textTransform="none"
+            // borderBottom="none"
             label="Active"
             {...a11yProps(0)}
           />
@@ -397,7 +397,7 @@ export default function SingleGroupPage() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          {console.log("search in singlegp:" + JSON.stringify(searchResults))}
+          {/* {console.log("search in singlegp:" + JSON.stringify(searchResults))} */}
 
           {searchResults.length === 0 && displayListOfMembers ? (
             <ListOfMembers

@@ -64,6 +64,23 @@ export default function MemberMenu({ open, onClose, anchorEl, handleLogout }) {
   const router = useRouter();
   const { id: groupId, memberId } = router.query;
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
+      .then((response) => {
+        setSelectedMember(response.data);
+        // console.log(
+        //   "selected member in form: " + JSON.stringify(response.data)
+        // );
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [memberId]);
+  if (!selectedMember.name) {
+    return null;
+  }
+
   const navigateToSelectedProfilePage = () => {
     router.push({
       pathname: "/profile",
@@ -71,19 +88,6 @@ export default function MemberMenu({ open, onClose, anchorEl, handleLogout }) {
     });
     onClose();
   };
-  useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
-      .then((response) => {
-        setSelectedMember(response.data);
-        console.log(
-          "selected member in form: " + JSON.stringify(response.data)
-        );
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [memberId]);
   return (
     <div>
       <StyledMenu
@@ -97,7 +101,7 @@ export default function MemberMenu({ open, onClose, anchorEl, handleLogout }) {
         onClose={onClose}
       >
         <div style={{ padding: "0px 20px" }}>
-          {console.log("name:" + selectedMember.name)}
+          {/* {console.log("name:" + selectedMember.name)} */}
           {!selectedMember.name ? (
             <></>
           ) : (
@@ -154,7 +158,7 @@ export default function MemberMenu({ open, onClose, anchorEl, handleLogout }) {
             </MenuItem>
           )}
         </div>
-        {console.log("name:" + selectedMember.name)}
+        {/* {console.log("name:" + selectedMember.name)} */}
         {selectedMember.name ? (
           <MenuItem onClick={navigateToSelectedProfilePage} disableRipple>
             <PersonOutlineIcon />

@@ -128,7 +128,7 @@ const EditGroupForm = () => {
           groupDescription: response.data.groupDescription,
           groupImage: response.data.groupImage,
         });
-        console.log("selectedGroup: " + JSON.stringify(response.data));
+        // console.log("selectedGroup: " + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

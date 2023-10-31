@@ -17,7 +17,7 @@ const MemberProfilePage = () => {
   const { id: groupId, memberId } = router.query;
   const { isMemberLoggedIn } = useUserAuth();
 
-  console.log("memberId in form:", memberId);
+  // console.log("memberId in form:", memberId);
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [open, setOpen] = useState(false);
   const [openAdmin, setOpenAdmin] = useState(false);
@@ -52,26 +52,23 @@ const MemberProfilePage = () => {
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
       .then((response) => {
         setSelectedMember(response.data);
-        console.log(
-          "selected member in form: " + JSON.stringify(response.data)
-        );
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [memberId, selectedMember]);
+  }, [memberId]);
+
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
       .then((response) => {
         setSelectedGroup(response.data);
-        console.log("selected group in form: " + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
-  console.log("selected gp:", JSON.stringify(selectedGroup));
+  }, [groupId]);
+
   return (
     <div
       style={{

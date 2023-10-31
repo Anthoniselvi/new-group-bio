@@ -47,11 +47,11 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
     const cleanedCourse = course.replace(/\s*\([^)]*\)\s*/, "");
     return `${cleanedCourse.replace(/\)$/, "")}, ${year} (${shortform})`;
   };
-  let hasNonEmptyName = false;
+
   return (
     <div style={{ display: "flex" }}>
       <List sx={{ width: "100%" }}>
-        {Array.isArray(singleGroup) ? (
+        {singleGroup.length > 0 ? ( // Check if the array is not empty
           singleGroup.map((item) => {
             if (item.name !== "") {
               return (
@@ -59,7 +59,7 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                   sx={{ maxHeight: "120px" }}
                   onClick={() => showSingleMemberProfile(item)}
                   alignItems="flex-start"
-                  key={item.profileId}
+                  key={item.memberId}
                   data-starts-with={item.name.charAt(0).toLowerCase()}
                 >
                   <div
@@ -172,11 +172,16 @@ export default function ListOfMembers({ singleGroup, selectedGroup }) {
                   </div>
                 </ListItem>
               );
+            } else {
+              return (
+                <div key={`empty-${item.memberId}`} style={{ display: "none" }}>
+                  Empty Item
+                </div>
+              );
             }
-            return null;
           })
         ) : (
-          <div>No members found</div>
+          <div>Loading...</div>
         )}
       </List>
       {selectedMember && (

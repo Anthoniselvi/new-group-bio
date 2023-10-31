@@ -45,7 +45,7 @@ export default function CreateMemberForm() {
 
       .then((response) => {
         setSelectedGroup(response.data);
-        console.log("selectedGroup :" + JSON.stringify(response.data));
+        // console.log("selectedGroup :" + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

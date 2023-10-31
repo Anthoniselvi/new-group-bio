@@ -83,7 +83,7 @@ export default function SearchBar({
     setSearchVisible(false);
     // setSearchQuery("");
   };
-  console.log("search in searchbar:" + JSON.stringify(searchResults));
+  // console.log("search in searchbar:" + JSON.stringify(searchResults));
   return (
     <>
       <div className={styles.searchContainer}>

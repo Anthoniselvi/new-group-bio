@@ -55,9 +55,9 @@ export default function DialogSocialInfo({
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
       .then((response) => {
         setEditedMember(response.data);
-        console.log(
-          "selected member in form: " + JSON.stringify(response.data)
-        );
+        // console.log(
+        //   "selected member in form: " + JSON.stringify(response.data)
+        // );
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -135,7 +135,7 @@ export default function DialogSocialInfo({
                   >
                     LinkedIn URL
                   </label>
-                  {console.log("editedMember:" + JSON.stringify(editedMember))}
+                  {/* {console.log("editedMember:" + JSON.stringify(editedMember))} */}
                   <input
                     type="text"
                     id="name"
@@ -162,7 +162,7 @@ export default function DialogSocialInfo({
                     }
                   />
                 </div>
-                {console.log("groupType:" + JSON.stringify(selectedGroup))}
+                {/* {console.log("groupType:" + JSON.stringify(selectedGroup))} */}
 
                 <div
                   style={{

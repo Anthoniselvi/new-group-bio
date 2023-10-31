@@ -24,7 +24,7 @@ export default function SingleMemberProfile({
     const cleanedCourse = course.replace(/\s*\([^)]*\)\s*/, "");
     return `${cleanedCourse.replace(/\)$/, "")}, ${year} (${shortform})`;
   };
-  console.log("profile: " + JSON.stringify(profile));
+  // console.log("profile: " + JSON.stringify(profile));
   let hasNonEmptyName = false;
   return (
     <>

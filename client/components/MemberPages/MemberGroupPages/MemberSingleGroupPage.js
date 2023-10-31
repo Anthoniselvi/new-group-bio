@@ -25,13 +25,14 @@ export default function MemberSingleGroupPage() {
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
       .then((response) => {
         setSelectedMember(response.data);
-        console.log(
-          "selected member in form: " + JSON.stringify(response.data)
-        );
+        // console.log(
+        //   "selected member in form: " + JSON.stringify(response.data)
+        // );
         setDataLoaded(true); // Set dataLoaded to true when data is available
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setDataLoaded(true); // Set dataLoaded to true even on error
       });
   }, [groupId]);
 
@@ -47,24 +48,24 @@ export default function MemberSingleGroupPage() {
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/group/single/${groupId}`)
       .then((response) => {
         setSelectedGroup(response.data);
-        console.log("selectedGroup :" + JSON.stringify(response.data));
+        // console.log("selectedGroup :" + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [groupId, selectedGroup]);
 
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/all/${groupId}`)
       .then((response) => {
         setSingleGroupMembers(response.data);
-        console.log("singleGroup :" + JSON.stringify(response.data));
+        // console.log("singleGroup :" + JSON.stringify(response.data));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [groupId, singleGroupMembers]);
 
   return (
     <div
@@ -83,7 +84,7 @@ export default function MemberSingleGroupPage() {
         }}
       >
         <h2>{selectedGroup.groupName}</h2>
-        {dataLoaded && !selectedMember.name ? ( // Check if data is loaded before rendering
+        {!selectedMember.name || selectedMember.name === "" ? ( // Check if data is loaded before rendering
           <button
             style={{
               padding: "10px 20px",

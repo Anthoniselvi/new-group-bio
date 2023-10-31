@@ -112,9 +112,11 @@ export default function Groups() {
           const groupData = groupCountArray[index];
 
           return (
-            <>
-              <GroupCard singleGroup={singleGroup} groupData={groupData} />
-            </>
+            <GroupCard
+              key={singleGroup.groupId}
+              singleGroup={singleGroup}
+              groupData={groupData}
+            />
           );
         })
       )}

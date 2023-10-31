@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
 
 export default function PendingMembersTable({ singleGroup }) {
-  console.log("singleGroupMembers: " + JSON.stringify(singleGroup));
+  // console.log("singleGroupMembers: " + JSON.stringify(singleGroup));
   if (!singleGroup || !Array.isArray(singleGroup)) {
     return (
       <Box>

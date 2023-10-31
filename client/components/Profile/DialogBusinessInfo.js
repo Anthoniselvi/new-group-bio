@@ -55,9 +55,9 @@ export default function DialogBusinessInfo({
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
       .then((response) => {
         setEditedMember(response.data);
-        console.log(
-          "selected member in form: " + JSON.stringify(response.data)
-        );
+        // console.log(
+        //   "selected member in form: " + JSON.stringify(response.data)
+        // );
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

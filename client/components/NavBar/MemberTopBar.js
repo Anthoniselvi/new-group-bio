@@ -90,14 +90,25 @@ const MemberTopBar = () => {
       .get(`${process.env.NEXT_PUBLIC_BASE_URL}/member/${memberId}`)
       .then((response) => {
         setSelectedMember(response.data);
-        console.log(
-          "selected member in form: " + JSON.stringify(response.data)
-        );
+        // console.log(
+        //   "selected member in form: " + JSON.stringify(response.data)
+        // );
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        // Handle the case where the member is not found
+        setSelectedMember({ message: "Member not found" });
       });
-  }, [memberId]);
+  }, [memberId, groupId, selectedMember]);
+
+  if (selectedMember.message === "Member not found") {
+    return (
+      <div>
+        {/* Render an error message or handle the "Member not found" case */}
+        <p>Member not found. Please check your data.</p>
+      </div>
+    );
+  }
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#ffffff" }}>
@@ -147,7 +158,7 @@ const MemberTopBar = () => {
                     color: "#ffffff",
                   }}
                 >
-                  {console.log("name:" + selectedMember.name)}
+                  {/* {console.log("name:" + selectedMember.name)} */}
                   {!selectedMember.name ? (
                     <PersonIcon />
                   ) : (
