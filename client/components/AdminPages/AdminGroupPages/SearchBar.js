@@ -101,7 +101,7 @@ export default function SearchBar({
           />
         )}
 
-        <div className={styles.search}>
+        <div className={styles.search} data-testId="search-icon">
           <SearchIcon
             style={{
               color: "#222222",

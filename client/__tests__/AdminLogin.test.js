@@ -55,7 +55,7 @@ describe("AdminLogin", () => {
     const button = screen.getByRole("button");
 
     // Mock the adminLogin function
-    AdminLoginMock.mockResolvedValue(true); // Mock a successful login
+    AdminLoginMock.mockResolvedValue(true);
 
     fireEvent.change(nameInput, { target: { value: "testuser" } });
     fireEvent.change(passwordInput, { target: { value: "testpassword" } });
