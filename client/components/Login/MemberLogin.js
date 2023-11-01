@@ -36,7 +36,9 @@ const MemberLogin = () => {
       if (matchingMember) {
         memberLogin(mobile, membersList);
       } else {
-        setError("Your mobile number is not registered in this group.");
+        setError(
+          "You're not a registered member of the group. Please contact the admin to join the group."
+        );
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -58,8 +60,8 @@ const MemberLogin = () => {
         <button onClick={handleMemberLogin} className={styles.button}>
           Sign In
         </button>
-        {error && <span className={styles.error}>{error}</span>}
       </div>
+      {error && <span className={styles.error}>{error}</span>}
     </div>
   );
 };
