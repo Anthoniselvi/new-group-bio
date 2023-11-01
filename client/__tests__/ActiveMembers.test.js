@@ -43,17 +43,16 @@ describe("ActiveMembers", () => {
     // Add more assertions for other fields as needed
   });
 
-  //   it("displays a message when there are no non-empty members", () => {
-  //     render(
-  //       <ActiveMembers
-  //         singleGroup={sampleData}
-  //         selectedGroup={{ groupType: "0" }}
-  //       />
-  //     );
+  // it("displays a message when there are no non-empty members", () => {
+  //   render(
+  //     <ActiveMembers
+  //       singleGroup={sampleData}
+  //       selectedGroup={{ groupType: "0" }}
+  //     />
+  //   );
 
-  //     // Ensure that the "No Updated Members" message is displayed
-  //     expect(screen.getByText("No Updated Members")).toBeInTheDocument();
-  //   });
-
-  // Add more test cases for different scenarios, such as cases with empty names, etc.
+  //   // Ensure that the "No Updated Members" message is displayed
+  //   const text = screen.getByText("No Updated Members");
+  //   expect.extend({ toBeInTheDocument });
+  // });
 });
