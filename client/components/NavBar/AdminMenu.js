@@ -58,7 +58,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function AdminMenu({ open, onClose, anchorEl }) {
+export default function AdminMenu({ open, onClose, anchorEl, handleLogout }) {
   const router = useRouter();
 
   const navigateToAdminProfile = () => {
@@ -87,7 +87,7 @@ export default function AdminMenu({ open, onClose, anchorEl }) {
           Profile
         </MenuItem>
 
-        <MenuItem onClick={onClose} disableRipple>
+        <MenuItem onClick={handleLogout} disableRipple>
           <LogoutIcon />
           Logout
         </MenuItem>
