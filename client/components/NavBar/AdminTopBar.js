@@ -277,7 +277,12 @@ const AdminTopBar = () => {
         open={isLeftDrawerOpen}
         onClose={() => setIsLeftDrawerOpen(false)}
       />
-      <AdminMenu open={open} onClose={handleClose} anchorEl={anchorEl} />
+      <AdminMenu
+        open={open}
+        onClose={handleClose}
+        anchorEl={anchorEl}
+        handleLogout={handleLogout}
+      />
       {isMobile && (
         <AdminMobileMenu
           open={menuOpen}
