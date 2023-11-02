@@ -53,10 +53,7 @@ margin-top: 15%;
   /* transition: #01b4e4 0.3s ease-in-out; */
   position: relative;
   }
-  .searchInputFocused {
-    /* border-color: #01b4e4; 
-    box-shadow: 0 0 5px rgba(1, 180, 228, 0.5); */
-  }
+  
   .search{
     display: flex;
     justify-content: center;

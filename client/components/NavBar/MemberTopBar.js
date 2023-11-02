@@ -101,14 +101,14 @@ const MemberTopBar = () => {
       });
   }, [memberId, groupId, selectedMember]);
 
-  if (selectedMember.message === "Member not found") {
-    return (
-      <div>
-        {/* Render an error message or handle the "Member not found" case */}
-        <p>Member not found. Please check your data.</p>
-      </div>
-    );
-  }
+  // if (selectedMember.message === "Member not found") {
+  //   return (
+  //     <div>
+  //       {/* Render an error message or handle the "Member not found" case */}
+  //       <p>Member not found. Please check your data.</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#ffffff" }}>
@@ -298,6 +298,7 @@ const MemberTopBar = () => {
         handleLogout={handleLogout}
         anchorEl={anchorEl}
         memberId={memberId}
+        groupId={groupId}
       />
       {isMobile && (
         <MemberMobileMenu

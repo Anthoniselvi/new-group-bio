@@ -59,10 +59,17 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function MemberMenu({ open, onClose, anchorEl, handleLogout }) {
+export default function MemberMenu({
+  open,
+  onClose,
+  anchorEl,
+  memberId,
+  groupId,
+  handleLogout,
+}) {
   const [selectedMember, setSelectedMember] = useState({});
   const router = useRouter();
-  const { id: groupId, memberId } = router.query;
+  // const { id: groupId, memberId } = router.query;
 
   useEffect(() => {
     axios
