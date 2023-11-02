@@ -63,14 +63,12 @@ export default function SearchBar({
   const isMobile = useMediaQuery("(max-width: 900px)");
 
   const handleSearchInputChange = (e) => {
-    const inputText = e.target.value.trim(); // Remove leading and trailing whitespace
+    const inputText = e.target.value.trim();
     setSearchQuery(e.target.value);
 
     if (inputText === "") {
-      // Clear search results when the input is empty
       setSearchResults([]);
     } else {
-      // Execute search logic here as you type
       const filteredData = singleGroupMembers.filter(
         (item) =>
           item.name.toLowerCase().includes(inputText.toLowerCase()) ||
@@ -83,7 +81,6 @@ export default function SearchBar({
   };
 
   const handleSearchClick = () => {
-    // This function will only be used for the "Enter" key press event.
     const filteredData = singleGroupMembers.filter(
       (item) =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -107,8 +104,7 @@ export default function SearchBar({
             className={`${styles.searchInput} ${styles.searchInputFocused}`}
             value={searchQuery}
             onChange={handleSearchInputChange}
-            // onKeyPress={handleSearchEnter}
-            autoFocus // Set autofocus here
+            autoFocus
             ref={(input) => input && input.focus()}
           />
         )}
