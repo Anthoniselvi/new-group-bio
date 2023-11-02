@@ -13,15 +13,28 @@ export default function CreateMemberForm() {
   const isMobile = useMediaQuery("(max-width: 1000px)");
   const [mobile, setMobile] = useState("");
   const [selectedGroup, setSelectedGroup] = useState({});
+  const [error, setError] = useState("");
+
   const router = useRouter();
   const { id, name } = router.query;
+
+  const validateMobile = (mobile) => {
+    // Ensure mobile is a 10-digit number
+    const regex = /^\d{10}$/;
+    return regex.test(mobile);
+  };
 
   const handleSubmit = () => {
     const memberData = {
       mobile: mobile,
       groupId: id,
     };
-
+    if (!validateMobile(mobile)) {
+      setError("Please enter a valid 10-digit mobile number.");
+      return;
+    } else {
+      setError(""); // Clear the error message if the mobile number is valid.
+    }
     axios
       .post(`${process.env.NEXT_PUBLIC_BASE_URL}/member/new`, memberData)
       .then((response) => {
@@ -33,6 +46,13 @@ export default function CreateMemberForm() {
         console.error("Error adding Member: ", error);
       });
 
+    router.push({
+      pathname: "/adminsinglegroup",
+      query: { id: id },
+    });
+  };
+
+  const handleCancel = () => {
     router.push({
       pathname: "/adminsinglegroup",
       query: { id: id },
@@ -134,6 +154,10 @@ export default function CreateMemberForm() {
           />
         </div>
       </form>
+      {error && (
+        <div style={{ color: "red", paddingBottom: "5%" }}>{error}</div>
+      )}
+
       <div style={{ display: "flex", gap: "20px" }}>
         <Button
           sx={{
@@ -162,7 +186,7 @@ export default function CreateMemberForm() {
             border: "1px solid #dbdbd7",
             textTransform: "none",
           }}
-          onClick={handleSubmit}
+          onClick={handleCancel}
         >
           Cancel
         </Button>
